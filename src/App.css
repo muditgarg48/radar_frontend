@@ -1,38 +1,39 @@
-.App {
-  text-align: center;
+body {
+    margin: 5%;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+#resume-upload-section {
+    display: flex;
+    justify-content: center;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+#jd-preview, #resume-summary, #cover-letter {
+    /* max-width: 70vw; */
+    text-align: justify;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+#resume-operations-section {
+    display: flex;
+    justify-content: space-evenly;
 }
 
-.App-link {
-  color: #61dafb;
+#jd-section {
+    display: flex;
+    flex-direction: column;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#jd-keywords-section {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.jd-keyword {
+    padding: 5px;
+    margin: 5px;
+    font-weight: bold;
+    border: 1px solid black;
+    border-radius: 10px;
+    max-width: max-content;
+    max-height: max-content;
 }
