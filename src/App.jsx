@@ -1,9 +1,6 @@
 import React, { useState } from "react";
-import { Document, Page, pdfjs } from "react-pdf"; // For PDF viewer
+import ResumeSection from "./ResumeSection/ResumeSection.jsx";
 import './App.css';
-import "react-pdf/dist/esm/Page/AnnotationLayer.css"; // PDF viewer styles
-
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.mjs`;
 
 function App() {
   const [resume, setResume] = useState(null);
@@ -16,22 +13,8 @@ function App() {
   const [jobKeyNotes, setJobKeyNotes] = useState([]);
   const [coverLetter, setCoverLetter] = useState({});
   const [coverLetterImprovements, setCoverLetterImprovements] = useState([]);
-  const [summary, setSummary] = useState("");
 
   const deployment = "http://localhost:4000";
-
-  // Handle resume upload
-  const handleResumeUpload = async (file) => {
-    const formData = new FormData();
-    formData.append("resume", file);
-
-    // Store resume in localStorage
-    const fileUrl = URL.createObjectURL(file);
-    localStorage.setItem("resume", file.name);
-    localStorage.setItem("resumeUrl", fileUrl);
-    setResume(file);
-    setResumeUrl(fileUrl);
-  };
 
   // Handle job description input
   const handleJobDescriptionSubmit = async () => {
@@ -75,98 +58,17 @@ function App() {
     }
   }
 
-  // Summarize resume
-  const summarizeResume = async () => {
-    
-    const formData = new FormData();
-    formData.append('resume', resume);
-    // console.log(formData);
-    
-    const response = await fetch(deployment+"/summarize-resume", {
-      method: "POST",
-      body: formData,
-    });
-
-    if (response.ok) {
-      const result = await response.json();
-      setSummary(result.summary);
-    }
-  };
-
-  // Show resume in new tab
-  const showResume = () => {
-    if (resumeUrl) {
-      window.open(resumeUrl, "_blank");
-    } else {
-      alert("No resume found in cache.");
-    }
-  };
-
-  // Update resume
-  const updateResume = () => {
-    if (window.confirm("Are you sure you want to update the resume? This will clear the current resume.")) {
-      localStorage.removeItem("resume");
-      localStorage.removeItem("resumeUrl");
-      localStorage.removeItem("resume-embeddings");
-      setResume(null);
-      setResumeUrl(null);
-
-
-      // IMPORTANT: remember to delete the file from gemini as well if uploaded
-
-
-      setEmbeddingsGenerated(false);
-
-      // Prompt to upload new resume
-      const fileInput = document.createElement("input");
-      fileInput.type = "file";
-      fileInput.accept = "application/pdf";
-      fileInput.onchange = (e) => handleResumeUpload(e.target.files[0]);
-      fileInput.click();
-    }
-  };
-
   return (
     <div>
       <h1>RADAR: Resume and Job Description Analyzer</h1>
 
-      <div id="resume-upload-section">
-        <input
-          type="file"
-          accept="application/pdf"
-          onChange={(e) => handleResumeUpload(e.target.files[0])}
-        />
-      </div>
-
-      {resumeUrl && (
-        <div>
-          <h2>Resume Preview</h2>
-          <Document file={resumeUrl} >
-            <Page pageNumber={1} renderAnnotationLayer={false} renderTextLayer={false}/>
-          </Document>
-        </div>
-      )}
-
-      {summary && (
-        <div id="resume-summary">
-          <h3>Resume Summary</h3>
-            <p>{summary}</p>
-          </div>
-      )}
-
-      {
-        resumeUrl && 
-        <div id="resume-operations-section">
-          {/* Show Resume Button */}
-          <button onClick={showResume}>Show Resume</button>
-
-          {/* Summarize Resume Button */}
-          <button onClick={summarizeResume}>Summarize Resume</button>
-
-          {/* Update Resume Button */}
-          <button onClick={updateResume}>Update Resume</button>
-        </div>
-      }
+      <ResumeSection 
+        deployment={deployment}
+        setResume={setResume}
+        resume={resume}
+        setResumeUrl={setResumeUrl}
+        resumeUrl={resumeUrl}
+      />
 
       {/* Job Description Input */}
       <div id="jd-section">

@@ -1,0 +1,32 @@
+#resume-section {
+    display: flex;
+}
+
+#resume-upload-section {
+    flex: 1;
+}
+
+#resume-operations-section {
+    flex: 2;
+}
+
+#resume-action-buttons {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#resume-upload-button {
+    display: flex;
+    justify-content: center;
+}
+
+#resume-summary {
+    text-align: justify;
+    padding: 2%;
+}
+
+#resume-improvements {
+    /* list-style: none; */
+    /* padding-left: 0; */
+    text-align: justify;
+}
