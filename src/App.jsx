@@ -7,11 +7,11 @@ function App() {
   const [resume, setResume] = useState(null);
   const [resumeUrl, setResumeUrl] = useState(null);
   // const [embeddingsGenerated, setEmbeddingsGenerated] = useState(false);
-  const [jobDescription, setJobDescription] = useState("");
-  const [jobTitle, setJobTitle] = useState("");
-  const [jobCompany, setJobCompany] = useState("");
-  const [jobKeywords, setJobKeywords] = useState([]);
-  const [jobKeyNotes, setJobKeyNotes] = useState([]);
+  const [jobDescription, setJobDescription] = useState(null);
+  const [jobTitle, setJobTitle] = useState(null);
+  const [jobCompany, setJobCompany] = useState(null);
+  const [jobKeywords, setJobKeywords] = useState(null);
+  const [jobKeyNotes, setJobKeyNotes] = useState(null);
 
   const deployment = "http://localhost:4000";
 

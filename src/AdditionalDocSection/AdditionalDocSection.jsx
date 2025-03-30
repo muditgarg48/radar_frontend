@@ -2,8 +2,8 @@ import React, { useState } from "react";
 
 export default function AdditionalDocSection({resume, jobDescription, jobTitle, jobCompany, deployment}) {
 
-    const [coverLetter, setCoverLetter] = useState({});
-    const [coverLetterImprovements, setCoverLetterImprovements] = useState([]);
+    const [coverLetter, setCoverLetter] = useState(null);
+    const [coverLetterImprovements, setCoverLetterImprovements] = useState(null);
     
     const handleCoverLetterGeneration = async () => {
 
@@ -43,14 +43,14 @@ export default function AdditionalDocSection({resume, jobDescription, jobTitle, 
                     <p>{coverLetter.signature}</p>
                 </div>
             </div>}
-            {coverLetterImprovements &&<div>
-            <u>Improvements for final version:</u>
-            <ul>
-                {coverLetterImprovements.map((improvement, index) => {
-                // const keyword = word.substring(1, word.length - 1);
-                return (<li key={index}>{improvement}</li>)
-                })}
-            </ul>
+            {coverLetterImprovements && <div>
+                <u>Improvements for final version:</u>
+                <ul>
+                    {coverLetterImprovements.map((improvement, index) => {
+                    // const keyword = word.substring(1, word.length - 1);
+                    return (<li key={index}>{improvement}</li>)
+                    })}
+                </ul>
             </div>}
         </div>
     );
