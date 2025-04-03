@@ -63,7 +63,6 @@ export default function ApplySection({deployment}) {
     };
 
     useEffect(() => {
-        // console.log("Trying to filter using query:", searchQuery);
         filterCompanies(searchQuery);
     }, [searchQuery]);
 
@@ -71,21 +70,42 @@ export default function ApplySection({deployment}) {
         return <div>Loading the list...</div>;
     }
 
+    function SingleCompany(company) {
+        company = company.company
+        return (
+            <a className="apply-button" href={company.portal_link} target="_blank" rel="noopener noreferrer">
+                <img className="company-logo" src={`${logo_link}${company.domain}?c=${clientId}`} alt={company.name}/>
+                <div className="company-name">{company.name}</div>
+            </a>
+        );
+    }
+
+    function SingleCategory(category) {
+        category = category.category;
+        return (
+            <div className="apply-category">
+                <h2 className="category-name">{category.category}</h2>
+                <div className="company-list">
+                {
+                    category.data.map((company, i) => (
+                        <SingleCompany 
+                            company={company} 
+                            key={i}
+                        />
+                    ))
+                }
+                </div>
+            </div>  
+        );
+    }
+
     function displayData(data) {
         return (
             data.map((item, index) => (
-                <div className="apply-category" key={index}>
-                    <h2 className="category-name">{item.category}</h2>
-                    {/* <hr/> */}
-                    <div className="company-list">
-                        {item.data.map((company, i) => (
-                            <a className="apply-button" key={i} href={company.portal_link} target="_blank" rel="noopener noreferrer">
-                                <img className="company-logo" src={`${logo_link}${company.domain}?c=${clientId}`} alt={company.name}/>
-                                <div className="company-name">{company.name}</div>
-                            </a>
-                        ))}
-                    </div>
-                </div>  
+                <SingleCategory 
+                    key={index} 
+                    category={item} 
+                />
             ))
         );
     }
@@ -114,19 +134,6 @@ export default function ApplySection({deployment}) {
                 displayData(applyData) :
                 displayData(filteredCompanies)
             }
-            {/* {filteredCompaniesfilteredCompanies.map((item, index) => (
-                <div className="apply-category" key={index}>
-                    <h2 className="category-name">{item.category}</h2>
-                    <div className="company-list">
-                        {item.data.map((company, i) => (
-                            <a className="apply-button" key={i} href={company.portal_link} target="_blank" rel="noopener noreferrer">
-                                <img className="company-logo" src={`${logo_link}${company.domain}?c=${clientId}`} alt={company.name}/>
-                                <div className="company-name">{company.name}</div>
-                            </a>
-                        ))}
-                    </div>
-                </div>  
-            ))} */}
         </div>
     );
 }
