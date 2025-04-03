@@ -1,0 +1,43 @@
+.apply-category {
+    display: flex;
+    border-bottom: 1px solid lightgrey;
+    padding: 1%;
+}
+
+.category-name {
+    flex: 1;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.company-list {
+    flex: 5;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: justify;
+    align-items: flex-end;
+}
+
+.apply-button {
+    padding: 5px;
+    justify-content: center;
+    align-items: space-evenly;
+    text-align: center;
+    border: 2px solid lightblue;
+    border-radius: 10px;
+    margin: 5px;
+    max-width: min-content;
+    text-decoration: none;
+    color: black;
+    transition: 0.5s all;
+}
+
+.apply-button:hover {
+    transform: translateY(-5px);
+}
+
+.company-logo {
+    height: 50px;
+    /* width: 50px; */
+}

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ResumeSection from "./ResumeSection/ResumeSection.jsx";
 import AdditionalDocSection from "./AdditionalDocSection/AdditionalDocSection.jsx";
+import ApplySection from "./ApplySection/ApplySection.jsx";
 import './App.css';
 
 function App() {
@@ -89,6 +90,9 @@ function App() {
           jobDescription={jobDescription}
           jobTitle={jobTitle}
           jobCompany={jobCompany}
+          deployment={deployment}
+        />
+        <ApplySection 
           deployment={deployment}
         />
       </div>
