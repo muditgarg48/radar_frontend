@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import "./ApplySection.css";
 
 export default function ApplySection({deployment}) {
+
     const [applyData, setApplyData] = useState(null);
     const [clientId, setClientId] = useState(null);
+    const [searchQuery, setSearchQuery] = useState("");
+    const [filteredCompanies, setFilteredCompanies] = useState(applyData);
     const logo_link = "https://cdn.brandfetch.io/";
 
     useEffect(() => {
@@ -15,6 +18,7 @@ export default function ApplySection({deployment}) {
             if (response.ok) {
                 const result = await response.json();
                 setApplyData(result);
+                setFilteredCompanies(result);
             }
         };
 
@@ -32,8 +36,58 @@ export default function ApplySection({deployment}) {
         fetchLogoClientId().then(() => fetchApplyData());
     }, [deployment]);
 
+    function handleSearchChange(event) {
+        setSearchQuery(event.target.value);
+    }
+
+    const filterCompanies = (query) => {
+        if (!applyData) {
+            return;
+        }
+        query = query.toLowerCase();
+        const filtered = applyData.map(category => {
+            const filteredCompanies = category.data.filter(company => 
+                company.name.toLowerCase().includes(query) ||
+                company.portal_link.toLowerCase().includes(query) ||
+                company.domain.toLowerCase().includes(query)
+            );
+            if (filteredCompanies.length > 0 || category.category.toLowerCase().includes(query)) {
+                return {
+                    ...category,
+                    data: filteredCompanies.length > 0 ? filteredCompanies : category.data
+                };
+            }
+            return null;
+        }).filter(Boolean); // Remove null entries (categories with no matches)
+        setFilteredCompanies(filtered);
+    };
+
+    useEffect(() => {
+        // console.log("Trying to filter using query:", searchQuery);
+        filterCompanies(searchQuery);
+    }, [searchQuery]);
+
     if (!applyData) {
         return <div>Loading the list...</div>;
+    }
+
+    function displayData(data) {
+        return (
+            data.map((item, index) => (
+                <div className="apply-category" key={index}>
+                    <h2 className="category-name">{item.category}</h2>
+                    {/* <hr/> */}
+                    <div className="company-list">
+                        {item.data.map((company, i) => (
+                            <a className="apply-button" key={i} href={company.portal_link} target="_blank" rel="noopener noreferrer">
+                                <img className="company-logo" src={`${logo_link}${company.domain}?c=${clientId}`} alt={company.name}/>
+                                <div className="company-name">{company.name}</div>
+                            </a>
+                        ))}
+                    </div>
+                </div>  
+            ))
+        );
     }
 
     return (     
@@ -49,10 +103,20 @@ export default function ApplySection({deployment}) {
                 In some cases, I too felt like going to these universal job portals. Hence I have included them at the end of this section as well.
             </p>
             <h4>Happy Applying!</h4>
-            {applyData.map((item, index) => (
+            <input
+                type="text"
+                placeholder="Search company ..."
+                value={searchQuery}
+                onChange={handleSearchChange}
+                id="search-company"
+            />
+            { searchQuery == "" ?
+                displayData(applyData) :
+                displayData(filteredCompanies)
+            }
+            {/* {filteredCompaniesfilteredCompanies.map((item, index) => (
                 <div className="apply-category" key={index}>
-                    <h3 className="category-name">{item.category}</h3>
-                    {/* <hr/> */}
+                    <h2 className="category-name">{item.category}</h2>
                     <div className="company-list">
                         {item.data.map((company, i) => (
                             <a className="apply-button" key={i} href={company.portal_link} target="_blank" rel="noopener noreferrer">
@@ -62,7 +126,7 @@ export default function ApplySection({deployment}) {
                         ))}
                     </div>
                 </div>  
-            ))}
+            ))} */}
         </div>
     );
 }
