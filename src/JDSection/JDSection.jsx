@@ -91,7 +91,7 @@ export default function JDSection({deployment, setJobDescription, jobDescription
     
     return (
         <div id="jd-section">
-        <h2>Job Description</h2>
+        <h2 className="section-heading">Job Description</h2>
         <InputJD/>
         &nbsp;
         <JDPreview/>

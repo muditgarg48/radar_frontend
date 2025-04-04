@@ -34,14 +34,17 @@ function App() {
         jobTitle={jobTitle}
         setJobCompany={setJobCompany}
         jobCompany={jobCompany}
-      />
+        />
+      &nbsp;
       <AdditionalDocSection 
         resume={resume}
         jobDescription={jobDescription}
         jobTitle={jobTitle}
         jobCompany={jobCompany}
         deployment={deployment}
-      />
+        />
+      &nbsp;
+      &nbsp;
       <ApplySection 
         deployment={deployment}
       />

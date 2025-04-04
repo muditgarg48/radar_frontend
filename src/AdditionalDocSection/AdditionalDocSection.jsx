@@ -32,7 +32,7 @@ export default function AdditionalDocSection({resume, jobDescription, jobTitle, 
     
     return (
         <div>
-            <h2>Cover Letter</h2>
+            <h2 className="section-heading  ">Cover Letter</h2>
             <p>
                 Please note, you <strong>MUST NOT</strong> use this generated cover letter directly. It has been generated based on your resume and job description via a Generative AI and it bound to have a lot of issues and will lack the personal touch of a human. Recruiters and Hiring Managers are capable of easily identifying AI generated resumes and cover letters.
                 <br/>
