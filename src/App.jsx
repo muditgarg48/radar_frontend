@@ -3,6 +3,7 @@ import ResumeSection from "./ResumeSection/ResumeSection.jsx";
 import AdditionalDocSection from "./AdditionalDocSection/AdditionalDocSection.jsx";
 import ApplySection from "./ApplySection/ApplySection.jsx";
 import './App.css';
+import IntroductionSection from "./IntroductionSection/IntroductionSection.jsx";
 
 function App() {
   const [resume, setResume] = useState(null);
@@ -38,8 +39,7 @@ function App() {
 
   return (
     <div>
-      <h1>RADAR: Resume and Job Description Analyzer</h1>
-
+      <IntroductionSection/>
       <ResumeSection 
         deployment={deployment}
         setResume={setResume}
