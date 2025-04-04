@@ -1,6 +1,7 @@
 #website-title {
-    font-size: xx-large;
-    font-weight: bolder;
+    font-family: "Righteous", sans-serif;
+    font-size: 15vh;
+    font-weight: 800;
     text-align: center;
 }
 
