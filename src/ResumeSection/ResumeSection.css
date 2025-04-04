@@ -1,5 +1,6 @@
 #resume-section {
     display: flex;
+    justify-content: center;
 }
 
 #resume-upload-section {
@@ -25,8 +26,12 @@
     padding: 2%;
 }
 
+#resume-preview {
+    border: 2px solid black;
+}
+
 #resume-improvements {
-    /* list-style: none; */
-    /* padding-left: 0; */
     text-align: justify;
+    padding-left: 0;
+    margin: 2%;
 }

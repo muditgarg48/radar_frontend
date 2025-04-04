@@ -101,10 +101,10 @@ export default function ResumeSection({deployment, setResume, resume, setResumeU
     const ResumePreview = () => {
         if (resumeUrl)  {
             return (
-                <div>
-                <Document file={resumeUrl} >
-                    <Page pageNumber={1} renderAnnotationLayer={false} renderTextLayer={false}/>
-                </Document>
+                <div id="resume-preview">
+                    <Document file={resumeUrl} >
+                        <Page pageNumber={1} renderAnnotationLayer={false} renderTextLayer={false}/>
+                    </Document>
                 </div>
             );
         } else {
@@ -146,14 +146,10 @@ export default function ResumeSection({deployment, setResume, resume, setResumeU
         if (resumeUrl) { 
             return (
                 <div id="resume-action-buttons">
-                <button onClick={showResume}>Show Resume</button>
-        
-                <button onClick={summarizeResume}>Summarize Resume</button>
-        
-                {/* <button onClick={updateResume}>Update Resume</button> */}
-
-                <button onClick={improveResume}>Suggest Improvements</button>
-
+                    <button onClick={showResume}>Show Resume</button>
+                    <button onClick={summarizeResume}>Summarize Resume</button>        
+                    {/* <button onClick={updateResume}>Update Resume</button> */}
+                    <button onClick={improveResume}>Suggest Improvements</button>
                 </div>
             );
         } else {
@@ -163,14 +159,15 @@ export default function ResumeSection({deployment, setResume, resume, setResumeU
 
     return (
         <div id="resume-section">
-            <div id="resume-upload-section">
-                <ResumeUploadSection />
-                <ResumePreview />
-                <ResumeSummary />
-            </div>
             <div id="resume-operations-section">
                 <ResumeActionButtons />
                 <ResumeImprovements />
+            </div>
+            <div id="resume-upload-section">
+                <ResumeUploadSection />
+                <ResumeSummary />
+                &nbsp;
+                <ResumePreview />
             </div>
         </div>
     );

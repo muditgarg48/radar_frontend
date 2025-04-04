@@ -1,6 +1,18 @@
+body * {
+    font-family: "Kanit", sans-serif;
+}
+
+button {
+    border: none;
+    border-radius: 20px;
+    padding: 5px 8px;
+    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
 body {
     margin: 5%;
-    font-family: "Kanit", sans-serif;
+    background-color: rgba(255, 255, 0, 0.1);
 }
 
 #jd-preview, #cover-letter {
