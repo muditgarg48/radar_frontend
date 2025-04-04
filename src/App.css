@@ -14,28 +14,3 @@ body {
     margin: 5%;
     background-color: rgba(255, 255, 0, 0.1);
 }
-
-#jd-preview, #cover-letter {
-    text-align: justify;
-}
-
-#jd-section {
-    display: flex;
-    flex-direction: column;
-}
-
-#jd-keywords-section {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.jd-keyword {
-    padding: 5px;
-    margin: 5px;
-    font-weight: bold;
-    border: 1px solid black;
-    border-radius: 10px;
-    max-width: max-content;
-    max-height: max-content;
-}
