@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import './AdditionalDocSection.css';
 
 export default function AdditionalDocSection({resume, jobDescription, jobTitle, jobCompany, deployment}) {
 
@@ -14,24 +15,31 @@ export default function AdditionalDocSection({resume, jobDescription, jobTitle, 
         formData.append('company', jobCompany);
 
         const response = await fetch(deployment+"/generate-cover-letter", {
-        method: "POST",
-        body: formData
+            method: "POST",
+            body: formData
         });
 
         if (response.ok) {
-        const result = await response.json();
-        console.log("Cover Letter generated:", result.cover_letter);
-        setCoverLetter(result.cover_letter);
-        setCoverLetterImprovements(result.improvements);
+            const result = await response.json();
+            console.log("Cover Letter generated:", result.cover_letter);
+            setCoverLetter(result.cover_letter);
+            setCoverLetterImprovements(result.improvements);
+        } else {
+            console.log("Error generating cover letter");
+            console.log(response.json().then(data => console.log(data.error)));
         }
     }
     
     return (
         <div>
-            <button onClick={handleCoverLetterGeneration}>Generate Cover Letter</button>
-            &nbsp;
+            <h2>Cover Letter</h2>
+            <p>
+                Please note, you <strong>MUST NOT</strong> use this generated cover letter directly. It has been generated based on your resume and job description via a Generative AI and it bound to have a lot of issues and will lack the personal touch of a human. Recruiters and Hiring Managers are capable of easily identifying AI generated resumes and cover letters.
+                <br/>
+                Instead, use this cover letter as a starting point for your own cover letter. There will be some suggestions on how to start to improve this generated cover letter. Use them as your guide and make your own cover letter.
+            </p>
+            <button id="gen-cover-letter" onClick={handleCoverLetterGeneration}>Generate Cover Letter</button>
             {coverLetter && <div id="cover-letter">
-                <h3>Cover Letter</h3>
                 <p id="cover-letter-greeting">{coverLetter.greeting}</p>
                 <div id="cover-letter-body">
                     <p>{coverLetter.opening_paragraph}</p>
