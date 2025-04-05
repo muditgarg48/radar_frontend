@@ -20,9 +20,9 @@ function App() {
   const [jobCompany, setJobCompany] = useState(null);
 
   // Development
-  const deployment = "http://localhost:4000";
+  // const deployment = "http://localhost:4000";
   // Production
-  // const deployment = "https://radar-backend-o1yd.onrender.com";
+  const deployment = "https://radar-backend-o1yd.onrender.com";
 
   useEffect(() => {
     async function checkServerStatus() {
