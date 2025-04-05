@@ -14,7 +14,10 @@ function App() {
   const [jobTitle, setJobTitle] = useState(null);
   const [jobCompany, setJobCompany] = useState(null);
 
-  const deployment = "http://localhost:4000";
+  // Development
+  // const deployment = "http://localhost:4000";
+  // Production
+  const deploymentProd = "https://radar-backend-o1yd.onrender.com";
 
   return (
     <div>
