@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./ResumeSection.css";
-
+import Loading from '../components/Loading/Loading.jsx';
 import { Document, Page, pdfjs } from "react-pdf"; // For PDF viewer
 import "react-pdf/dist/esm/Page/AnnotationLayer.css"; // PDF viewer styles
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.mjs`;
@@ -10,9 +10,11 @@ export default function ResumeSection({deployment, setResume, resume, setResumeU
     const [summary, setSummary] = useState("");
     const [improvements, setImprovements] = useState(null);
 
+    const [loadingSummary, setLoadingSummary] = useState(false);
+    const [loadingSuggestions, setLoadingSuggestions] = useState(false);
+
     // Handle resume upload
     const handleResumeUpload = async (file) => {
-
         // Store resume in localStorage
         const fileUrl = URL.createObjectURL(file);
         localStorage.setItem("resume", file.name);
@@ -24,10 +26,10 @@ export default function ResumeSection({deployment, setResume, resume, setResumeU
     // Summarize resume
     const summarizeResume = async () => {
         
+        setLoadingSummary(true);
         const formData = new FormData();
         formData.append('resume', resume);
         // console.log(formData);
-        
         const response = await fetch(deployment+"/summarize-resume", {
             method: "POST",
             body: formData,
@@ -37,11 +39,14 @@ export default function ResumeSection({deployment, setResume, resume, setResumeU
             const result = await response.json();
             setSummary(result.summary);
         }
+        setLoadingSummary(false);
+
     };
 
     // Generate resume improvement suggestions
     const improveResume = async () => {
         
+        setLoadingSuggestions(true);
         const formData = new FormData();
         formData.append('resume', resume);
         const response = await fetch(deployment+"/improve-resume", {
@@ -53,6 +58,7 @@ export default function ResumeSection({deployment, setResume, resume, setResumeU
             const result = await response.json();
             setImprovements(result.improvements);
         }
+        setLoadingSuggestions(false);
     };
 
     // Show resume in new tab
@@ -89,11 +95,15 @@ export default function ResumeSection({deployment, setResume, resume, setResumeU
     const ResumeUploadSection = () => {
         return (
             <div id="resume-upload-button">
-                <input
-                    type="file"
-                    accept="application/pdf"
-                    onChange={(e) => handleResumeUpload(e.target.files[0])}
-                />
+                {
+                    resumeUrl ?
+                    <button onClick={updateResume}>Update Resume</button> :
+                    <input
+                        type="file"
+                        accept="application/pdf"
+                        onChange={(e) => handleResumeUpload(e.target.files[0])}
+                    />
+                }
             </div>
         );
     }
@@ -116,12 +126,16 @@ export default function ResumeSection({deployment, setResume, resume, setResumeU
         if (summary) {
             return (
                 <div id="resume-summary">
-                <h3>Resume Summary</h3>
+                    <h3>Resume Summary</h3>
                     <p>{summary}</p>
                 </div>
             );
         } else {
-            return null;
+            return (
+                <div id="resume-summary">
+                    <Loading loading={loadingSummary} message="Summarizing resume..."/>
+                </div>
+            );
         }
     }
 
@@ -129,7 +143,7 @@ export default function ResumeSection({deployment, setResume, resume, setResumeU
         if (improvements) {
             return (
                 <div>
-                <h3>Resume Improvements</h3>
+                    <h3>Resume Improvements</h3>
                     <ul id="resume-improvements">
                         {improvements.map((improvement, index) => (
                             <li class="resume-improvement" key={index}>{improvement}</li>
@@ -138,7 +152,11 @@ export default function ResumeSection({deployment, setResume, resume, setResumeU
                 </div>
             );
         } else {
-            return null;
+            return (
+                <div>
+                    <Loading loading={loadingSuggestions} message="Suggesting improvements..."/>
+                </div>
+            );
         }
     }
 
@@ -159,15 +177,15 @@ export default function ResumeSection({deployment, setResume, resume, setResumeU
 
     return (
         <div id="resume-section">
-            <div id="resume-operations-section">
-                <ResumeActionButtons />
-                <ResumeImprovements />
-            </div>
             <div id="resume-upload-section">
                 <ResumeUploadSection />
                 <ResumeSummary />
-                &nbsp;
                 <ResumePreview />
+            </div>
+            &nbsp;
+            <div id="resume-operations-section">
+                <ResumeActionButtons />
+                <ResumeImprovements />
             </div>
         </div>
     );

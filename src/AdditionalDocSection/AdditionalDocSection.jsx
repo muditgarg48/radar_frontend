@@ -1,12 +1,17 @@
 import React, { useState } from "react";
+import Loading from '../components/Loading/Loading.jsx';
 import './AdditionalDocSection.css';
 
 export default function AdditionalDocSection({resume, jobDescription, jobTitle, jobCompany, deployment}) {
 
     const [coverLetter, setCoverLetter] = useState(null);
     const [coverLetterImprovements, setCoverLetterImprovements] = useState(null);
+
+    const [loading, setLoading] = useState(false);
     
     const handleCoverLetterGeneration = async () => {
+
+        setLoading(true);
 
         const formData = new FormData();
         formData.append('resume', resume);
@@ -28,6 +33,8 @@ export default function AdditionalDocSection({resume, jobDescription, jobTitle, 
             console.log("Error generating cover letter");
             console.log(response.json().then(data => console.log(data.error)));
         }
+
+        setLoading(false);
     }
     
     return (
@@ -39,6 +46,8 @@ export default function AdditionalDocSection({resume, jobDescription, jobTitle, 
                 Instead, use this cover letter as a starting point for your own cover letter. There will be some suggestions on how to start to improve this generated cover letter. Use them as your guide and make your own cover letter.
             </p>
             <button id="gen-cover-letter" onClick={handleCoverLetterGeneration}>Generate Cover Letter</button>
+            &nbsp;
+            <Loading loading={loading} message="Generating Cover Letter using the Job Description and your resume"/>
             {coverLetter && <div id="cover-letter">
                 <p id="cover-letter-greeting">{coverLetter.greeting}</p>
                 <div id="cover-letter-body">

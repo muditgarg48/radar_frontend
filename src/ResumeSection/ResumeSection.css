@@ -3,6 +3,26 @@
     justify-content: center;
 }
 
+@media (max-width: 1200px) {
+    #resume-section {
+        display: block;
+    }
+
+    #resume-preview {
+        display: none;
+    }
+}
+
+@media (max-width: 500px) {
+    #resume-action-buttons {
+        flex-direction: column;
+    }
+
+    #resume-action-buttons button {
+        margin: 2%;
+    }
+}
+
 #resume-upload-section {
     flex: 1;
 }
