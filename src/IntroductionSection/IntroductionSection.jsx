@@ -11,7 +11,7 @@ export default function IntroductionSection({serverStatus}) {
                 {serverStatus}
             </div>
             <h3 id="website-subtitle">
-                Resume and Job Description Analyzer
+                Resume and Description Analysis Resource
             </h3>
             <p>
                 Job Search can be a very daunting journey, one filled with a lot of failures. I, myself, am currently (as of March 2025) going through the same journey. With the current job market, the competition has become very tough. From layoffs going on one side of the industry, to even experienced candidates applying for entry level roles, getting an opportunity has never felt short of a battle. 

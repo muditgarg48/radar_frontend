@@ -43,7 +43,7 @@
 
 #resume-summary {
     text-align: justify;
-    padding: 2%;
+    margin: 2%;
 }
 
 #resume-preview {
@@ -53,5 +53,5 @@
 #resume-improvements {
     text-align: justify;
     padding-left: 0;
-    margin: 2%;
+    margin-left: 5%;
 }

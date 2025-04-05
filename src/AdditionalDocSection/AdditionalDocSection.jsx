@@ -11,8 +11,17 @@ export default function AdditionalDocSection({resume, jobDescription, jobTitle, 
     
     const handleCoverLetterGeneration = async () => {
 
+        
+        if (resume === null) {
+            alert("Please upload a resume first.");
+            return;
+        } else if (jobDescription === "") {
+            alert("Please enter a job description and process it first.");
+            return;
+        }
+        
         setLoading(true);
-
+        
         const formData = new FormData();
         formData.append('resume', resume);
         formData.append('jd', jobDescription);

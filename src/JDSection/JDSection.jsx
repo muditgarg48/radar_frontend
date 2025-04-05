@@ -17,6 +17,11 @@ export default function JDSection({deployment, setJobDescription, jobDescription
     // Handle job description input
     const handleJobDescriptionSubmit = async () => {
 
+        if (jdCache === "") {
+            alert("Please enter a job description.");
+            return;
+        }
+
         setLoading(true);
         setJobDescription(jdCache);
 
