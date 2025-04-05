@@ -17,7 +17,7 @@ function App() {
   // Development
   // const deployment = "http://localhost:4000";
   // Production
-  const deploymentProd = "https://radar-backend-o1yd.onrender.com";
+  const deployment = "https://radar-backend-o1yd.onrender.com";
 
   return (
     <div>
