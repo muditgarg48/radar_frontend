@@ -1,12 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+
 import ResumeSection from "./ResumeSection/ResumeSection.jsx";
 import AdditionalDocSection from "./AdditionalDocSection/AdditionalDocSection.jsx";
 import ApplySection from "./ApplySection/ApplySection.jsx";
 import IntroductionSection from "./IntroductionSection/IntroductionSection.jsx";
 import JDSection from "./JDSection/JDSection.jsx";
+
 import './App.css';
 
 function App() {
+
+  const [serverStatus, setServerStatus] = useState("🟡 Starting...");
 
   const [resume, setResume] = useState(null);
   const [resumeUrl, setResumeUrl] = useState(null);
@@ -15,13 +20,31 @@ function App() {
   const [jobCompany, setJobCompany] = useState(null);
 
   // Development
-  // const deployment = "http://localhost:4000";
+  const deployment = "http://localhost:4000";
   // Production
-  const deployment = "https://radar-backend-o1yd.onrender.com";
+  // const deployment = "https://radar-backend-o1yd.onrender.com";
+
+  useEffect(() => {
+    async function checkServerStatus() {
+      try {
+        const response = await axios.get(deployment+"/hello-server");
+        if(response.status === 200) {
+          setServerStatus("🟢 Active");
+          console.log("RaDAR Online!");
+        }
+      } catch (Exception) {
+        setServerStatus("🔴 Error");
+        alert("Server response: "+Exception+". Report back to the developer.");
+      }
+    }
+    checkServerStatus();
+  }, []);
 
   return (
     <div>
-      <IntroductionSection/>
+      <IntroductionSection
+        serverStatus={serverStatus}
+      />
       <ResumeSection 
         deployment={deployment}
         setResume={setResume}

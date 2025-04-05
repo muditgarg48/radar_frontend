@@ -1,10 +1,16 @@
 #website-title {
     font-family: "Righteous", sans-serif;
-    font-size: 15vh;
+    font-size: 13vh;
     font-weight: 800;
     text-align: center;
 }
 
 #website-subtitle {
     text-align: center;
+}
+
+#server-status {
+    text-align: end;
+    font-size: 90%;
+    opacity: 70%;
 }

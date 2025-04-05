@@ -1,11 +1,14 @@
 import React from "react";
 import './IntroductionSection.css';
 
-export default function IntroductionSection() {
+export default function IntroductionSection({serverStatus}) {
     return (
         <div id="introduction-section">
             <div id="website-title">
                 RaDAR
+            </div>
+            <div id="server-status">
+                {serverStatus}
             </div>
             <h3 id="website-subtitle">
                 Resume and Job Description Analyzer
