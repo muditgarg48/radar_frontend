@@ -26,6 +26,7 @@ export default function ResumeSection({deployment, setResume, resume, setResumeU
     // Summarize resume
     const summarizeResume = async () => {
         
+        setSummary(null);
         setLoadingSummary(true);
         const formData = new FormData();
         formData.append('resume', resume);
@@ -46,6 +47,7 @@ export default function ResumeSection({deployment, setResume, resume, setResumeU
     // Generate resume improvement suggestions
     const improveResume = async () => {
         
+        setImprovements(null);
         setLoadingSuggestions(true);
         const formData = new FormData();
         formData.append('resume', resume);
@@ -123,41 +125,33 @@ export default function ResumeSection({deployment, setResume, resume, setResumeU
     }
 
     const ResumeSummary = () => {
-        if (summary) {
-            return (
-                <div id="resume-summary">
-                    <h3>Resume Summary</h3>
-                    <p>{summary}</p>
-                </div>
-            );
-        } else {
-            return (
-                <div id="resume-summary">
-                    <Loading loading={loadingSummary} message="Summarizing resume..."/>
-                </div>
-            );
-        }
+        return (
+            <div id="resume-summary">
+                {(summary || loadingSummary) && <h3>Resume Summary</h3>}
+                {
+                    summary?
+                        <p>{summary}</p>:
+                        <Loading loading={loadingSummary} message="Summarizing resume..."/>
+                }
+            </div>
+        );
     }
 
     const ResumeImprovements = () => {
-        if (improvements) {
-            return (
-                <div>
-                    <h3>Resume Improvements</h3>
-                    <ul id="resume-improvements">
+        return (
+            <div id="resume-improvements">
+                {(improvements || loadingSuggestions) && <h3>Resume Improvements</h3>}
+                {
+                    improvements?
+                    <ul>
                         {improvements.map((improvement, index) => (
                             <li class="resume-improvement" key={index}>{improvement}</li>
                         ))}
-                    </ul>
-                </div>
-            );
-        } else {
-            return (
-                <div>
+                    </ul>:
                     <Loading loading={loadingSuggestions} message="Suggesting improvements..."/>
-                </div>
-            );
-        }
+                }
+            </div>
+        );
     }
 
     const ResumeActionButtons = () => {
