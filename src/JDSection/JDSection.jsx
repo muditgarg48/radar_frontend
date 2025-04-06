@@ -58,7 +58,7 @@ export default function JDSection({deployment, setJobDescription, jobDescription
     //             wrap="soft"
     //         />
     //     );
-    // });
+    // });  
 
     const InputJD = () => {
         return (
@@ -127,18 +127,18 @@ export default function JDSection({deployment, setJobDescription, jobDescription
     
     return (
         <div id="jd-section">
-        <h2 className="section-heading">Job Description</h2>
-        {/* <InputJD value={jdCache} onChange={handleJDChange}/> */}
-        <InputJD/>
-        &nbsp;
-        {/* <JDPreview/>
-        &nbsp; */}
-        <button onClick={handleJobDescriptionSubmit}>Process Job Description</button>
-        &nbsp;
-        <Loading loading={loading} message="Processing the Job Description"/>
-        <JHeader/>
-        <JKeywords/>
-        <JNotes/>
-      </div>
+            <h2 className="section-heading">Job Description</h2>
+            {/* <InputJD value={jdCache} onChange={handleJDChange}/> */}
+            <InputJD/>
+            &nbsp;
+            {/* <JDPreview/>
+            &nbsp; */}
+            <button onClick={handleJobDescriptionSubmit}>Process Job Description</button>
+            &nbsp;
+            <Loading loading={loading} message="Processing the Job Description"/>
+            <JHeader/>
+            <JKeywords/>
+            <JNotes/>
+        </div>
     );
 }

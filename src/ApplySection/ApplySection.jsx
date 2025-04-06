@@ -122,7 +122,8 @@ export default function ApplySection({deployment}) {
             <p>
                 In some cases, I too felt like going to these universal job portals. Hence I have included them at the end of this section as well.
             </p>
-            <h4>Happy Applying!</h4>
+            <h4>Please Note, there is no affiliation between RaDAR and any of these companies. These are just the direct links to the list of job opportunties there.</h4>
+            <h3>Happy Applying!</h3>
             <input
                 type="text"
                 placeholder="Search company ..."

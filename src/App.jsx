@@ -11,7 +11,7 @@ import './App.css';
 
 function App() {
 
-  const [serverStatus, setServerStatus] = useState("🟡 Starting...");
+  const [serverStatus, setServerStatus] = useState("🟡 Initialising...");
 
   const [resume, setResume] = useState(null);
   const [resumeUrl, setResumeUrl] = useState(null);
@@ -29,11 +29,11 @@ function App() {
       try {
         const response = await axios.get(deployment+"/hello-server");
         if(response.status === 200) {
-          setServerStatus("🟢 Active");
+          setServerStatus("🟢 Online");
           console.log("RaDAR Online!");
         }
       } catch (Exception) {
-        setServerStatus("🔴 Error");
+        setServerStatus("🔴 Offline");
         alert("Server response: "+Exception+". Report back to the developer.");
       }
     }
