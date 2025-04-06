@@ -6,6 +6,7 @@ export default function AdditionalDocSection({resume, jobDescription, jobTitle, 
 
     const [coverLetter, setCoverLetter] = useState(null);
     const [coverLetterImprovements, setCoverLetterImprovements] = useState(null);
+    const [coverLetterContext, setCoverLetterContext] = useState(null);
 
     const [loading, setLoading] = useState(false);
     
@@ -27,6 +28,7 @@ export default function AdditionalDocSection({resume, jobDescription, jobTitle, 
         formData.append('jd', jobDescription);
         formData.append('position', jobTitle);
         formData.append('company', jobCompany);
+        formData.append('context', coverLetterContext);
 
         const response = await fetch(deployment+"/generate-cover-letter", {
             method: "POST",
@@ -48,7 +50,16 @@ export default function AdditionalDocSection({resume, jobDescription, jobTitle, 
     
     return (
         <div>
-            <h2 className="section-heading  ">Cover Letter</h2>
+            <h2 className="section-heading">Cover Letter</h2>
+            <div>
+                <h4>Context for your cover letter (optional)</h4>
+                <textarea
+                    rows={5}
+                    id="cover-letter-context" 
+                    placeholder="Cover letter context" 
+                    onChange={(e) => setCoverLetterContext(e.target.value)}
+                />
+            </div>
             <p>
                 Please note, you <strong>MUST NOT</strong> use this generated cover letter directly. It has been generated based on your resume and job description via a Generative AI and it bound to have a lot of issues and will lack the personal touch of a human. Recruiters and Hiring Managers are capable of easily identifying AI generated resumes and cover letters.
                 <br/>
@@ -56,7 +67,14 @@ export default function AdditionalDocSection({resume, jobDescription, jobTitle, 
             </p>
             <button id="gen-cover-letter" onClick={handleCoverLetterGeneration}>Generate Cover Letter</button>
             &nbsp;
-            <Loading loading={loading} message="Generating Cover Letter using the Job Description and your resume"/>
+            <Loading 
+                loading={loading} 
+                message={
+                    coverLetterContext?
+                    "Generating Cover Letter using JB, Resume and User context":
+                    "Generating Cover Letter using the Job Description and your resume"
+                }
+            />
             {coverLetter && <div id="cover-letter">
                 <p id="cover-letter-greeting">{coverLetter.greeting}</p>
                 <div id="cover-letter-body">
