@@ -21,9 +21,21 @@
 .jd-keyword {
     padding: 5px;
     margin: 5px;
-    font-weight: bold;
-    border: 1px solid black;
+    /* font-weight: bold; */
+    border: 1px solid lightgrey;
+    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     max-width: max-content;
     max-height: max-content;
+}
+
+#jd-keywords-footnote {
+    font-size: 80%;
+    opacity: 70%;
+    text-align: end;
+}
+
+.keyword-present {
+    background-color: green;
+    color: white;
 }

@@ -60,6 +60,7 @@ function App() {
         jobTitle={jobTitle}
         setJobCompany={setJobCompany}
         jobCompany={jobCompany}
+        resume={resume}
         />
       &nbsp;
       <AdditionalDocSection 

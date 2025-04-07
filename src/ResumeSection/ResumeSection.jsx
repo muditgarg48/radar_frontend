@@ -145,7 +145,7 @@ export default function ResumeSection({deployment, setResume, resume, setResumeU
                     improvements?
                     <ul>
                         {improvements.map((improvement, index) => (
-                            <li class="resume-improvement" key={index}>{improvement}</li>
+                            <li className="resume-improvement" key={index}>{improvement}</li>
                         ))}
                     </ul>:
                     <Loading loading={loadingSuggestions} message="Suggesting improvements..."/>

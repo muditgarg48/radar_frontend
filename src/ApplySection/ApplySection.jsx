@@ -112,7 +112,7 @@ export default function ApplySection({deployment}) {
 
     return (     
         <div id="apply-section">
-            <h2 class="section-heading">APPLY DIRECTLY THROUGH THEIR PORTAL</h2>
+            <h2 className="section-heading">APPLY DIRECTLY THROUGH THEIR PORTAL</h2>
             <p>
                 I felt by the time a role was advertised on universal job portals like LinkedIn or Glassdoor, it would be too late to apply. With the current job market, it has become very competitive and a little late is a little too late. Hence, I used to apply directly through each company's portal. The problem was that it was not a structured effort and I used to apply to any company that came to my mind and resonated with me. This section would hence help to improve this process.
             </p>

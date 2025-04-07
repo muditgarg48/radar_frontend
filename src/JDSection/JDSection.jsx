@@ -2,19 +2,16 @@ import React, { useState } from "react";
 import Loading from '../components/Loading/Loading.jsx';
 import './JDSection.css';
 
-export default function JDSection({deployment, setJobDescription, jobDescription, setJobTitle, setJobCompany, jobCompany, jobTitle}) {
+export default function JDSection({deployment, setJobDescription, jobDescription, setJobTitle, setJobCompany, jobCompany, jobTitle, resume}) {
     
     const [jobKeywords, setJobKeywords] = useState(null);
     const [jobKeyNotes, setJobKeyNotes] = useState(null);
     const [jdCache, setJDCache] = useState("");
+    const [resumeText, setResumeText] = useState(null);
 
     const [loading, setLoading] = useState(false);
+    const [highlightKeywords, setHighlightKeywords] = useState(false);
 
-    // const handleJDChange = useCallback((event) => {
-    //     setJDCache(event.target.value);
-    // });
-
-    // Handle job description input
     const handleJobDescriptionSubmit = async () => {
 
         if (jdCache === "") {
@@ -24,6 +21,22 @@ export default function JDSection({deployment, setJobDescription, jobDescription
 
         setLoading(true);
         setJobDescription(jdCache);
+
+        if (resume) {
+            const formData = new FormData();
+            formData.append('resume', resume);
+            const response = await fetch(deployment+"/get-resume-text", {
+                method: "POST",
+                body: formData,
+            });
+            if (response.ok) {
+                setHighlightKeywords(true);
+                const result = await response.text();
+                setResumeText(result);
+            } else {
+                alert("Failed to get resume text.");
+            }
+        }
 
         const response = await fetch(deployment+"/process-job-description", {
             method: "POST",
@@ -35,30 +48,14 @@ export default function JDSection({deployment, setJobDescription, jobDescription
 
         if (response.ok) {
             const result = await response.json();
-            console.log(jdCache);
-            console.log("Job Description Processed:", result);
             setJobTitle(result.title);
             setJobCompany(result.company);
             setJobKeywords(result.keywords);
             setJobKeyNotes(result.notes);
         }
 
-        // setJDCache("");
         setLoading(false);
     };
-
-    // const InputJD = React.memo(({ value, onChange }) => {
-    //     return (
-    //         <textarea
-    //             id="jd-input"
-    //             rows={20}
-    //             value={value}
-    //             onChange={onChange}
-    //             placeholder="Paste job description here..."
-    //             wrap="soft"
-    //         />
-    //     );
-    // });  
 
     const InputJD = () => {
         return (
@@ -93,6 +90,12 @@ export default function JDSection({deployment, setJobDescription, jobDescription
         );
     }
 
+    function checkResumeForKeyword (word) {
+        if (!resumeText) {return false;}
+        if (!highlightKeywords) {return false;}
+        return resumeText.toLowerCase().includes(word.toLowerCase());
+    }
+
     const JKeywords = () => {
         if (!jobKeywords) {return null;}
         return (
@@ -101,10 +104,20 @@ export default function JDSection({deployment, setJobDescription, jobDescription
                 <ul id="jd-keywords-section">
                 {
                     jobKeywords.map((word, index) => {
-                        return (<li class="jd-keyword" key={index}>{word}</li>)
+                        return (
+                            <li className={checkResumeForKeyword(word) ? "jd-keyword keyword-present" : "jd-keyword"} key={index}>
+                                {word}
+                            </li>
+                        )
                     })
                 }
                 </ul>
+                {highlightKeywords? <div id="jd-keywords-footnote">
+                    <span className="jd-keyword keyword-present">Green</span> indicate that the keyword was found in your resume.
+                </div>: <div id="jd-keywords-footnote">
+                    <a href="#introduction-section">Add resume</a> and process JD again to check which keywords were found in your resume.
+                </div>}
+                &nbsp;
             </div>
         );
     }
@@ -114,7 +127,7 @@ export default function JDSection({deployment, setJobDescription, jobDescription
         return (
             <div>
                 <u>Note:</u>
-                <ul>
+                <ul id="jd-note">
                 {
                     jobKeyNotes.map((note, index) => {
                         return (<li key={index}>{note}</li>)

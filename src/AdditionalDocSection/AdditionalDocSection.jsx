@@ -7,8 +7,8 @@ import CoverLetterSection from "../CoverLetterSection/CoverLetterSection.jsx";
 export default function AdditionalDocSection({resume, jobDescription, jobTitle, jobCompany, deployment}) {
     
     return (
-        <div id="additional-docs" className="section-heading">
-            <h2>Additional Documents</h2>
+        <div id="additional-docs-section">
+            <h2 className="section-heading">ADDITIONAL DOCUMENTS</h2>
             <p>
                 Please note, you <strong>MUST NOT</strong> use these generated documents directly. It has been generated based on your resume and job description via a Generative AI and it bound to have a lot of issues and will lack the personal touch of a human. Recruiters and Hiring Managers are capable of easily identifying AI generated documents.
                 <br/>
