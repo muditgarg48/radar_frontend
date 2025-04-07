@@ -1,0 +1,27 @@
+#additional-msg {
+    text-align: justify;
+    border: 2px solid black;
+    border-radius: 20px;
+    padding: 0.5%;
+    margin: 1.5%;
+}
+
+#additional-msg-context {
+    border-radius: 20px;
+    padding: 1.3%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 97%;
+}
+
+#gen-additional-msg {
+    width: 100%;
+}
+
+#additional-msg-characters-count {
+    display: flex;
+    justify-content: flex-end;
+    opacity: 70%;
+    font-size: 70%;
+}
