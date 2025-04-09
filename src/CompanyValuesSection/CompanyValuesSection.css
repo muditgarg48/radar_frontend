@@ -1,0 +1,9 @@
+#company-values-redirect {
+    display: flex;
+    align-items: center;
+}
+
+#company-values-redirect *{
+    text-decoration: none;
+    color: black;
+}

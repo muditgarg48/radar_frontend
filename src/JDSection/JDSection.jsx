@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Loading from '../components/Loading/Loading.jsx';
 import './JDSection.css';
+import CompanyValuesSection from "../CompanyValuesSection/CompanyValuesSection.jsx";
 
 export default function JDSection({deployment, setJobDescription, jobDescription, setJobTitle, setJobCompany, jobCompany, jobTitle, resume}) {
     
@@ -8,6 +9,7 @@ export default function JDSection({deployment, setJobDescription, jobDescription
     const [jobKeyNotes, setJobKeyNotes] = useState(null);
     const [jdCache, setJDCache] = useState("");
     const [resumeText, setResumeText] = useState(null);
+    const [showValues, setShowValues] = useState(false);
 
     const [loading, setLoading] = useState(false);
     const [highlightKeywords, setHighlightKeywords] = useState(false);
@@ -83,7 +85,7 @@ export default function JDSection({deployment, setJobDescription, jobDescription
         if (!jobTitle || !jobCompany) {return null;}
         return (
             <p>
-                <b>Job Details:</b>
+                <b>Role:</b>
                 <br/>
                 {jobTitle && <span>{jobTitle}</span>} at {jobCompany && <span>{jobCompany}</span>} 
             </p>
@@ -152,6 +154,12 @@ export default function JDSection({deployment, setJobDescription, jobDescription
             <JHeader/>
             <JKeywords/>
             <JNotes/>
+            {showValues && <CompanyValuesSection
+                deployment={deployment}
+                jobTitle={jobTitle}
+                jobCompany={jobCompany}
+                />}
+            {jobCompany && <button onClick={() => setShowValues(!showValues)}>{showValues? "Hide":"Get"} Company Values</button>}
         </div>
     );
 }
