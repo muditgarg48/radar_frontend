@@ -96,10 +96,13 @@ export default function ResumeSection({deployment, setResume, resume, setResumeU
     
     const ResumeUploadSection = () => {
         return (
-            <div id="resume-upload-button">
+            <div id="resume-basic-actions">
                 {
                     resumeUrl ?
-                    <button onClick={updateResume}>Update Resume</button> :
+                    <div>
+                        <button onClick={updateResume}>Update Resume</button>
+                        <button onClick={showResume}>Show Resume</button>
+                    </div>:
                     <input
                         type="file"
                         accept="application/pdf"
@@ -125,9 +128,10 @@ export default function ResumeSection({deployment, setResume, resume, setResumeU
     }
 
     const ResumeSummary = () => {
+        if(!summary && !loadingSummary) {return null}
         return (
             <div id="resume-summary">
-                {(summary || loadingSummary) && <h3>Resume Summary</h3>}
+                <h3>Resume Summary</h3>
                 {
                     summary?
                         <p>{summary}</p>:
@@ -140,7 +144,7 @@ export default function ResumeSection({deployment, setResume, resume, setResumeU
     const ResumeImprovements = () => {
         return (
             <div id="resume-improvements">
-                {(improvements || loadingSuggestions) && <h3>Resume Improvements</h3>}
+                {(improvements || loadingSuggestions) && <h3 style={{textAlign: "center"}}>Resume Improvements</h3>}
                 {
                     improvements?
                     <ul>
@@ -158,9 +162,7 @@ export default function ResumeSection({deployment, setResume, resume, setResumeU
         if (resumeUrl) { 
             return (
                 <div id="resume-action-buttons">
-                    <button onClick={showResume}>Show Resume</button>
                     <button onClick={summarizeResume}>Summarize Resume</button>        
-                    {/* <button onClick={updateResume}>Update Resume</button> */}
                     <button onClick={improveResume}>Suggest Improvements</button>
                 </div>
             );

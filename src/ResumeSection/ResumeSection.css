@@ -36,22 +36,20 @@
     justify-content: space-evenly;
 }
 
-#resume-upload-button {
+#resume-basic-actions div{
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
 }
 
 #resume-summary {
     text-align: justify;
-    margin: 2%;
 }
 
 #resume-preview {
     border: 2px solid black;
+    margin-top: 4%;
 }
 
 #resume-improvements {
     text-align: justify;
-    padding-left: 0;
-    margin-left: 5%;
 }
