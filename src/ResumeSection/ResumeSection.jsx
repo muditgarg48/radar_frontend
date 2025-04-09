@@ -7,7 +7,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 
 export default function ResumeSection({deployment, setResume, resume, setResumeUrl, resumeUrl}) {
 
-    const [summary, setSummary] = useState("");
+    const [summary, setSummary] = useState(null);
     const [improvements, setImprovements] = useState(null);
 
     const [loadingSummary, setLoadingSummary] = useState(false);
@@ -80,6 +80,8 @@ export default function ResumeSection({deployment, setResume, resume, setResumeU
             // localStorage.removeItem("resume-embeddings");
             setResume(null);
             setResumeUrl(null);
+            setSummary(null);
+            setImprovements(null);
 
             // IMPORTANT: remember to delete the file from gemini as well if uploaded
 

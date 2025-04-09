@@ -9,7 +9,7 @@ export default function JDSection({deployment, setJobDescription, jobDescription
     const [jobKeyNotes, setJobKeyNotes] = useState(null);
     const [jdCache, setJDCache] = useState("");
     const [resumeText, setResumeText] = useState(null);
-    const [showValues, setShowValues] = useState(false);
+    const [showCompanyValues, setShowCompanyValues] = useState(false);
 
     const [loading, setLoading] = useState(false);
     const [highlightKeywords, setHighlightKeywords] = useState(false);
@@ -21,6 +21,10 @@ export default function JDSection({deployment, setJobDescription, jobDescription
             return;
         }
 
+        setJobKeywords(null);
+        setJobKeyNotes(null);
+        setJobCompany(null);
+        setJobTitle(null);
         setLoading(true);
         setJobDescription(jdCache);
 
@@ -154,12 +158,12 @@ export default function JDSection({deployment, setJobDescription, jobDescription
             <JHeader/>
             <JKeywords/>
             <JNotes/>
-            {showValues && <CompanyValuesSection
+            {showCompanyValues && <CompanyValuesSection
                 deployment={deployment}
                 jobTitle={jobTitle}
                 jobCompany={jobCompany}
                 />}
-            {jobCompany && <button onClick={() => setShowValues(!showValues)}>{showValues? "Hide":"Get"} Company Values</button>}
+            {jobCompany && <button onClick={() => setShowCompanyValues(!showCompanyValues)}>{showCompanyValues? "Hide":"Get"} Company Values</button>}
         </div>
     );
 }
