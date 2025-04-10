@@ -22,11 +22,13 @@ export default function JDSection({deployment, setJobDescription, jobDescription
             return;
         }
 
+        setLoading(true);
+        setShowCompanyValues(false);
+        setAlignmentScore(null);
         setJobKeywords(null);
         setJobKeyNotes(null);
         setJobCompany(null);
         setJobTitle(null);
-        setLoading(true);
         setJobDescription(jdCache);
 
         if (resume) {
