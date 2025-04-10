@@ -9,6 +9,7 @@ export default function JDSection({deployment, setJobDescription, jobDescription
     const [jobKeyNotes, setJobKeyNotes] = useState(null);
     const [jdCache, setJDCache] = useState("");
     const [resumeText, setResumeText] = useState(null);
+    const [alignmentScore, setAlignmentScore] = useState(null);
     const [showCompanyValues, setShowCompanyValues] = useState(false);
 
     const [loading, setLoading] = useState(false);
@@ -58,10 +59,36 @@ export default function JDSection({deployment, setJobDescription, jobDescription
             setJobCompany(result.company);
             setJobKeywords(result.keywords);
             setJobKeyNotes(result.notes);
+        } else {
+            alert("Failed to process job description. "+result.error);
+            setLoading(false);
+        }
+
+        if (resume) {
+            const formData = new FormData();
+            formData.append('resume', resume);
+            formData.append('jd', jdCache);
+            formData.append('company', jobCompany);
+            formData.append('position', jobTitle);
+            const response = await fetch(deployment+"/get-resume-alignment-score", {
+                method: "POST",
+                body: formData,
+            });
+            if (response.ok) {
+                const result = await response.json();
+                setAlignmentScore(result.alignment_score);
+            } else {
+                alert("Failed to get resume alignment score. "+response.text().error);
+                setLoading(false);
+            }
         }
 
         setLoading(false);
     };
+
+    const handleImproveResume = async () => {
+        
+    }
 
     const InputJD = () => {
         return (
@@ -118,10 +145,14 @@ export default function JDSection({deployment, setJobDescription, jobDescription
                     })
                 }
                 </ul>
-                {highlightKeywords? <div id="jd-keywords-footnote">
+                {highlightKeywords? <div className="section-footnote">
                     <span className="jd-keyword keyword-present">Green</span> indicate that the keyword was found in your resume.
-                </div>: <div id="jd-keywords-footnote">
-                    <a href="#introduction-section">Add resume</a> and process JD again to check which keywords were found in your resume.
+                </div>: <div className="section-footnote">
+                    {
+                        resume?
+                        <em><a href="#jd-section">Process JD</a> to highlight which keywords were found in your resume.</em>:
+                        <em><a href="#introduction-section">Add resume</a> and process JD again to check which keywords were found in your resume.</em>
+                    }
                 </div>}
                 &nbsp;
             </div>
@@ -143,6 +174,53 @@ export default function JDSection({deployment, setJobDescription, jobDescription
             </div>
         );
     }
+
+    const CompanyValues = () => {
+        return (
+            <div id="company-values-section">
+                {showCompanyValues && <CompanyValuesSection
+                deployment={deployment}
+                jobTitle={jobTitle}
+                jobCompany={jobCompany}
+                />}
+                {jobCompany && <button onClick={() => setShowCompanyValues(!showCompanyValues)}>{showCompanyValues? "Hide":"Get"} Company Values</button>}
+            </div>
+        );
+    }
+
+    const ResumeAlignment = () => {
+        if (!jobDescription || loading) {return null;}
+        if (!resume) {
+            return (
+                <div className="section-footnote"><em>
+                    <a href="#introduction-section">Add resume</a> and process the JD again to get resume alignment score.
+                </em></div>
+            );
+        } else if (!alignmentScore) {
+            return (
+                <div className="section-footnote"><em>
+                    <a href="#jd-section">Process JD</a> to get resume alignment score.
+                </em></div>
+            );
+        }
+        if (alignmentScore) {
+            return (
+                <div className="resume-alignment-score">
+                    Alignment Score:
+                    <br/>
+                    <b className={
+                        alignmentScore >= 80? "A alignment-score":
+                        alignmentScore < 80 && alignmentScore >= 60? "B alignment-score":
+                        alignmentScore < 60 && alignmentScore >= 40? "C alignment-score":
+                        alignmentScore < 40 && alignmentScore >= 20? "D alignment-score":
+                        "F alignment-score"
+                        }>
+                        {alignmentScore}%
+                    </b>
+                </div>
+            );
+        }
+    }
     
     return (
         <div id="jd-section">
@@ -158,12 +236,8 @@ export default function JDSection({deployment, setJobDescription, jobDescription
             <JHeader/>
             <JKeywords/>
             <JNotes/>
-            {showCompanyValues && <CompanyValuesSection
-                deployment={deployment}
-                jobTitle={jobTitle}
-                jobCompany={jobCompany}
-                />}
-            {jobCompany && <button onClick={() => setShowCompanyValues(!showCompanyValues)}>{showCompanyValues? "Hide":"Get"} Company Values</button>}
+            <ResumeAlignment/>
+            <CompanyValues/>
         </div>
     );
 }

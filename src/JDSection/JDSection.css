@@ -30,13 +30,41 @@
     max-height: max-content;
 }
 
-#jd-keywords-footnote {
-    font-size: 80%;
-    opacity: 70%;
-    text-align: end;
-}
-
 .keyword-present {
     background-color: green;
     color: white;
+}
+
+.resume-alignment-score {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 1px 1px 3px 3px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    padding: 1%;
+    margin: 1%;
+}
+
+.alignment-score {
+    font-size: xx-large;
+}
+
+.A {
+    color: green;
+}
+
+.B {
+    color: orange;
+}
+
+.C {
+    color: yellow;
+}
+
+.D {
+    color: red;
+}
+
+.F {
+    color: black;
 }

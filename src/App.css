@@ -19,3 +19,9 @@ body {
     text-align: "center";
     font-family: "Righteous";
 }
+
+.section-footnote {
+    font-size: 80%;
+    opacity: 70%;
+    text-align: end;
+}

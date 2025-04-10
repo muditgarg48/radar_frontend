@@ -44,9 +44,7 @@ export default function CompanyValuesSection({jobTitle, jobCompany, deployment})
     }, [jobCompany]);
 
     return (
-        <div id="company-values-section" className="section-container">
-            <br/>
-            <hr/>
+        <div id="company-values" className="section-container">
             {loadingValues?
                 <Loading loading={loadingValues} message="Fetching company values..."/>:
                 <div>
