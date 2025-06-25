@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Loading from "../components/Loading/Loading";
+import Loading from "../../components/Loading/Loading";
 import './CoverLetterSection.css';
 
 export default function CoverLetterSection({resume, jobDescription, jobTitle, jobCompany, deployment}) {

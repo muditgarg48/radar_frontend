@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import './CompanyValuesSection.css';
-import Loading from "../components/Loading/Loading";
+import Loading from "../../components/Loading/Loading";
 
 export default function CompanyValuesSection({jobTitle, jobCompany, deployment}) {
     

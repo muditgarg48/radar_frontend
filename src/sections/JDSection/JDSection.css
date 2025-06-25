@@ -12,6 +12,21 @@
     flex-direction: column;
 }
 
+#jd-subheader {
+    margin: 0 0 1% 0;
+}
+
+#check-salaries {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#check-salaries a {
+    text-decoration: none;
+    color: black;
+}
+
 #jd-keywords-section {
     list-style: none;
     display: flex;

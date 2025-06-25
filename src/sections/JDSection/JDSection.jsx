@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import Loading from '../components/Loading/Loading.jsx';
-import './JDSection.css';
+import Loading from '../../components/Loading/Loading.jsx';
 import CompanyValuesSection from "../CompanyValuesSection/CompanyValuesSection.jsx";
+import './JDSection.css';
+import levelfyiIcon from '../../assets/levelfyi.svg';
 
 export default function JDSection({deployment, setJobDescription, jobDescription, setJobTitle, setJobCompany, jobCompany, jobTitle, resume}) {
     
@@ -125,6 +126,17 @@ export default function JDSection({deployment, setJobDescription, jobDescription
         );
     }
 
+    const JSubHeader = () => {
+        if (!jobCompany) {return null;}
+        return (
+            <div id="jd-subheader">
+                <CheckSalaries/>
+                &nbsp;
+                <CompanyValues/>
+            </div>
+        );
+    }
+
     function checkResumeForKeyword (word) {
         if (!resumeText) {return false;}
         if (!highlightKeywords) {return false;}
@@ -223,6 +235,17 @@ export default function JDSection({deployment, setJobDescription, jobDescription
             );
         }
     }
+
+    const CheckSalaries = () => {
+        return (
+            <button id="check-salaries">
+                <img src={levelfyiIcon} alt="Redirect to Levels.fyi" width="40px" height="40px"/>
+                &nbsp;
+                &nbsp;
+                <a href="https://www.levels.fyi/" target="_blank" rel="noopener noreferrer">Check Salaries</a>
+            </button>
+        );
+    }
     
     return (
         <div id="jd-section">
@@ -236,10 +259,10 @@ export default function JDSection({deployment, setJobDescription, jobDescription
             &nbsp;
             <Loading loading={loading} message="Processing the Job Description"/>
             <JHeader/>
+            <JSubHeader/>
             <JKeywords/>
             <JNotes/>
             <ResumeAlignment/>
-            <CompanyValues/>
         </div>
     );
 }

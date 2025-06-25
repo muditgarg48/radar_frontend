@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Loading from '../components/Loading/Loading.jsx';
+import Loading from '../../components/Loading/Loading.jsx';
 import './AdditionalMessageSection.css';
 
 export default function AdditionalMessageSection({resume, jobDescription, jobTitle, jobCompany, deployment}) {

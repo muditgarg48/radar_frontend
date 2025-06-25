@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-import ResumeSection from "./ResumeSection/ResumeSection.jsx";
-import AdditionalDocSection from "./AdditionalDocSection/AdditionalDocSection.jsx";
-import ApplySection from "./ApplySection/ApplySection.jsx";
-import IntroductionSection from "./IntroductionSection/IntroductionSection.jsx";
-import JDSection from "./JDSection/JDSection.jsx";
+import ResumeSection from "./sections/ResumeSection/ResumeSection.jsx";
+import AdditionalDocSection from "./sections/AdditionalDocSection/AdditionalDocSection.jsx";
+import ApplySection from "./sections/ApplySection/ApplySection.jsx";
+import IntroductionSection from "./sections/IntroductionSection/IntroductionSection.jsx";
+import JDSection from "./sections/JDSection/JDSection.jsx";
 
 import './App.css';
 
@@ -20,9 +20,9 @@ function App() {
   const [jobCompany, setJobCompany] = useState(null);
 
   // Development
-  // const deployment = "http://localhost:4000";
+  const deployment = "http://localhost:4000";
   // Production
-  const deployment = "https://radar-backend-o1yd.onrender.com";
+  // const deployment = "https://radar-backend-o1yd.onrender.com";
 
   useEffect(() => {
     async function checkServerStatus() {
@@ -31,6 +31,8 @@ function App() {
         if(response.status === 200) {
           setServerStatus("🟢 Online");
           console.log("RaDAR Online!");
+        } else {
+          console.log("This is weird. Server status: "+response);
         }
       } catch (Exception) {
         setServerStatus("🔴 Offline");

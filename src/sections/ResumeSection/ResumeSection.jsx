@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./ResumeSection.css";
-import Loading from '../components/Loading/Loading.jsx';
+import Loading from '../../components/Loading/Loading.jsx';
 import { Document, Page, pdfjs } from "react-pdf"; // For PDF viewer
 import "react-pdf/dist/esm/Page/AnnotationLayer.css"; // PDF viewer styles
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.mjs`;
