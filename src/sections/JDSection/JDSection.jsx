@@ -3,15 +3,23 @@ import Loading from '../../components/Loading/Loading.jsx';
 import CompanyValuesSection from "../CompanyValuesSection/CompanyValuesSection.jsx";
 import './JDSection.css';
 import levelfyiIcon from '../../assets/levelfyi.svg';
+import CompanyLogo from "../../components/CompanyLogo/CompanyLogo.jsx";
 
 export default function JDSection({deployment, setJobDescription, jobDescription, setJobTitle, setJobCompany, jobCompany, jobTitle, resume}) {
-    
+
     const [jobKeywords, setJobKeywords] = useState(null);
     const [jobKeyNotes, setJobKeyNotes] = useState(null);
     const [jdCache, setJDCache] = useState("");
     const [resumeText, setResumeText] = useState(null);
     const [alignmentScore, setAlignmentScore] = useState(null);
     const [showCompanyValues, setShowCompanyValues] = useState(false);
+
+    const [salaryBracket, setSalaryBracket] = useState(null);
+    const [experienceLevel, setExperienceLevel] = useState(null);
+    const [teamName, setTeamName] = useState(null);
+    const [sponsorship, setSponsorship] = useState(false);
+    const [location, setLocation] = useState(null);
+    const [benefits, setBenefits] = useState(null);
 
     const [loading, setLoading] = useState(false);
     const [highlightKeywords, setHighlightKeywords] = useState(false);
@@ -62,6 +70,12 @@ export default function JDSection({deployment, setJobDescription, jobDescription
             setJobCompany(result.company);
             setJobKeywords(result.keywords);
             setJobKeyNotes(result.notes);
+            if ("salary_bracket" in result) setSalaryBracket(result.salary_bracket);
+            if ("experience_level" in result) setExperienceLevel(result.experience_level);
+            if ("visa_sponsorship" in result) setSponsorship(result.visa_sponsorship);
+            if ("location" in result) setLocation(result.location);
+            if ("benefits" in result) setBenefits(result.benefits);
+            if ("team_name" in result) setTeamName(result.team_name);
         } else {
             alert("Failed to process job description. "+result.error);
             setLoading(false);
@@ -118,11 +132,16 @@ export default function JDSection({deployment, setJobDescription, jobDescription
     const JHeader = () => {
         if (!jobTitle || !jobCompany) {return null;}
         return (
-            <p>
-                <b>Role:</b>
-                <br/>
-                {jobTitle && <span>{jobTitle}</span>} at {jobCompany && <span>{jobCompany}</span>} 
-            </p>
+            <div id="jd-header">
+                <CompanyLogo deployment={deployment} jobCompany={jobCompany}/>
+                <div id="jd-within-header">
+                    <div>
+                        {jobTitle && <div id="jd-title">{jobTitle}</div>}
+                        {jobCompany && <div id="jd-company">{jobCompany}</div   >}
+                    </div>
+                    <CheckSalaries/>
+                </div> 
+            </div>
         );
     }
 
@@ -130,9 +149,33 @@ export default function JDSection({deployment, setJobDescription, jobDescription
         if (!jobCompany) {return null;}
         return (
             <div id="jd-subheader">
-                <CheckSalaries/>
-                &nbsp;
-                <CompanyValues/>
+                {teamName && <div id="jd-team-name">
+                    <span>👥</span>
+                    &nbsp;
+                    &nbsp;
+                    <span>{teamName}</span>
+                </div>}
+                {salaryBracket && <div id="jd-salary-bracket">
+                    <span>🤑</span>
+                    &nbsp;
+                    &nbsp;
+                    <span>{salaryBracket}</span>
+                </div>}
+                {experienceLevel && <div id="jd-experience-level">
+                    <span>🏢</span>
+                    &nbsp;
+                    &nbsp;
+                    <span>{experienceLevel}</span>
+                </div>}
+                {sponsorship && <div id="jd-sponsorship">
+                    Visa Sponsorship: {sponsorship? "✅" : "❌"}
+                </div>}
+                {location && <div id="jd-location">
+                    <span>📌</span>
+                    &nbsp;
+                    &nbsp;
+                    <span>{location}</span>
+                </div>}
             </div>
         );
     }
@@ -147,7 +190,7 @@ export default function JDSection({deployment, setJobDescription, jobDescription
         if (!jobKeywords) {return null;}
         return (
             <div>
-                <b>Suggested keywords</b> to be included in the application:
+                {/* <b>Suggested keywords</b> to be included in the application: */}
                 <ul id="jd-keywords-section">
                 {
                     jobKeywords.map((word, index) => {
@@ -177,7 +220,17 @@ export default function JDSection({deployment, setJobDescription, jobDescription
         if (!jobKeyNotes) {return null;}
         return (
             <div>
-                <u>Note:</u>
+                <div id="jd-benefits">
+                    {benefits && <h3>💪  Key Benefits</h3>}
+                    {benefits && <ul>
+                    {
+                        benefits.map((benefit, index) => {
+                            return (<li key={index}>{benefit}</li>)
+                        })
+                    }
+                    </ul>}
+                </div>
+                <h3>📝  Note:</h3>
                 <ul id="jd-note">
                 {
                     jobKeyNotes.map((note, index) => {
@@ -193,11 +246,16 @@ export default function JDSection({deployment, setJobDescription, jobDescription
         return (
             <div id="company-values-section">
                 {showCompanyValues && <CompanyValuesSection
-                deployment={deployment}
-                jobTitle={jobTitle}
-                jobCompany={jobCompany}
+                    deployment={deployment}
+                    jobTitle={jobTitle}
+                    jobCompany={jobCompany}
                 />}
-                {jobCompany && <button onClick={() => setShowCompanyValues(!showCompanyValues)}>{showCompanyValues? "Hide":"Get"} Company Values</button>}
+                {jobCompany && <button
+                    style={{margin: "1% 0"}}
+                    onClick={() => setShowCompanyValues(!showCompanyValues)}
+                    >
+                        {showCompanyValues? "Hide":"Get"} Company Values
+                </button>}
             </div>
         );
     }
@@ -259,6 +317,7 @@ export default function JDSection({deployment, setJobDescription, jobDescription
             &nbsp;
             <Loading loading={loading} message="Processing the Job Description"/>
             <JHeader/>
+            <CompanyValues/>
             <JSubHeader/>
             <JKeywords/>
             <JNotes/>

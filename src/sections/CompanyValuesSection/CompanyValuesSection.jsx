@@ -5,9 +5,7 @@ import Loading from "../../components/Loading/Loading";
 export default function CompanyValuesSection({jobTitle, jobCompany, deployment}) {
     
     const [values, setValues] = useState(null);
-    const [link, setLink] = useState(null);
-    const [domain, setDomain] = useState(null);
-    const [clientId, setClientId] = useState(null);
+    const [link, setLink] = useState(null); 
 
     const [loadingValues, setLoadingValues] = useState(true);
 
@@ -25,22 +23,10 @@ export default function CompanyValuesSection({jobTitle, jobCompany, deployment})
                 const result = await response.json();
                 setValues(result.values);
                 setLink(result.link);
-                setDomain(result.domain);
                 setLoadingValues(false);
             }
         }
-        const fetchLogoClientId = async () => {
-            const response = await fetch(deployment+"/get-logo-client-id", {
-                method: "GET",
-            });
-
-            if (response.ok) {
-                const result = await response.text();
-                setClientId(result);
-            }
-        }
         fetchValues();
-        fetchLogoClientId();
     }, [jobCompany]);
 
     return (
@@ -49,10 +35,7 @@ export default function CompanyValuesSection({jobTitle, jobCompany, deployment})
                 <Loading loading={loadingValues} message="Fetching company values..."/>:
                 <div>
                     <div id="company-values-redirect">
-                        <img className="company-logo" src={`https://cdn.brandfetch.io/${domain}?c=${clientId}`} alt={jobCompany}/>
-                        &nbsp;
-                        &nbsp;
-                        <h2>{jobCompany} Core Values</h2>
+                        <h2>Core Values</h2>
                         &nbsp;
                         <a href={link} target="_blank" rel="noopener noreferrer">🔗</a>
                     </div>

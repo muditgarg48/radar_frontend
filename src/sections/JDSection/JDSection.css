@@ -12,8 +12,48 @@
     flex-direction: column;
 }
 
-#jd-subheader {
+#jd-header {
+    display: flex;
+    align-items: center;
     margin: 0 0 1% 0;
+}
+
+#jd-title {
+    font-weight: bold;
+    font-size: 3vh;
+}
+
+#jd-within-header {
+    display: flex;
+    flex: 5;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1% 3%;
+}
+
+#jd-subheader {
+    display: flex;
+    width: 100%;
+}
+
+#jd-team-name, #jd-salary-bracket, #jd-experience-level, #jd-sponsorship, #jd-location {
+    padding: 10px;
+    margin: 5px;
+    font-weight: bold;
+    border: 1px solid lightgrey;
+    box-shadow: 2px 2px 1px 1px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    max-width: max-content;
+    max-height: max-content;
+
+    display: flex;
+    align-items: center;
+}
+
+#jd-benefits {
+    padding: 1%;
+    box-shadow: 1px 1px 3px 3px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
 }
 
 #check-salaries {
