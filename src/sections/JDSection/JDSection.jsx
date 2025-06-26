@@ -133,14 +133,21 @@ export default function JDSection({deployment, setJobDescription, jobDescription
         if (!jobTitle || !jobCompany) {return null;}
         return (
             <div id="jd-header">
-                <CompanyLogo deployment={deployment} jobCompany={jobCompany}/>
-                <div id="jd-within-header">
+                <div id="jd-within-header-title">
+                    <CompanyLogo deployment={deployment} jobCompany={jobCompany}/>
+                    &nbsp;
+                    &nbsp;
                     <div>
                         {jobTitle && <div id="jd-title">{jobTitle}</div>}
                         {jobCompany && <div id="jd-company">{jobCompany}</div   >}
                     </div>
+                </div>
+                <div id="jd-within-header-rest">
+                    <ResumeAlignment/>
                     <CheckSalaries/>
-                </div> 
+                </div>
+                {/* <div id="jd-within-header">
+                </div>  */}
             </div>
         );
     }
@@ -279,7 +286,6 @@ export default function JDSection({deployment, setJobDescription, jobDescription
             return (
                 <div className="resume-alignment-score">
                     Alignment Score:
-                    <br/>
                     <b className={
                         alignmentScore >= 80? "A alignment-score":
                         alignmentScore < 80 && alignmentScore >= 60? "B alignment-score":
@@ -321,7 +327,6 @@ export default function JDSection({deployment, setJobDescription, jobDescription
             <JSubHeader/>
             <JKeywords/>
             <JNotes/>
-            <ResumeAlignment/>
         </div>
     );
 }
