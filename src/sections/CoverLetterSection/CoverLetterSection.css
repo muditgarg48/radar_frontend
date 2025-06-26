@@ -1,9 +1,16 @@
+#cover-letter-section {
+    box-shadow: 1px 1px 3px 3px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    padding: 1.3%;
+}
+
 #cover-letter {
     text-align: justify;
-    border: 2px solid black;
+    /* border: 2px solid black; */
+    /* background-color: aliceblue; */
+    background-image: url("https://images.pexels.com/photos/4834876/pexels-photo-4834876.jpeg?_gl=1*13p6n4c*_ga*ODQxMDA0OTkxLjE3NTA5Nzk3OTU.*_ga_8JE65Q40S6*czE3NTA5Nzk3OTUkbzEkZzEkdDE3NTA5ODAzMjkkajM0JGwwJGgw");
     border-radius: 20px;
-    padding: 0.5%;
-    margin: 1.5%;
+    padding: 1%;
 }
 
 #cover-letter-context {
@@ -17,4 +24,11 @@
 
 #gen-cover-letter {
     width: 100%;
+}
+
+#cover-letter-improvements {
+    /* box-shadow: 1px 1px 3px 3px rgba(0, 0, 0, 0.1); */
+    /* border-radius: 20px; */
+    padding: 1%;
+    margin: 3% 1% 0 1%;
 }

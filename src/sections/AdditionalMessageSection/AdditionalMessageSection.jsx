@@ -54,12 +54,12 @@ export default function AdditionalMessageSection({resume, jobDescription, jobTit
     }
     
     return (
-        <div>
+        <div id="additional-msg-section">
             <h3>Additional message with your application</h3>
             <div>
                 <h4>Context (optional)</h4>
                 <textarea
-                    rows={5}
+                    rows={2}
                     id="additional-msg-context" 
                     placeholder="Additional Message context" 
                     onChange={(e) => setAdditionalMessageContext(e.target.value)}

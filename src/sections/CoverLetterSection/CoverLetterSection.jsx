@@ -54,12 +54,12 @@ export default function CoverLetterSection({resume, jobDescription, jobTitle, jo
     }
     
     return (
-        <div>
-            <h3>Cover Letter</h3>
+        <div id="cover-letter-section">
+            <h2>Cover Letter</h2>
             <div>
                 <h4>Context for your cover letter (optional)</h4>
                 <textarea
-                    rows={5}
+                    rows={2}
                     id="cover-letter-context" 
                     placeholder="Cover letter context" 
                     onChange={(e) => setCoverLetterContext(e.target.value)}
@@ -88,8 +88,8 @@ export default function CoverLetterSection({resume, jobDescription, jobTitle, jo
                     <p>{coverLetter.signature}</p>
                 </div>
             </div>}
-            {coverLetterImprovements && <div>
-                <u>Improvements for final version:</u>
+            {coverLetterImprovements && <div id="cover-letter-improvements">
+                <div style={{fontSize: "1.2rem", fontWeight: "bold"}}>✏️ Improvements for final version:</div>
                 <ul>
                     {coverLetterImprovements.map((improvement, index) => {
                     // const keyword = word.substring(1, word.length - 1);

@@ -21,6 +21,7 @@ export default function AdditionalDocSection({resume, jobDescription, jobTitle, 
                 jobCompany={jobCompany}
                 deployment={deployment}
             />
+            &nbsp;
             <AdditionalMessageSection
                 resume={resume}
                 jobDescription={jobDescription}

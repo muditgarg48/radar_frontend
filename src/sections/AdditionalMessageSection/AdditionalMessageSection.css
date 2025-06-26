@@ -1,3 +1,9 @@
+#additional-msg-section {
+    box-shadow: 1px 1px 3px 3px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    padding: 1.3%;
+}
+
 #additional-msg {
     text-align: justify;
     border: 2px solid black;
