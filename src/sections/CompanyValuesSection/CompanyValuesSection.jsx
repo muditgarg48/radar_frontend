@@ -16,7 +16,7 @@ export default function CompanyValuesSection({jobTitle, jobCompany, deployment})
 
             const company_values = await cachedRetriever(
                 "RADAR_CACHED_COMPANY_VALUES",
-                jobCompany,
+                jobCompany.toLowerCase(),
                 deployment,
                 "/get-company-values",
                 {

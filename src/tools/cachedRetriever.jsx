@@ -1,13 +1,3 @@
-async function retrieveFromEndpoint(deployment, endpoint, payload) {
-    const response = await fetch(deployment + endpoint, payload);
-    if (response.ok) {
-        const result = await response.json();
-        return result;
-    } else {
-        return response;
-    }
-}
-
 export default async function cachedRetriever(cacheKey, dataKey, deployment, endpoint, payload=null) {
     let cache = JSON.parse(localStorage.getItem(cacheKey));
     // if cache is not null, check for our data using dataKey
@@ -29,13 +19,16 @@ export default async function cachedRetriever(cacheKey, dataKey, deployment, end
         localStorage.setItem(cacheKey, JSON.stringify(cache));
     }
     // update the cache using newly fetched data since we haven't returned till now
-    const response = await retrieveFromEndpoint(deployment, endpoint, payload);
+    const response = await fetch(deployment + endpoint, payload);
     if (response.ok) {
-        cache[dataKey] = response;
-        console.log("Cached the newly fetched data for "+dataKey+" within "+cacheKey+" cache with the following:\n"+response);
+        const data = await response.json()
+        cache[dataKey] = data;
+        console.log("Cached the newly fetched data for "+dataKey+" within "+cacheKey+" cache with the following:");
+        console.log(data);
         localStorage.setItem(cacheKey, JSON.stringify(cache));
     } else {
-        console.log("Weird. When fetching data for "+dataKey+" within "+cacheKey+" cache, got response: "+response);
+        console.log("Weird. When fetching data for "+dataKey+" within "+cacheKey+" cache, got response");
+        console.log(response);
     }
     return response;
 }
