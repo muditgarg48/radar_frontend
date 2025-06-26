@@ -21,14 +21,15 @@ export default async function cachedRetriever(cacheKey, dataKey, deployment, end
     // update the cache using newly fetched data since we haven't returned till now
     const response = await fetch(deployment + endpoint, payload);
     if (response.ok) {
-        const data = await response.json()
+        const data = await response.json();
         cache[dataKey] = data;
         console.log("Cached the newly fetched data for "+dataKey+" within "+cacheKey+" cache with the following:");
         console.log(data);
         localStorage.setItem(cacheKey, JSON.stringify(cache));
+        return data;
     } else {
         console.log("Weird. When fetching data for "+dataKey+" within "+cacheKey+" cache, got response");
         console.log(response);
+        return response;
     }
-    return response;
 }

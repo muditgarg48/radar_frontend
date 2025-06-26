@@ -29,7 +29,6 @@ export default function CompanyValuesSection({jobTitle, jobCompany, deployment})
             setValues(company_values.values);
             setLink(company_values.link);
             setLoadingValues(false);
-
             // let company_values = localStorage.getItem("RADAR_CACHED_COMPANY_VALUES");
             // if (company_values != null) {
             //     company_values = JSON.parse(company_values);
