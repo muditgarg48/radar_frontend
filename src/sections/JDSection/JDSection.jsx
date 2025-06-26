@@ -220,16 +220,16 @@ export default function JDSection({deployment, setJobDescription, jobDescription
         if (!jobKeyNotes) {return null;}
         return (
             <div>
-                <div id="jd-benefits">
-                    {benefits && <h3>💪  Key Benefits</h3>}
-                    {benefits && <ul>
+                {benefits && <div id="jd-benefits">
+                    <h3>💪  Key Benefits</h3>
+                    <ul>
                     {
                         benefits.map((benefit, index) => {
                             return (<li key={index}>{benefit}</li>)
                         })
                     }
-                    </ul>}
-                </div>
+                    </ul>
+                </div>}
                 <h3>📝  Note:</h3>
                 <ul id="jd-note">
                 {
