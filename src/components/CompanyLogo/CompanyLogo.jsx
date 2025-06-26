@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import './CompanyLogo.css';
+import cachedRetriever from "../../tools/cachedRetriever";
 
 export default function CompanyLogo({deployment, jobCompany}) {
     
