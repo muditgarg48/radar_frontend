@@ -18,19 +18,31 @@ export default function CompanyLogo({deployment, jobCompany}) {
             }
         }
         const fetchCompanyDomain = async () => {
-            const response = await fetch(deployment+"/get-company-domain", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({"company": jobCompany}),
-            });
+            // const response = await fetch(deployment+"/get-company-domain", {
+            //     method: "POST",
+            //     headers: {
+            //         "Content-Type": "application/json",
+            //     },
+            //     body: JSON.stringify({"company": jobCompany}),
+            // });
 
-            if (response.ok) {
-                const result = await response.json();
-                console.log(result);
-                setDomain(result.domain);
-            }
+            // if (response.ok) {
+            //     const result = await response.json();
+            //     console.log(result);
+            //     setDomain(result.domain);
+            // }
+            const result = await cachedRetriever(
+                "RADAR_CACHED_COMPANY_DOMAINS",
+                jobCompany.toLowerCase(),
+                deployment,
+                "/get-company-domain",
+                {
+                    method: "POST",
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({"company":jobCompany})
+                }
+            );
+            setDomain(result.domain);
         }
         fetchLogoClientId();
         fetchCompanyDomain();

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import './CompanyValuesSection.css';
 import Loading from "../../components/Loading/Loading";
 
+import cachedRetriever from "../../tools/cachedRetriever";
+
 export default function CompanyValuesSection({jobTitle, jobCompany, deployment}) {
     
     const [values, setValues] = useState(null);
@@ -12,43 +14,59 @@ export default function CompanyValuesSection({jobTitle, jobCompany, deployment})
     useEffect(() => {
         const fetchValues = async () => {
 
-            let company_values = localStorage.getItem("RADAR_CACHED_COMPANY_VALUES");
-            if (company_values != null) {
-                company_values = JSON.parse(company_values);
-                if (jobCompany in company_values) {
-                    console.log("Using cached company values for "+jobCompany);
-                    setValues(company_values[jobCompany].values);
-                    setLink(company_values[jobCompany].link);
-                    setLoadingValues(false);
-                    return;
+            const company_values = await cachedRetriever(
+                "RADAR_CACHED_COMPANY_VALUES",
+                jobCompany,
+                deployment,
+                "/get-company-values",
+                {
+                    method: "POST",
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({"job_title": jobTitle, "company":jobCompany})
                 }
-                console.log("Couldn't find cached company values for "+jobCompany);
-            }
+            );
+            // console.log(company_values);
+            setValues(company_values.values);
+            setLink(company_values.link);
+            setLoadingValues(false);
 
-            const response = await fetch(deployment+"/get-company-values", {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({"job_title": jobTitle, "company":jobCompany})
-            });
-            if (response.ok) {
-                const result = await response.json();
-                let company_values = localStorage.getItem("RADAR_CACHED_COMPANY_VALUES");
-                if (company_values == null) {
-                    company_values = {};
-                    console.log("The caching of company values is new.")
-                } else {
-                    company_values = JSON.parse(company_values);
-                    console.log(company_values)
-                }
-                company_values[jobCompany] = result;
-                localStorage.setItem("RADAR_CACHED_COMPANY_VALUES", JSON.stringify(company_values));
-                console.log("Cached the company values for "+jobCompany);
-                setValues(result.values);
-                setLink(result.link);
-                setLoadingValues(false);
-            }
+            // let company_values = localStorage.getItem("RADAR_CACHED_COMPANY_VALUES");
+            // if (company_values != null) {
+            //     company_values = JSON.parse(company_values);
+            //     if (jobCompany in company_values) {
+            //         console.log("Using cached company values for "+jobCompany);
+            //         setValues(company_values[jobCompany].values);
+            //         setLink(company_values[jobCompany].link);
+            //         setLoadingValues(false);
+            //         return;
+            //     }
+            //     console.log("Couldn't find cached company values for "+jobCompany);
+            // }
+
+            // const response = await fetch(deployment+"/get-company-values", {
+            //     method: "POST",
+            //     headers: {
+            //         'Content-Type': 'application/json'
+            //     },
+            //     body: JSON.stringify({"job_title": jobTitle, "company":jobCompany})
+            // });
+            // if (response.ok) {
+            //     const result = await response.json();
+            //     let company_values = localStorage.getItem("RADAR_CACHED_COMPANY_VALUES");
+            //     if (company_values == null) {
+            //         company_values = {};
+            //         console.log("The caching of company values is new.")
+            //     } else {
+            //         company_values = JSON.parse(company_values);
+            //         console.log(company_values)
+            //     }
+            //     company_values[jobCompany] = result;
+            //     localStorage.setItem("RADAR_CACHED_COMPANY_VALUES", JSON.stringify(company_values));
+            //     console.log("Cached the company values for "+jobCompany);
+            //     setValues(result.values);
+            //     setLink(result.link);
+            //     setLoadingValues(false);
+            // }
         }
         fetchValues();
     }, [jobCompany]);
