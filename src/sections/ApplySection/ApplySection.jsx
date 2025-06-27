@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./ApplySection.css";
+import Loading from "../../components/Loading/Loading.jsx";
 
 export default function ApplySection({deployment}) {
 
@@ -66,10 +67,6 @@ export default function ApplySection({deployment}) {
         filterCompanies(searchQuery);
     }, [searchQuery]);
 
-    if (!applyData) {
-        return <div>Loading the list...</div>;
-    }
-
     function SingleCompany(company) {
         company = company.company
         return (
@@ -124,17 +121,20 @@ export default function ApplySection({deployment}) {
             </p>
             <h4>Please Note, there is no affiliation between RaDAR and any of these companies. These are just the direct links to the list of job opportunties there.</h4>
             <h3>Happy Applying!</h3>
-            <input
-                type="text"
-                placeholder="Search company ..."
-                value={searchQuery}
-                onChange={handleSearchChange}
-                id="search-company"
-            />
-            { searchQuery == "" ?
-                displayData(applyData) :
-                displayData(filteredCompanies)
-            }
+            <Loading loading={applyData == null} message="Loading the Portal List"/>
+            {applyData && <>
+                <input
+                    type="text"
+                    placeholder="Search company ..."
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                    id="search-company"
+                />
+                { searchQuery == "" ?
+                    displayData(applyData) :
+                    displayData(filteredCompanies)
+                }
+            </>}
         </div>
     );
 }
