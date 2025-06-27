@@ -1,0 +1,16 @@
+.error-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    /* margin-top: "5%"; */
+}
+
+.error-message {
+    color: rgb(195, 0, 0);
+    opacity: "0.7";
+}
+
+.error-footnote {
+    color: rgba(0, 0, 0, 0.3);
+}

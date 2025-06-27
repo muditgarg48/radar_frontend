@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./ApplySection.css";
 import Loading from "../../components/Loading/Loading.jsx";
+import ErrorLogo from "../../components/ErrorLogo/ErrorLogo.jsx";
 
-export default function ApplySection({deployment}) {
+export default function ApplySection({deployment, serverStatus}) {
 
     const [applyData, setApplyData] = useState(null);
+    const [loading, setLoading] = useState(true);
     const [clientId, setClientId] = useState(null);
     const [searchQuery, setSearchQuery] = useState("");
     const [filteredCompanies, setFilteredCompanies] = useState(applyData);
@@ -20,6 +22,7 @@ export default function ApplySection({deployment}) {
                 const result = await response.json();
                 setApplyData(result);
                 setFilteredCompanies(result);
+                setLoading(false);
             }
         };
 
@@ -36,6 +39,14 @@ export default function ApplySection({deployment}) {
 
         fetchLogoClientId().then(() => fetchApplyData());
     }, [deployment]);
+
+    useEffect(() => {
+        if (serverStatus === "🔴 Offline" || serverStatus === "🟢 Online") {
+            setLoading(false);
+        } else {
+            setLoading(true);
+        }
+    }, [serverStatus]);
 
     function handleSearchChange(event) {
         setSearchQuery(event.target.value);
@@ -121,7 +132,7 @@ export default function ApplySection({deployment}) {
             </p>
             <h4>Please Note, there is no affiliation between RaDAR and any of these companies. These are just the direct links to the list of job opportunties there.</h4>
             <h3>Happy Applying!</h3>
-            <Loading loading={applyData == null} message="Loading the Portal List"/>
+            <Loading loading={loading} message="Loading the Portal List"/>
             {applyData && <>
                 <input
                     type="text"
@@ -135,6 +146,11 @@ export default function ApplySection({deployment}) {
                     displayData(filteredCompanies)
                 }
             </>}
+            {!applyData && !loading && 
+                <ErrorLogo
+                    errorMessage="There's something wrong with the server."
+                />
+            }
         </div>
     );
 }
