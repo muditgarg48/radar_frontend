@@ -60,13 +60,13 @@ export default function CompanyDetailsSection ({jobTitle, jobCompany, deployment
     }
     
     return (
-        <>
+        <div id="company-section">
             <CompanyHeader/>
             {showCompanyValues && <CompanyValuesSection
                 deployment={deployment}
                 jobCompany={jobCompany}
                 jobTitle={jobTitle}
             />}
-        </>
+        </div>
     );
 }

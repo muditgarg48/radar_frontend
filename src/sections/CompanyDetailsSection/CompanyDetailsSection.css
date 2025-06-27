@@ -1,3 +1,9 @@
+#company-section {
+    box-shadow: 1px 1px 3px 3px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    padding: 10px;
+}
+
 #company-section-header {
     display: flex;
     flex-wrap: wrap;

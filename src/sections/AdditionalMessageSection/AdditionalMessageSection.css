@@ -1,5 +1,5 @@
 #additional-msg-section {
-    box-shadow: 1px 1px 3px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: 1px 1px 3px 3px rgba(0, 0, 0, 0.1) inset;
     border-radius: 20px;
     padding: 1.3%;
 }

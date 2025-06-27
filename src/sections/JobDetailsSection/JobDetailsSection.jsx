@@ -172,7 +172,7 @@ export default function JobDetailsSection ({
     }
     
     return (
-        <div>
+        <div id="job-section">
             <Loading loading={loading} message="Processing the Job Description"/>
             <JHeader/>
             <JSubHeader/>
