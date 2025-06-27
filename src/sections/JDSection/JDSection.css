@@ -118,13 +118,16 @@
     border-radius: 20px;
 }
 
-#check-salaries {
+#check-salaries, #check-company {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    /* justify-content: space-between; */
     align-items: center;
+    font-size: medium;
+    font-weight: bold;
 }
 
-#check-salaries a {
+#check-salaries a, #check-company a {
     text-decoration: none;
     color: black;
 }

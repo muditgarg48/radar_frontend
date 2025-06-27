@@ -3,6 +3,7 @@ import Loading from '../../components/Loading/Loading.jsx';
 import CompanyValuesSection from "../CompanyValuesSection/CompanyValuesSection.jsx";
 import './JDSection.css';
 import levelfyiIcon from '../../assets/levelfyi.svg';
+import glassdoorIcon from '../../assets/glassdoor.svg';
 import CompanyLogo from "../../components/CompanyLogo/CompanyLogo.jsx";
 
 export default function JDSection({deployment, setJobDescription, jobDescription, setJobTitle, setJobCompany, jobCompany, jobTitle, resume}) {
@@ -145,6 +146,7 @@ export default function JDSection({deployment, setJobDescription, jobDescription
                 <div id="jd-within-header-rest">
                     <ResumeAlignment/>
                     <CheckSalaries/>
+                    <CheckCompany/>
                 </div>
                 {/* <div id="jd-within-header">
                 </div>  */}
@@ -303,10 +305,17 @@ export default function JDSection({deployment, setJobDescription, jobDescription
     const CheckSalaries = () => {
         return (
             <button id="check-salaries">
-                <img src={levelfyiIcon} alt="Redirect to Levels.fyi" width="40px" height="40px"/>
-                &nbsp;
-                &nbsp;
+                <img src={levelfyiIcon} alt="Redirect to Levels.fyi" width="60px" height="35px"/>
                 <a href="https://www.levels.fyi/" target="_blank" rel="noopener noreferrer">Check Salaries</a>
+            </button>
+        );
+    }
+
+    const CheckCompany = () => {
+        return (
+            <button id="check-company">
+                <img src={glassdoorIcon} alt="Redirect to Glassdoor Review" width="20px" height="35px"/>
+                <a href="https://www.glassdoor.ie/Reviews/index.htm" target="_blank" rel="noopener noreferrer">Glassdoor Review</a>
             </button>
         );
     }
