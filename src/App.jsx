@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 import ResumeSection from "./sections/ResumeSection/ResumeSection.jsx";
-import AdditionalDocSection from "./sections/AdditionalDocSection/AdditionalDocSection.jsx";
 import ApplySection from "./sections/ApplySection/ApplySection.jsx";
 import IntroductionSection from "./sections/IntroductionSection/IntroductionSection.jsx";
 import JDSection from "./sections/JDSection/JDSection.jsx";
@@ -63,14 +62,6 @@ function App() {
         setJobCompany={setJobCompany}
         jobCompany={jobCompany}
         resume={resume}
-        />
-      &nbsp;
-      <AdditionalDocSection 
-        resume={resume}
-        jobDescription={jobDescription}
-        jobTitle={jobTitle}
-        jobCompany={jobCompany}
-        deployment={deployment}
         />
       &nbsp;
       &nbsp;

@@ -4,6 +4,7 @@ import 'react-tabs/style/react-tabs.css';
 import './JDSection.css';
 import JobDetailsSection from "../JobDetailsSection/JobDetailsSection.jsx";
 import CompanyDetailsSection from "../CompanyDetailsSection/CompanyDetailsSection.jsx";
+import AdditionalDocSection from "../AdditionalDocSection/AdditionalDocSection.jsx";
 
 export default function JDSection({deployment, setJobDescription, jobDescription, setJobTitle, setJobCompany, jobCompany, jobTitle, resume}) {
 
@@ -125,6 +126,7 @@ export default function JDSection({deployment, setJobDescription, jobDescription
                 <TabList>
                     <Tab>Job Details</Tab>
                     <Tab>Company Details</Tab>
+                    <Tab>Additional Documents</Tab>
                 </TabList>
                 <TabPanel>
                     <JobDetailsSection
@@ -152,6 +154,15 @@ export default function JDSection({deployment, setJobDescription, jobDescription
                         deployment={deployment}
                         jobTitle={jobTitle}
                         jobCompany={jobCompany}
+                    />
+                </TabPanel>
+                <TabPanel>
+                    <AdditionalDocSection 
+                        resume={resume}
+                        jobDescription={jobDescription}
+                        jobTitle={jobTitle}
+                        jobCompany={jobCompany}
+                        deployment={deployment}
                     />
                 </TabPanel>
             </Tabs>}
