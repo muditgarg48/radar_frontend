@@ -19,18 +19,22 @@
     flex: 2;
     display: flex;
     justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 #check-salaries, #check-company, #get-company-values {
     display: flex;
+    width: max-content;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     font-size: medium;
     font-weight: bold;
+    margin: 3px;
 }
 
-#check-salaries a, #check-company a {
+#company-section-header-buttons a {
     text-decoration: none;
     color: black;
 }

@@ -12,19 +12,23 @@ export default function CompanyDetailsSection ({jobTitle, jobCompany, deployment
 
     const CheckSalaries = () => {
         return (
-            <button id="check-salaries">
-                <img src={levelfyiIcon} alt="Redirect to Levels.fyi" width="60px" height="35px"/>
-                <a href="https://www.levels.fyi/" target="_blank" rel="noopener noreferrer">Check Salaries</a>
-            </button>
+            <a href="https://www.levels.fyi/" target="_blank" rel="noopener noreferrer">
+                <button id="check-salaries">
+                    <img src={levelfyiIcon} alt="Redirect to Levels.fyi" width="60px" height="35px"/>
+                    Check Salaries
+                </button>
+            </a>
         );
     }
 
     const CheckCompany = () => {
         return (
-            <button id="check-company">
-                <img src={glassdoorIcon} alt="Redirect to Glassdoor Review" width="20px" height="35px"/>
-                <a href="https://www.glassdoor.ie/Reviews/index.htm" target="_blank" rel="noopener noreferrer">Glassdoor Review</a>
-            </button>
+            <a href="https://www.glassdoor.ie/Reviews/index.htm" target="_blank" rel="noopener noreferrer">
+                <button id="check-company">
+                    <img src={glassdoorIcon} alt="Redirect to Glassdoor Review" width="20px" height="35px"/>
+                    Glassdoor Review
+                </button>
+            </a>
         );
     }
 

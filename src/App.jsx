@@ -67,6 +67,7 @@ function App() {
       &nbsp;
       <ApplySection 
         deployment={deployment}
+        serverStatus={serverStatus}
       />
     </div>
   );

@@ -76,6 +76,7 @@
 #jd-subheader {
     display: flex;
     width: 100%;
+    flex-wrap: wrap;
 }
 
 #jd-team-name, #jd-salary-bracket, #jd-experience-level, #jd-sponsorship, #jd-location {
