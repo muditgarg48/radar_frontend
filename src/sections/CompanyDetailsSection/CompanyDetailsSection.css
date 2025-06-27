@@ -1,0 +1,30 @@
+#company-section-header {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#company-section-header-title {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+#company-section-header-buttons {
+    flex: 2;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#check-salaries, #check-company, #get-company-values {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: medium;
+    font-weight: bold;
+}
+
+#check-salaries a, #check-company a {
+    text-decoration: none;
+    color: black;
+}

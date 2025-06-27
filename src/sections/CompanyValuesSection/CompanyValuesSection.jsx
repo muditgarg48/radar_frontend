@@ -25,47 +25,9 @@ export default function CompanyValuesSection({jobTitle, jobCompany, deployment})
                     body: JSON.stringify({"job_title": jobTitle, "company":jobCompany})
                 }
             );
-            // console.log(company_values);
             setValues(company_values.values);
             setLink(company_values.link);
             setLoadingValues(false);
-            // let company_values = localStorage.getItem("RADAR_CACHED_COMPANY_VALUES");
-            // if (company_values != null) {
-            //     company_values = JSON.parse(company_values);
-            //     if (jobCompany in company_values) {
-            //         console.log("Using cached company values for "+jobCompany);
-            //         setValues(company_values[jobCompany].values);
-            //         setLink(company_values[jobCompany].link);
-            //         setLoadingValues(false);
-            //         return;
-            //     }
-            //     console.log("Couldn't find cached company values for "+jobCompany);
-            // }
-
-            // const response = await fetch(deployment+"/get-company-values", {
-            //     method: "POST",
-            //     headers: {
-            //         'Content-Type': 'application/json'
-            //     },
-            //     body: JSON.stringify({"job_title": jobTitle, "company":jobCompany})
-            // });
-            // if (response.ok) {
-            //     const result = await response.json();
-            //     let company_values = localStorage.getItem("RADAR_CACHED_COMPANY_VALUES");
-            //     if (company_values == null) {
-            //         company_values = {};
-            //         console.log("The caching of company values is new.")
-            //     } else {
-            //         company_values = JSON.parse(company_values);
-            //         console.log(company_values)
-            //     }
-            //     company_values[jobCompany] = result;
-            //     localStorage.setItem("RADAR_CACHED_COMPANY_VALUES", JSON.stringify(company_values));
-            //     console.log("Cached the company values for "+jobCompany);
-            //     setValues(result.values);
-            //     setLink(result.link);
-            //     setLoadingValues(false);
-            // }
         }
         fetchValues();
     }, [jobCompany]);
@@ -73,11 +35,12 @@ export default function CompanyValuesSection({jobTitle, jobCompany, deployment})
     return (
         <div id="company-values" className="section-container">
             {loadingValues?
-                <Loading loading={loadingValues} message="Fetching company values..."/>:
+                <div style={{margin: "1% 0"}}>
+                    <Loading loading={loadingValues} message="Fetching company values..."/>
+                </div>:
                 <div>
                     <div id="company-values-redirect">
-                        <h2>Core Values</h2>
-                        &nbsp;
+                        <h2>Core Values</h2 >
                         <a href={link} target="_blank" rel="noopener noreferrer">🔗</a>
                     </div>
                     {

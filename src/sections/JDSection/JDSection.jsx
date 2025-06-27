@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import Loading from '../../components/Loading/Loading.jsx';
-import CompanyValuesSection from "../CompanyValuesSection/CompanyValuesSection.jsx";
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import 'react-tabs/style/react-tabs.css';
 import './JDSection.css';
-import levelfyiIcon from '../../assets/levelfyi.svg';
-import glassdoorIcon from '../../assets/glassdoor.svg';
-import CompanyLogo from "../../components/CompanyLogo/CompanyLogo.jsx";
+import JobDetailsSection from "../JobDetailsSection/JobDetailsSection.jsx";
+import CompanyDetailsSection from "../CompanyDetailsSection/CompanyDetailsSection.jsx";
 
 export default function JDSection({deployment, setJobDescription, jobDescription, setJobTitle, setJobCompany, jobCompany, jobTitle, resume}) {
 
@@ -13,7 +12,6 @@ export default function JDSection({deployment, setJobDescription, jobDescription
     const [jdCache, setJDCache] = useState("");
     const [resumeText, setResumeText] = useState(null);
     const [alignmentScore, setAlignmentScore] = useState(null);
-    const [showCompanyValues, setShowCompanyValues] = useState(false);
 
     const [salaryBracket, setSalaryBracket] = useState(null);
     const [experienceLevel, setExperienceLevel] = useState(null);
@@ -33,7 +31,6 @@ export default function JDSection({deployment, setJobDescription, jobDescription
         }
 
         setLoading(true);
-        setShowCompanyValues(false);
         setAlignmentScore(null);
         setJobKeywords(null);
         setJobKeyNotes(null);
@@ -104,10 +101,6 @@ export default function JDSection({deployment, setJobDescription, jobDescription
         setLoading(false);
     };
 
-    const handleImproveResume = async () => {
-        
-    }
-
     const InputJD = () => {
         return (
             <textarea
@@ -120,222 +113,48 @@ export default function JDSection({deployment, setJobDescription, jobDescription
             />
         );
     };
-
-    const JDPreview = () => {
-        if (!jobDescription) {return null}
-        return (
-            <div id="jd-preview">
-                {jobDescription} 
-            </div>
-        );
-    }
-
-    const JHeader = () => {
-        if (!jobTitle || !jobCompany) {return null;}
-        return (
-            <div id="jd-header">
-                <div id="jd-within-header-title">
-                    <CompanyLogo deployment={deployment} jobCompany={jobCompany}/>
-                    &nbsp;
-                    &nbsp;
-                    <div>
-                        {jobTitle && <div id="jd-title">{jobTitle}</div>}
-                        {jobCompany && <div id="jd-company">{jobCompany}</div   >}
-                    </div>
-                </div>
-                <div id="jd-within-header-rest">
-                    <ResumeAlignment/>
-                    <CheckSalaries/>
-                    <CheckCompany/>
-                </div>
-                {/* <div id="jd-within-header">
-                </div>  */}
-            </div>
-        );
-    }
-
-    const JSubHeader = () => {
-        if (!jobCompany) {return null;}
-        return (
-            <div id="jd-subheader">
-                {teamName && <div id="jd-team-name">
-                    <span>👥</span>
-                    &nbsp;
-                    &nbsp;
-                    <span>{teamName}</span>
-                </div>}
-                {salaryBracket && <div id="jd-salary-bracket">
-                    <span>🤑</span>
-                    &nbsp;
-                    &nbsp;
-                    <span>{salaryBracket}</span>
-                </div>}
-                {experienceLevel && <div id="jd-experience-level">
-                    <span>🏢</span>
-                    &nbsp;
-                    &nbsp;
-                    <span>{experienceLevel}</span>
-                </div>}
-                {sponsorship && <div id="jd-sponsorship">
-                    Visa Sponsorship: {sponsorship? "✅" : "❌"}
-                </div>}
-                {location && <div id="jd-location">
-                    <span>📌</span>
-                    &nbsp;
-                    &nbsp;
-                    <span>{location}</span>
-                </div>}
-            </div>
-        );
-    }
-
-    function checkResumeForKeyword (word) {
-        if (!resumeText) {return false;}
-        if (!highlightKeywords) {return false;}
-        return resumeText.toLowerCase().includes(word.toLowerCase());
-    }
-
-    const JKeywords = () => {
-        if (!jobKeywords) {return null;}
-        return (
-            <div>
-                {/* <b>Suggested keywords</b> to be included in the application: */}
-                <ul id="jd-keywords-section">
-                {
-                    jobKeywords.map((word, index) => {
-                        return (
-                            <li className={checkResumeForKeyword(word) ? "jd-keyword keyword-present" : "jd-keyword"} key={index}>
-                                {word}
-                            </li>
-                        )
-                    })
-                }
-                </ul>
-                {highlightKeywords? <div className="section-footnote">
-                    <span className="jd-keyword keyword-present">Green</span> indicate that the keyword was found in your resume.
-                </div>: <div className="section-footnote">
-                    {
-                        resume?
-                        <em><a href="#jd-section">Process JD</a> to highlight which keywords were found in your resume.</em>:
-                        <em><a href="#introduction-section">Add resume</a> and process JD again to check which keywords were found in your resume.</em>
-                    }
-                </div>}
-                &nbsp;
-            </div>
-        );
-    }
-
-    const JNotes = () => {
-        if (!jobKeyNotes) {return null;}
-        return (
-            <div>
-                {benefits && <div id="jd-benefits">
-                    <h3>💪  Key Benefits</h3>
-                    <ul>
-                    {
-                        benefits.map((benefit, index) => {
-                            return (<li key={index}>{benefit}</li>)
-                        })
-                    }
-                    </ul>
-                </div>}
-                <h3>📝  Note:</h3>
-                <ul id="jd-note">
-                {
-                    jobKeyNotes.map((note, index) => {
-                        return (<li key={index}>{note}</li>)
-                    })
-                }
-                </ul>
-            </div>
-        );
-    }
-
-    const CompanyValues = () => {
-        return (
-            <div id="company-values-section">
-                {showCompanyValues && <CompanyValuesSection
-                    deployment={deployment}
-                    jobTitle={jobTitle}
-                    jobCompany={jobCompany}
-                />}
-                {jobCompany && <button
-                    style={{margin: "1% 0"}}
-                    onClick={() => setShowCompanyValues(!showCompanyValues)}
-                    >
-                        {showCompanyValues? "Hide":"Get"} Company Values
-                </button>}
-            </div>
-        );
-    }
-
-    const ResumeAlignment = () => {
-        if (!jobDescription || loading) {return null;}
-        if (!resume) {
-            return (
-                <div className="section-footnote"><em>
-                    <a href="#introduction-section">Add resume</a> and process the JD again to get resume alignment score.
-                </em></div>
-            );
-        } else if (!alignmentScore) {
-            return (
-                <div className="section-footnote"><em>
-                    <a href="#jd-section">Process JD</a> to get resume alignment score.
-                </em></div>
-            );
-        }
-        if (alignmentScore) {
-            return (
-                <div className="resume-alignment-score">
-                    Alignment Score:
-                    <b className={
-                        alignmentScore >= 80? "A alignment-score":
-                        alignmentScore < 80 && alignmentScore >= 60? "B alignment-score":
-                        alignmentScore < 60 && alignmentScore >= 40? "C alignment-score":
-                        alignmentScore < 40 && alignmentScore >= 20? "D alignment-score":
-                        "F alignment-score"
-                        }>
-                        {alignmentScore}%
-                    </b>
-                </div>
-            );
-        }
-    }
-
-    const CheckSalaries = () => {
-        return (
-            <button id="check-salaries">
-                <img src={levelfyiIcon} alt="Redirect to Levels.fyi" width="60px" height="35px"/>
-                <a href="https://www.levels.fyi/" target="_blank" rel="noopener noreferrer">Check Salaries</a>
-            </button>
-        );
-    }
-
-    const CheckCompany = () => {
-        return (
-            <button id="check-company">
-                <img src={glassdoorIcon} alt="Redirect to Glassdoor Review" width="20px" height="35px"/>
-                <a href="https://www.glassdoor.ie/Reviews/index.htm" target="_blank" rel="noopener noreferrer">Glassdoor Review</a>
-            </button>
-        );
-    }
     
     return (
         <div id="jd-section">
             <h2 className="section-heading">Job Description</h2>
-            {/* <InputJD value={jdCache} onChange={handleJDChange}/> */}
             <InputJD/>
             &nbsp;
-            {/* <JDPreview/>
-            &nbsp; */}
             <button onClick={handleJobDescriptionSubmit}>Process Job Description</button>
             &nbsp;
-            <Loading loading={loading} message="Processing the Job Description"/>
-            <JHeader/>
-            <CompanyValues/>
-            <JSubHeader/>
-            <JKeywords/>
-            <JNotes/>
+            {jobDescription && <Tabs>
+                <TabList>
+                    <Tab>Job Details</Tab>
+                    <Tab>Company Details</Tab>
+                </TabList>
+                <TabPanel>
+                    <JobDetailsSection
+                        loading={loading}
+                        deployment={deployment}
+                        jobTitle={jobTitle}
+                        jobCompany={jobCompany}
+                        jobDescription={jobDescription}
+                        resume={resume}
+                        resumeText={resumeText}
+                        alignmentScore={alignmentScore}
+                        jobKeywords={jobKeywords}
+                        highlightKeywords={highlightKeywords}
+                        jobKeyNotes={jobKeyNotes}
+                        benefits={benefits}
+                        sponsorship={sponsorship}
+                        experienceLevel={experienceLevel}
+                        salaryBracket={salaryBracket}
+                        teamName={teamName}
+                        location={location}
+                    />
+                </TabPanel>
+                <TabPanel>
+                    <CompanyDetailsSection
+                        deployment={deployment}
+                        jobTitle={jobTitle}
+                        jobCompany={jobCompany}
+                    />
+                </TabPanel>
+            </Tabs>}
         </div>
     );
 }
