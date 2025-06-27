@@ -10,6 +10,10 @@ export default function CompanyDetailsSection ({jobTitle, jobCompany, deployment
     
     const [showCompanyValues, setShowCompanyValues] = useState(false);
 
+    const generateGlassdoorLink = () => {
+        return "https://www.glassdoor.ie/Reviews/index.htm?filterType=RATING_OVERALL&employerName="+jobCompany.toLowerCase().replace(" ", "+")+"&page=1&overall_rating_low=1";
+    }
+
     const CheckSalaries = () => {
         return (
             <a href="https://www.levels.fyi/" target="_blank" rel="noopener noreferrer">
@@ -23,7 +27,7 @@ export default function CompanyDetailsSection ({jobTitle, jobCompany, deployment
 
     const CheckCompany = () => {
         return (
-            <a href="https://www.glassdoor.ie/Reviews/index.htm" target="_blank" rel="noopener noreferrer">
+            <a href={generateGlassdoorLink()} target="_blank" rel="noopener noreferrer">
                 <button id="check-company">
                     <img src={glassdoorIcon} alt="Redirect to Glassdoor Review" width="20px" height="35px"/>
                     Glassdoor Review
