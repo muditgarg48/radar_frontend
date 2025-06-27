@@ -11,3 +11,29 @@
     display: flex;
     flex-direction: column;
 }
+
+/* related to tabs styling */
+
+.react-tabs__tab-list {
+    margin: 10px 0;
+    padding: 10px;
+    /* box-shadow: 1px 1px 3px 3px rgba(0, 0, 0, 0.1); */
+    border-radius: 20px;
+}
+
+.react-tabs__tab {
+    display: inline-block;
+    /* border: 1px solid transparent; */
+    position: relative;
+    list-style: none;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-weight: lighter;
+}
+
+.react-tabs__tab--selected {
+    /* background-color: aliceblue; */
+    border-radius: 10px;
+    box-shadow: 1px 1px 5px 5px rgba(0, 0, 0, 0.1) inset;
+    font-weight: normal;
+}
