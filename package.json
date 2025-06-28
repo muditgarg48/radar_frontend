@@ -13,12 +13,14 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.8.2",
     "axios": "^1.8.4",
     "frontend": "file:",
     "gh-pages": "^6.3.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-pdf": "^9.2.1",
+    "react-redux": "^9.2.0",
     "react-spinners": "^0.15.0",
     "react-tabs": "^6.1.0"
   },

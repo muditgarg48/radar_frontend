@@ -17,7 +17,7 @@ export default function JDSection({deployment, setJobDescription, jobDescription
     const [salaryBracket, setSalaryBracket] = useState(null);
     const [experienceLevel, setExperienceLevel] = useState(null);
     const [teamName, setTeamName] = useState(null);
-    const [sponsorship, setSponsorship] = useState(false);
+    const [sponsorship, setSponsorship] = useState(null);
     const [location, setLocation] = useState(null);
     const [benefits, setBenefits] = useState(null);
 
