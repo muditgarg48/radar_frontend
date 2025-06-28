@@ -76,6 +76,9 @@ export default function JobDetailsSection ({
 
     const JSubHeader = () => {
         if (!jobCompany) {return null;}
+        const salaries = salaryBracket.split(";");
+        const experiences = experienceLevel.split(";");
+        const locations = location.split(";");
         return (
             <div id="jd-subheader">
                 {teamName && <div id="jd-team-name">
@@ -88,13 +91,29 @@ export default function JobDetailsSection ({
                     <span>🤑</span>
                     &nbsp;
                     &nbsp;
-                    <span>{salaryBracket}</span>
+                    <div>
+                        {salaries.map((salary, index) => {
+                            return (
+                                <div key={index}>
+                                    {salary}
+                                </div>
+                            )
+                        })}
+                    </div>
                 </div>}
                 {experienceLevel && <div id="jd-experience-level">
                     <span>🏢</span>
                     &nbsp;
                     &nbsp;
-                    <span>{experienceLevel}</span>
+                    <div>
+                        {experiences.map((experience, index) => {
+                            return (
+                                <div key={index}>
+                                    {experience}
+                                </div>
+                            )
+                        })}
+                    </div>
                 </div>}
                 {sponsorship && <div id="jd-sponsorship">
                     Visa Sponsorship: {sponsorship? "✅" : "❌"}
@@ -103,7 +122,15 @@ export default function JobDetailsSection ({
                     <span>📌</span>
                     &nbsp;
                     &nbsp;
-                    <span>{location}</span>
+                    <div>
+                        {locations.map((location, index) => {
+                            return (
+                                <div key={index}>
+                                    {location}
+                                </div>
+                            )
+                        })}
+                    </div>
                 </div>}
             </div>
         );
