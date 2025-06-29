@@ -85,7 +85,8 @@ export default function JDSection() {
     
     return (
         <div id="jd-section">
-            <h2 className="section-heading">Job Description</h2>
+            <h2 className="section-heading">JOB DESCRIPTION</h2>
+            &nbsp;
             <InputJD/>
             &nbsp;
             <button onClick={handleJobDescriptionSubmit}>Process Job Description</button>

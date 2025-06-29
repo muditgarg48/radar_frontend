@@ -76,14 +76,18 @@ export default function ResumeSection() {
         }
     };
 
+    const uploadResume = () => {
+        dispatch(resetResumeData());
+        const fileInput = document.createElement("input");
+        fileInput.type = "file";
+        fileInput.accept = "application/pdf";
+        fileInput.onchange = (e) => handleResumeUpload(e.target.files[0]);
+        fileInput.click();
+    }
+
     const updateResume = () => {
         if (window.confirm("Are you sure you want to update the resume? This will clear the current resume.")) {
-            dispatch(resetResumeData())
-            const fileInput = document.createElement("input");
-            fileInput.type = "file";
-            fileInput.accept = "application/pdf";
-            fileInput.onchange = (e) => handleResumeUpload(e.target.files[0]);
-            fileInput.click();
+            uploadResume();
         }
     };
     
@@ -92,15 +96,11 @@ export default function ResumeSection() {
             <div id="resume-basic-actions">
                 {
                     resumeUrl ?
-                    <div>
+                    <div style={{width: "100%",display: "flex", justifyContent: "space-evenly"}}>
                         <button onClick={updateResume}>Update Resume</button>
                         <button onClick={showResume}>Show Resume</button>
                     </div>:
-                    <input
-                        type="file"
-                        accept="application/pdf"
-                        onChange={(e) => handleResumeUpload(e.target.files[0])}
-                    />
+                    <button onClick={uploadResume}>Upload Resume</button>
                 }
             </div>
         );
@@ -165,16 +165,20 @@ export default function ResumeSection() {
     }
 
     return (
-        <div id="resume-section">
-            <div id="resume-upload-section">
-                <ResumeUploadSection />
-                <ResumeSummary />
-                <ResumePreview />
-            </div>
+        <div style={{minHeight: "30vh"}}>
+            <h2 className="section-heading">RESUME SECTION</h2>
             &nbsp;
-            <div id="resume-operations-section">
-                <ResumeActionButtons />
-                <ResumeImprovements />
+            <div id="resume-section">
+                <div id="resume-upload-section">
+                    <ResumeUploadSection />
+                    <ResumeSummary />
+                    <ResumePreview />
+                </div>
+                &nbsp;
+                {resumeUrl && <div id="resume-operations-section">
+                    <ResumeActionButtons />
+                    <ResumeImprovements />
+                </div>}
             </div>
         </div>
     );

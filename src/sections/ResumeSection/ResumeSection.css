@@ -3,6 +3,12 @@
     justify-content: center;
 }
 
+#resume-basic-actions {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
 @media (max-width: 1200px) {
     #resume-section {
         display: block;
