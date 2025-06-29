@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setGlassdoorLink } from "../../store/features/companySlice.js";
+import { showCompanyValues, hideCompanyValues } from "../../store/features/sessionSlice.js";
 
 import "./CompanyDetailsSection.css";   
 import CompanyLogo from "../../components/CompanyLogo/CompanyLogo.jsx";
@@ -12,8 +13,9 @@ import geminiIcon from '../../assets/gemini.svg';
 export default function CompanyDetailsSection () {
     
     const dispatch = useDispatch();
-    const [showCompanyValues, setShowCompanyValues] = useState(false);
+    // const [showCompanyValues, setShowCompanyValues] = useState(false);
     const { companyName, companyGlassdoorLink } = useSelector((state) => state.company);
+    const { companyValuesVisibility } = useSelector((state) => state.session);
 
     // const generateGlassdoorLink = () => {
     //     return "https://www.glassdoor.ie/Reviews/index.htm?filterType=RATING_OVERALL&employerName="+jobCompany.toLowerCase().replace(" ", "+")+"&page=1&overall_rating_low=1";
@@ -53,11 +55,18 @@ export default function CompanyDetailsSection () {
         return (
             <button id="get-company-values"
                 style={{margin: "1% 0"}}
-                onClick={() => setShowCompanyValues(!showCompanyValues)}
+                // onClick={() => setShowCompanyValues(!showCompanyValues)}
+                onClick={() => {
+                    if (companyValuesVisibility) {
+                        dispatch(hideCompanyValues());
+                    } else {
+                        dispatch(showCompanyValues());
+                    }
+                }}
                 disabled={companyName === "UNSPECIFIED"}
             >
                 <img src={geminiIcon} alt="Fetch Company Values" width="30px" height="35px"/>
-                {showCompanyValues? "Hide":"Get"} Company Values
+                {companyValuesVisibility? "Hide":"Get"} Company Values
             </button>
         );
     }
@@ -84,7 +93,7 @@ export default function CompanyDetailsSection () {
     return (
         <div id="company-section">
             <CompanyHeader/>
-            {showCompanyValues && <CompanyValuesSection/>}
+            {companyValuesVisibility && <CompanyValuesSection/>}
         </div>
     );
 }

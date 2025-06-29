@@ -9,6 +9,7 @@ const initialState = {
 	loadingResumeImprovements: false,
 	processingJobDescription: false,
 	fetchingCompanyValues: false,
+	companyValuesVisibility: false,
 	generatingCoverLetter: false,
 	loadingApplyData: false
 };
@@ -41,6 +42,12 @@ const sessionSlice = createSlice({
 		setFetchingCompanyValues: (state, action) => {
 			state.fetchingCompanyValues = action.payload;
 		},
+		showCompanyValues: (state) => {
+			state.companyValuesVisibility = true;
+		},
+		hideCompanyValues: (state) => {
+			state.companyValuesVisibility = false;
+		},
 		setGeneratingCoverLetter: (state, action) => {
 			state.generatingCoverLetter = action.payload;
 		},
@@ -59,6 +66,8 @@ export const {
     setLoadingResumeImprovements, 
     setProcessingJobDescription, 
 	setFetchingCompanyValues,
+	showCompanyValues,
+	hideCompanyValues,
     setGeneratingCoverLetter, 
     setLoadingApplyData,
 	resetSession } = sessionSlice.actions;
