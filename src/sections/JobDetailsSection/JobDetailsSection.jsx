@@ -1,5 +1,7 @@
-import React, { use } from "react";
-import { useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setResumeAlignmentScore } from "../../store/features/resumeSlice.js";
+import geminiIcon from '../../assets/gemini.svg';
 
 import "./JobDetailsSection.css";
 import Loading from "../../components/Loading/Loading.jsx";
@@ -25,29 +27,71 @@ export default function JobDetailsSection ({
         // location
     }) {
 
-    const { processingJobDescription } = useSelector((state) => state.session);
+    const dispatch = useDispatch();
+    const { deployment, processingJobDescription } = useSelector((state) => state.session);
     const { jobTitle, jobDescription, jdKeywords, jdKeyNotes, benefits, sponsorship, experienceLevel, salaryBracket, teamName, location } = useSelector((state) => state.job);
     const { companyName } = useSelector((state) => state.company);
     const { resumeText, resumeAlignmentScore } = useSelector((state) => state.resume);
+    const [loadingResumeAlignmentScore, setLoadingResumeAlignmentScore] = useState(false);
+
+    async function calculateResumeAlignmentScore () {
+        setLoadingResumeAlignmentScore(true);
+        const formData = new FormData();
+        formData.append('resume', resumeText);
+        formData.append('jd', jobDescription);
+        // formData.append('company', jobCompany);
+        formData.append('company', companyName);
+        formData.append('position', jobTitle);
+        const response = await fetch(deployment+"/get-resume-alignment-score", {
+            method: "POST",
+            body: formData,
+        });
+        if (response.ok) {
+            const result = await response.json();
+            // setAlignmentScore(result.alignment_score);
+            dispatch(setResumeAlignmentScore(result.alignment_score));
+        } else {
+            alert("Failed to get resume alignment score. "+response.text().error);
+            // setLoading(false);
+            // dispatch(setProcessingJobDescription(false));
+        }
+        setLoadingResumeAlignmentScore(false);
+    }
 
     const ResumeAlignment = () => {
+        if(loadingResumeAlignmentScore) {
+            return (
+                <div id="loading-resume-alignment-score">
+                    <Loading loading={loadingResumeAlignmentScore} message="Calculating resume alignment score..."/>
+                </div>
+            );
+        }
         if (!jobDescription || processingJobDescription) {return null;}
         if (!resumeText) {
             return (
                 <div className="section-footnote"><em>
-                    <a href="#introduction-section">Add resume</a> and process the JD again to get resume alignment score.
+                    <a href="#introduction-section">Add resume</a> to get resume alignment score.
                 </em></div>
             );
         } else if (!resumeAlignmentScore) {
             return (
-                <div className="section-footnote"><em>
-                    <a href="#jd-section">Process JD</a> to get resume alignment score.
-                </em></div>
+                // <div className="section-footnote">
+                //     <button onClick={calculateResumeAlignmentScore}>Calculate Resume Alignment Score</button>
+                // </div>
+                <button id="calculate-resume-alignment-score"
+                    style={{margin: "1% 0"}}
+                    onClick={calculateResumeAlignmentScore}
+                >
+                    <img src={geminiIcon} alt="Calculate Resume Alignment Score" width="20px" height="25px"/>
+                    &nbsp;
+                    &nbsp;
+                    <span>Calculate Resume Alignment Score</span>
+                </button>
             );
         }
         if (resumeAlignmentScore) {
             return (
-                <div className="resume-alignment-score">
+                <div id="resume-alignment-score">
                     Alignment Score:
                     <b className={
                         resumeAlignmentScore >= 80? "A alignment-score":
