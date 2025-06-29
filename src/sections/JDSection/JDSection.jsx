@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setJobDescription, setJobDetails, resetJobData } from "../../store/features/jobSlice.js";
 import { resetCompanyData, setCompanyName } from "../../store/features/companySlice.js";
 import { setProcessingJobDescription } from "../../store/features/sessionSlice.js";
-import { setResumeText, setResumeAlignmentScore } from "../../store/features/resumeSlice.js";
+import { setResumeAlignmentScore } from "../../store/features/resumeSlice.js";
 
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 // import 'react-tabs/style/react-tabs.css';
@@ -17,7 +17,7 @@ export default function JDSection() {
 
     const dispatch = useDispatch();
     const { deployment } = useSelector((state) => state.session);
-    const { resumeFile } = useSelector((state) => state.resume);
+    const { resumeText } = useSelector((state) => state.resume);
     const { jobDescription, jobTitle } = useSelector((state) => state.job);
     const { companyName } = useSelector((state) => state.company);
 
@@ -61,22 +61,22 @@ export default function JDSection() {
         dispatch(resetCompanyData())
         dispatch(setJobDescription(jdCache));
 
-        if (resumeFile) {
-            const formData = new FormData();
-            formData.append('resume', resumeFile);
-            const response = await fetch(deployment+"/get-resume-text", {
-                method: "POST",
-                body: formData,
-            });
-            if (response.ok) {
-                // setHighlightKeywords(true);
-                const result = await response.text();
-                // setResumeText(result);
-                dispatch(setResumeText(result));
-            } else {
-                alert("Failed to parse resume text.");
-            }
-        }
+        // if (resumeFile) {
+        //     const formData = new FormData();
+        //     formData.append('resume', resumeFile);
+        //     const response = await fetch(deployment+"/get-resume-text", {
+        //         method: "POST",
+        //         body: formData,
+        //     });
+        //     if (response.ok) {
+        //         // setHighlightKeywords(true);
+        //         const result = await response.text();
+        //         // setResumeText(result);
+        //         dispatch(setResumeText(result));
+        //     } else {
+        //         alert("Failed to parse resume text.");
+        //     }
+        // }
 
         const response = await fetch(deployment+"/process-job-description", {
             method: "POST",
@@ -106,9 +106,9 @@ export default function JDSection() {
             // dispatch(setProcessingJobDescription(false));
         }
 
-        if (resumeFile) {
+        if (resumeText) {
             const formData = new FormData();
-            formData.append('resume', resumeFile);
+            formData.append('resume', resumeText);
             formData.append('jd', jdCache);
             // formData.append('company', jobCompany);
             formData.append('company', companyName);

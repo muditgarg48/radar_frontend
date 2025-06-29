@@ -28,11 +28,11 @@ export default function JobDetailsSection ({
     const { processingJobDescription } = useSelector((state) => state.session);
     const { jobTitle, jobDescription, jdKeywords, jdKeyNotes, benefits, sponsorship, experienceLevel, salaryBracket, teamName, location } = useSelector((state) => state.job);
     const { companyName } = useSelector((state) => state.company);
-    const { resumeFile, resumeText, resumeAlignmentScore } = useSelector((state) => state.resume);
+    const { resumeText, resumeAlignmentScore } = useSelector((state) => state.resume);
 
     const ResumeAlignment = () => {
         if (!jobDescription || processingJobDescription) {return null;}
-        if (!resumeFile) {
+        if (!resumeText) {
             return (
                 <div className="section-footnote"><em>
                     <a href="#introduction-section">Add resume</a> and process the JD again to get resume alignment score.
@@ -172,7 +172,7 @@ export default function JobDetailsSection ({
                     <span className="jd-keyword keyword-present">Green</span> indicate that the keyword was found in your resume.
                 </div>: <div className="section-footnote">
                     {
-                        resumeFile?
+                        resumeText?
                         <em><a href="#jd-section">Process JD</a> to highlight which keywords were found in your resume.</em>:
                         <em><a href="#introduction-section">Add resume</a> and process JD again to check which keywords were found in your resume.</em>
                     }

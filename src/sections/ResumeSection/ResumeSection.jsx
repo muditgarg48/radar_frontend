@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setResumeFile, setResumeUrl, setResumeSummary, setResumeImprovements, resetResumeData } from "../../store/features/resumeSlice.js";
+import { setResumeText, setResumeUrl, setResumeSummary, setResumeImprovements, resetResumeData } from "../../store/features/resumeSlice.js";
 import { setLoadingSummary, setLoadingResumeImprovements } from "../../store/features/sessionSlice.js";
 import "./ResumeSection.css";
 import Loading from '../../components/Loading/Loading.jsx';
@@ -16,7 +16,7 @@ export default function ResumeSection() {
     const { deployment } = useSelector((state) => state.session);
     // const [summary, setSummary] = useState(null);
     // const [improvements, setImprovements] = useState(null);
-    const { resumeFile, resumeUrl, resumeSummary, resumeImprovements } = useSelector((state) => state.resume);
+    const { resumeText, resumeUrl, resumeSummary, resumeImprovements } = useSelector((state) => state.resume);
 
     // const [loadingSummary, setLoadingSummary] = useState(false);
     // const [loadingSuggestions, setLoadingSuggestions] = useState(false);
@@ -26,12 +26,24 @@ export default function ResumeSection() {
     const handleResumeUpload = async (file) => {
         // Store resume in localStorage
         const fileUrl = URL.createObjectURL(file);
-        localStorage.setItem("resume", file.name);
-        localStorage.setItem("resumeUrl", fileUrl);
-        // setResume(file);
-        dispatch(setResumeFile(file));
-        // setResumeUrl(fileUrl);
         dispatch(setResumeUrl(fileUrl));
+        // localStorage.setItem("resume", file.name);
+        // localStorage.setItem("resumeUrl", fileUrl);
+        // setResume(file);
+        // dispatch(setResumeFile(file));
+        const formData = new FormData();
+        formData.append('resume', file);
+        const response = await fetch(deployment+"/get-resume-text", {
+            method: "POST",
+            body: formData,
+        });
+        if (response.ok) {
+            const result = await response.text();
+            dispatch(setResumeText(result));
+        } else {
+            alert("Failed to parse resume text.");
+        }
+        // setResumeUrl(fileUrl);
     };
 
     // Summarize resume
@@ -41,7 +53,7 @@ export default function ResumeSection() {
         // setLoadingSummary(true);
         dispatch(setLoadingSummary(true));
         const formData = new FormData();
-        formData.append('resume', resume);
+        formData.append('resume', resumeText);
         // console.log(formData);
         const response = await fetch(deployment+"/summarize-resume", {
             method: "POST",
@@ -51,7 +63,7 @@ export default function ResumeSection() {
         if (response.ok) {
             const result = await response.json();
             // setSummary(result.summary);
-            dispatch(setResumeSummary(result.resumeSummary));
+            dispatch(setResumeSummary(result.summary));
         }
         // setLoadingSummary(false);
         dispatch(setLoadingSummary(false));
@@ -64,7 +76,7 @@ export default function ResumeSection() {
         // setLoadingSuggestions(true);
         dispatch(setLoadingResumeImprovements(true));
         const formData = new FormData();
-        formData.append('resume', resume);
+        formData.append('resume', resumeText);
         const response = await fetch(deployment+"/improve-resume", {
             method: "POST",
             body: formData,
@@ -73,7 +85,7 @@ export default function ResumeSection() {
         if (response.ok) {
             const result = await response.json();
             // setImprovements(result.improvements);
-            dispatch(setResumeImprovements(result.resumeImprovements));
+            dispatch(setResumeImprovements(result.improvements));
         }
         // setLoadingSuggestions(false);
         dispatch(setLoadingResumeImprovements(false));
@@ -91,8 +103,8 @@ export default function ResumeSection() {
     // Update resume
     const updateResume = () => {
         if (window.confirm("Are you sure you want to update the resume? This will clear the current resume.")) {
-            localStorage.removeItem("resume");
-            localStorage.removeItem("resumeUrl");
+            // localStorage.removeItem("resume");
+            // localStorage.removeItem("resumeUrl");
             // localStorage.removeItem("resume-embeddings");
             // setResume(null);
             // setResumeUrl(null);
