@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
+	resumeName: null,
   	resumeText: null,
   	resumeUrl: null,
   	resumeSummary: null,
@@ -12,7 +13,10 @@ const resumeSlice = createSlice({
   	name: 'resume',
   	initialState,
   	reducers: {
-    	setResumeText: (state, action) => {
+		setResumeName: (state, action) => {
+			state.resumeName = action.payload;
+		},
+		setResumeText: (state, action) => {
       		state.resumeText = action.payload;
     	},
     	setResumeUrl: (state, action) => {
@@ -32,6 +36,7 @@ const resumeSlice = createSlice({
 });
 
 export const { 
+	setResumeName,
 	setResumeText, 
 	setResumeUrl, 
 	setResumeSummary, 

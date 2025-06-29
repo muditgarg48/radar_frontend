@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setResumeText, setResumeUrl, setResumeSummary, setResumeImprovements, resetResumeData } from "../../store/features/resumeSlice.js";
+import { setResumeName, setResumeText, setResumeUrl, setResumeSummary, setResumeImprovements, resetResumeData } from "../../store/features/resumeSlice.js";
 import { setLoadingSummary, setLoadingResumeImprovements } from "../../store/features/sessionSlice.js";
 import "./ResumeSection.css";
 import Loading from '../../components/Loading/Loading.jsx';
+import redirectIcon from '../../assets/redirect.gif';
 
 import { Document, Page, pdfjs } from "react-pdf"; // For PDF viewer
 import "react-pdf/dist/esm/Page/AnnotationLayer.css"; // PDF viewer styles
@@ -13,13 +14,14 @@ export default function ResumeSection() {
 
     const dispatch = useDispatch();
     const { deployment } = useSelector((state) => state.session);
-    const { resumeText, resumeUrl, resumeSummary, resumeImprovements } = useSelector((state) => state.resume);
+    const { resumeName, resumeText, resumeUrl, resumeSummary, resumeImprovements } = useSelector((state) => state.resume);
 
     const { loadingSummary, loadingResumeImprovements } = useSelector((state) => state.session);
 
     const handleResumeUpload = async (file) => {
         const fileUrl = URL.createObjectURL(file);
         dispatch(setResumeUrl(fileUrl));
+        dispatch(setResumeName(file.name));
         const formData = new FormData();
         formData.append('resume', file);
         const response = await fetch(deployment+"/get-resume-text", {
@@ -92,18 +94,27 @@ export default function ResumeSection() {
     };
     
     const ResumeUploadSection = () => {
-        return (
-            <div id="resume-basic-actions">
-                {
-                    resumeUrl ?
-                    <div style={{width: "100%",display: "flex", justifyContent: "space-evenly"}}>
+        if(resumeUrl) {
+            return (
+                <div id="resume-header">
+                    <div id="resume-subheader">
                         <button onClick={updateResume}>Update Resume</button>
-                        <button onClick={showResume}>Show Resume</button>
-                    </div>:
+                        &nbsp;
+                        &nbsp;
+                        <div id="resume-name">{resumeName}</div>
+                    </div>
+                    <button onClick={showResume} id="resume-redirect">
+                        <img src={redirectIcon} alt="Redirect to your uploaded resume" width="30px"/>
+                    </button>
+                </div>
+            );
+        } else {
+            return(
+                <div id="resume-header">
                     <button onClick={uploadResume}>Upload Resume</button>
-                }
-            </div>
-        );
+                </div>
+            );
+        }
     }
 
     const ResumePreview = () => {
