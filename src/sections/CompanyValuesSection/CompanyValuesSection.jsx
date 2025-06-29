@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setFetchingCompanyValues } from "../../store/features/sessionSlice";
 import { setValues, setCompanyValuesLink } from "../../store/features/companySlice";
+import coreValuesLogo from '../../assets/core_values.gif';
 
 import './CompanyValuesSection.css';
 import Loading from "../../components/Loading/Loading";
@@ -45,6 +46,9 @@ export default function CompanyValuesSection() {
                 </div>:
                 <div>
                     <div id="company-values-redirect">
+                        <img src={coreValuesLogo} width="50px"></img>
+                        &nbsp;
+                        &nbsp;
                         <h2>Core Values</h2 >
                         <a href={companyValuesLink} target="_blank" rel="noopener noreferrer">🔗</a>
                     </div>
