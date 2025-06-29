@@ -54,6 +54,7 @@ export default function CompanyDetailsSection () {
             <button id="get-company-values"
                 style={{margin: "1% 0"}}
                 onClick={() => setShowCompanyValues(!showCompanyValues)}
+                disabled={companyName === "UNSPECIFIED"}
             >
                 <img src={geminiIcon} alt="Redirect to Levels.fyi" width="30px" height="35px"/>
                 {showCompanyValues? "Hide":"Get"} Company Values

@@ -60,6 +60,6 @@ export default function CompanyLogo() {
 
     return (
         logoClientId && companyDomain &&
-        <img className="company-logo" src={`https://cdn.brandfetch.io/${companyDomain}?c=${logoClientId}`} alt={companyName}/>
+        <img className="company-logo" src={`https://cdn.brandfetch.io/${companyDomain}?c=${logoClientId}`} alt={companyName === "UNSPECIFIED"? "questionmark.com": companyName}/>
     );
 }
