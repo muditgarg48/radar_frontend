@@ -138,28 +138,51 @@ export default function ResumeSection() {
                 <h3>Resume Summary</h3>
                 {
                     resumeSummary?
-                        <p>{resumeSummary}</p>:
-                        <Loading loading={loadingSummary} message="Summarizing resume..."/>
+                    <p>{resumeSummary}</p>:
+                    <Loading loading={loadingSummary} message="Summarizing resume..."/>
                 }
             </div>
         );
     }
 
     const ResumeImprovements = () => {
+        if(!resumeImprovements && !loadingResumeImprovements) {return null}
+        if(resumeImprovements) {
         return (
             <div id="resume-improvements">
-                {(resumeImprovements || loadingResumeImprovements) && <h3 style={{textAlign: "center"}}>Resume Improvements</h3>}
-                {
-                    resumeImprovements?
+                <div id="resume-additions">
+                    <div className="resume-improvement-heading">➕ ADDITIONS</div>
                     <ul>
-                        {resumeImprovements.map((improvement, index) => (
-                            <li className="resume-improvement" key={index}>{improvement}</li>
+                        {resumeImprovements.additions.split(";").map((addition, index) => (
+                            <li className="resume-improvement" key={index}>{addition}</li>
                         ))}
-                    </ul>:
-                    <Loading loading={loadingResumeImprovements} message="Suggesting improvements..."/>
-                }
+                    </ul>
+                </div>
+                <div id="resume-modifications">
+                    <div className="resume-improvement-heading">✏️ MODIFICATIONS</div>
+                    <ul>
+                        {resumeImprovements.modifications.split(";").map((modification, index) => (
+                            <li className="resume-improvement" key={index}>{modification}</li>
+                        ))}
+                    </ul>
+                </div>
+                <div id="resume-deletions">
+                    <div className="resume-improvement-heading">➖ DELETIONS</div>
+                    <ul>
+                        {resumeImprovements.deletions.split(";").map((deletion, index) => (
+                            <li className="resume-improvement" key={index}>{deletion}</li>
+                        ))}
+                    </ul>
+                </div>
             </div>
         );
+        } else if (loadingResumeImprovements) {
+            return (
+                <div id="resume-improvements">
+                    <Loading loading={loadingResumeImprovements} message="Suggesting improvements..."/>
+                </div>
+            );
+        }
     }
 
     const ResumeActionButtons = () => {

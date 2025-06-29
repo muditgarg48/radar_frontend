@@ -13,7 +13,7 @@
     --button-border-radius: 15px;
 }
 
-body * {
+* {
     font-family: var(--font);
     color: var(--text-color);
 }
@@ -30,7 +30,7 @@ button {
 }
 
 body {
-    margin: 5%;
+    margin: 3%;
     background-color: var(--background-color);
 }
 

@@ -9,7 +9,6 @@
     justify-content: center;
 }
 
-
 #resume-header {
     display: flex;
     width: 100%;
@@ -76,8 +75,53 @@
 #resume-preview {
     border: 2px solid black;
     margin-top: 4%;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
 }
 
 #resume-improvements {
     text-align: justify;
+    margin-top: 2%;
+    padding: 2%;
+}
+
+#resume-improvements ul {
+    list-style: none;
+    padding: 1% 1.5%;
+    font-weight: 350;
+}
+
+#resume-additions, #resume-modifications, #resume-deletions {
+    /* glass effect */
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(7.9px);
+}
+
+/* #resume-improvements * {
+    text-align: justify;
+    margin: 0.5%;
+    padding: 0.5% 1.5%;
+    color: var(--background-color);
+    font-size: 95%;
+} */
+
+.resume-improvement-heading {
+    color: var(--background-color);
+    padding: 0.5% 1.5%;
+    font-size: 110%;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-top-right-radius: var(--border-radius);
+    border-top-left-radius: var(--border-radius);
+}
+
+#resume-additions .resume-improvement-heading{
+    background-color: var(--success-color);
+}
+
+#resume-modifications .resume-improvement-heading{
+    background-color: var(--hard-warning-color);
+}
+
+#resume-deletions .resume-improvement-heading{
+    background-color: var(--error-color);
 }
