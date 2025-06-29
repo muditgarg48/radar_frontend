@@ -3,17 +3,12 @@
     justify-content: center;
 }
 
-#resume-basic-actions {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-}
-
 #resume-header {
     display: flex;
     width: 100%;
     justify-content: center;
     align-items: center;
+    margin: 3% 0;
 }
 
 #resume-subheader {
@@ -40,36 +35,30 @@
     }
 }
 
-@media (max-width: 500px) {
-    #resume-action-buttons {
-        flex-direction: column;
-    }
-
-    #resume-action-buttons button {
-        margin: 2%;
-    }
-}
-
 #resume-upload-section {
     flex: 1;
 }
 
 #resume-operations-section {
     flex: 2;
-}
-
-#resume-action-buttons {
-    display: flex;
-    justify-content: space-evenly;
-}
-
-#resume-basic-actions div{
-    display: flex;
-    justify-content: space-evenly;
+    padding: 0 2%;
 }
 
 #resume-summary {
     text-align: justify;
+    padding: 3%;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(7.9px);
+}
+
+#resume-summary-heading {
+    font-size: 110%;
+    font-weight: bolder;
+    border-radius: var(--border-radius);
+    box-shadow: 1px 1px 3px 3px rgba(0, 0, 0, 0.3) inset;
+    width: fit-content;
+    padding: 0 1%;
 }
 
 #resume-preview {
@@ -80,13 +69,13 @@
 
 #resume-improvements {
     text-align: justify;
-    margin-top: 2%;
-    padding: 2%;
 }
 
 #resume-improvements ul {
-    list-style: none;
-    padding: 1% 1.5%;
+    /* list-style: none; */
+    padding: 2%;
+    padding-left: 5%;
+    margin: 0;
     font-weight: 350;
 }
 
@@ -95,19 +84,12 @@
     border-radius: var(--border-radius);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(7.9px);
+    margin: 2% 0;
 }
-
-/* #resume-improvements * {
-    text-align: justify;
-    margin: 0.5%;
-    padding: 0.5% 1.5%;
-    color: var(--background-color);
-    font-size: 95%;
-} */
 
 .resume-improvement-heading {
     color: var(--background-color);
-    padding: 0.5% 1.5%;
+    padding: 1.5%;
     font-size: 110%;
     background-color: rgba(255, 255, 255, 0.3);
     border-top-right-radius: var(--border-radius);

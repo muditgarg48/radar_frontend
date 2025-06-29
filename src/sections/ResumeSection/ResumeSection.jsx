@@ -6,6 +6,7 @@ import "./ResumeSection.css";
 import Loading from '../../components/Loading/Loading.jsx';
 import redirectIcon from '../../assets/redirect.gif';
 
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { Document, Page, pdfjs } from "react-pdf"; // For PDF viewer
 import "react-pdf/dist/esm/Page/AnnotationLayer.css"; // PDF viewer styles
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.mjs`;
@@ -132,69 +133,66 @@ export default function ResumeSection() {
     }
 
     const ResumeSummary = () => {
-        if(!resumeSummary && !loadingSummary) {return null}
-        return (
-            <div id="resume-summary">
-                <h3>Resume Summary</h3>
-                {
-                    resumeSummary?
-                    <p>{resumeSummary}</p>:
+        if (resumeSummary) {
+            return (
+                <div id="resume-summary">
+                    <div id="resume-summary-heading">📝 SUMMARY</div>
+                    <p>{resumeSummary}</p>
+                </div>
+            );
+        } else if (loadingSummary) {
+            return (
+                <div id="resume-summary">
                     <Loading loading={loadingSummary} message="Summarizing resume..."/>
-                }
-            </div>
-        );
+                </div>
+            );
+        } else {
+            return (
+                <button onClick={summarizeResume}>Summarize Resume</button>
+            );
+        }
     }
 
     const ResumeImprovements = () => {
-        if(!resumeImprovements && !loadingResumeImprovements) {return null}
-        if(resumeImprovements) {
-        return (
-            <div id="resume-improvements">
-                <div id="resume-additions">
-                    <div className="resume-improvement-heading">➕ ADDITIONS</div>
-                    <ul>
-                        {resumeImprovements.additions.split(";").map((addition, index) => (
-                            <li className="resume-improvement" key={index}>{addition}</li>
-                        ))}
-                    </ul>
+        if (resumeImprovements) {
+            return (
+                <div id="resume-improvements">
+                    <div id="resume-additions">
+                        <div className="resume-improvement-heading">➕ ADDITIONS</div>
+                        <ul>
+                            {resumeImprovements.additions.split(";").map((addition, index) => (
+                                <li className="resume-improvement" key={index}>{addition}</li>
+                            ))}
+                        </ul>
+                    </div>
+                    <div id="resume-modifications">
+                        <div className="resume-improvement-heading">✏️ MODIFICATIONS</div>
+                        <ul>
+                            {resumeImprovements.modifications.split(";").map((modification, index) => (
+                                <li className="resume-improvement" key={index}>{modification}</li>
+                            ))}
+                        </ul>
+                    </div>
+                    <div id="resume-deletions">
+                        <div className="resume-improvement-heading">➖ DELETIONS</div>
+                        <ul>
+                            {resumeImprovements.deletions.split(";").map((deletion, index) => (
+                                <li className="resume-improvement" key={index}>{deletion}</li>
+                            ))}
+                        </ul>
+                    </div>
                 </div>
-                <div id="resume-modifications">
-                    <div className="resume-improvement-heading">✏️ MODIFICATIONS</div>
-                    <ul>
-                        {resumeImprovements.modifications.split(";").map((modification, index) => (
-                            <li className="resume-improvement" key={index}>{modification}</li>
-                        ))}
-                    </ul>
-                </div>
-                <div id="resume-deletions">
-                    <div className="resume-improvement-heading">➖ DELETIONS</div>
-                    <ul>
-                        {resumeImprovements.deletions.split(";").map((deletion, index) => (
-                            <li className="resume-improvement" key={index}>{deletion}</li>
-                        ))}
-                    </ul>
-                </div>
-            </div>
-        );
+            );
         } else if (loadingResumeImprovements) {
             return (
                 <div id="resume-improvements">
                     <Loading loading={loadingResumeImprovements} message="Suggesting improvements..."/>
                 </div>
             );
-        }
-    }
-
-    const ResumeActionButtons = () => {
-        if (resumeUrl) { 
-            return (
-                <div id="resume-action-buttons">
-                    <button onClick={summarizeResume}>Summarize Resume</button>        
-                    <button onClick={improveResume}>Suggest Improvements</button>
-                </div>
-            );
         } else {
-            return null;
+            return (
+                <button onClick={improveResume}>Suggest Improvements</button>
+            );
         }
     }
 
@@ -204,14 +202,23 @@ export default function ResumeSection() {
             &nbsp;
             <div id="resume-section">
                 <div id="resume-upload-section">
-                    <ResumeUploadSection />
-                    <ResumeSummary />
                     <ResumePreview />
+                    <ResumeUploadSection />
                 </div>
                 &nbsp;
                 {resumeUrl && <div id="resume-operations-section">
-                    <ResumeActionButtons />
-                    <ResumeImprovements />
+                    <Tabs>
+                        <TabList>
+                            <Tab>Summary</Tab>
+                            <Tab>Improvements</Tab>
+                        </TabList>
+                        <TabPanel>
+                            <ResumeSummary/>
+                        </TabPanel>
+                        <TabPanel>
+                            <ResumeImprovements/> 
+                        </TabPanel>
+                    </Tabs>
                 </div>}
             </div>
         </div>
