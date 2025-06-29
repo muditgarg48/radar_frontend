@@ -59,7 +59,6 @@ export default function AdditionalMessageSection() {
     
     return (
         <div id="additional-msg-section">
-            <h3>Additional message with your application</h3>
             <div>
                 <h4>Context (optional)</h4>
                 <textarea
@@ -83,7 +82,7 @@ export default function AdditionalMessageSection() {
                     {additionalMessage.length} characters
             </p>}
             {additionalMessageImprovements && <div>
-                <u>Improvements for final version:</u>
+                <div style={{fontSize: "1.2rem", fontWeight: "bold"}}>✏️ Improvements for final version:</div>
                 <ul>
                     {additionalMessageImprovements.map((improvement, index) => {
                         return (<li key={index}>{improvement}</li>)

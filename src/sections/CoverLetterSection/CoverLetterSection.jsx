@@ -59,7 +59,6 @@ export default function CoverLetterSection() {
     
     return (
         <div id="cover-letter-section">
-            <h2>Cover Letter</h2>
             <div>
                 <h4>Context for your cover letter (optional)</h4>
                 <textarea
