@@ -155,7 +155,7 @@ export default function JDSection() {
             {jobDescription && <Tabs>
                 <TabList>
                     <Tab>Job Details</Tab>
-                    <Tab>Company Details</Tab>
+                    <Tab disabled={companyName === "UNSPECIFIED"}>Company Details</Tab>
                     <Tab>Additional Documents</Tab>
                 </TabList>
                 <TabPanel>

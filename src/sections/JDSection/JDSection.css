@@ -38,3 +38,9 @@
     font-weight: normal;
     font-size: x-large;
 }
+
+.react-tabs__tab--disabled {
+    color: gray;
+    cursor: not-allowed;
+    text-decoration: line-through;
+}

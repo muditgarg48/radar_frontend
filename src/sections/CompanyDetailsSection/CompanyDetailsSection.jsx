@@ -30,7 +30,7 @@ export default function CompanyDetailsSection () {
     const CheckSalaries = () => {
         return (
             <a href="https://www.levels.fyi/" target="_blank" rel="noopener noreferrer">
-                <button id="check-salaries">
+                <button id="check-salaries" disabled={companyName === "UNSPECIFIED"}>
                     <img src={levelfyiIcon} alt="Redirect to Levels.fyi" width="60px" height="35px"/>
                     Check Salaries
                 </button>
@@ -41,7 +41,7 @@ export default function CompanyDetailsSection () {
     const CheckCompany = () => {
         return (
             <a href={companyGlassdoorLink} target="_blank" rel="noopener noreferrer">
-                <button id="check-company">
+                <button id="check-company" disabled={companyName === "UNSPECIFIED"}>
                     <img src={glassdoorIcon} alt="Redirect to Glassdoor Review" width="20px" height="35px"/>
                     Glassdoor Review
                 </button>
@@ -56,7 +56,7 @@ export default function CompanyDetailsSection () {
                 onClick={() => setShowCompanyValues(!showCompanyValues)}
                 disabled={companyName === "UNSPECIFIED"}
             >
-                <img src={geminiIcon} alt="Redirect to Levels.fyi" width="30px" height="35px"/>
+                <img src={geminiIcon} alt="Fetch Company Values" width="30px" height="35px"/>
                 {showCompanyValues? "Hide":"Get"} Company Values
             </button>
         );
