@@ -29,6 +29,13 @@ export default function IntroductionSection() {
                 RaDAR is a tool I came up with which incorporates all the suggestions I have ever been given to optimize my job search, improve my resume, and improve my job hunting strategy.
             </p>
             <div id="introduction-section-footnote">
+                <a href="https://muditgarg48.github.io/" target="_blank" rel="noopener noreferrer">
+                    <button>
+                        About the Developer
+                    </button>
+                </a>
+                &nbsp;
+                &nbsp;
                 <button onClick={() => dispatch(invalidateCaches())}>
                     Invalidate Caches
                 </button>
