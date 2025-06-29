@@ -1,35 +1,40 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  name: null,
-  values: null,
-  domain: null,
-  glassdoor_link: null
+  	companyName: null,
+  	companyValues: null,
+	companyValuesLink: null,
+  	companyDomain: null,
+  	companyGlassdoorLink: null
 };
 
 const companySlice = createSlice({
-  name: 'company',
-  initialState,
-  reducers: {
-    setCompanyName: (state, action) => {
-        state.name = action.payload;
-    },
-    setValues: (state, action) => {
-        state.values = action.payload;
-    },
-    setDomain: (state, action) => {
-        state.domain = action.payload;
-    },
-    setGlassdoorLink: (state, action) => {
-        state.glassdoor_link = action.payload;
-    },
-    resetCompanyData: () => initialState
-  }
+  	name: 'company',
+  	initialState,
+  	reducers: {
+		setCompanyName: (state, action) => {
+			state.companyName = action.payload;
+		},
+		setValues: (state, action) => {
+			state.companyValues = action.payload;
+		},
+		setCompanyValuesLink: (state, action) => {
+			state.companyValuesLink = action.payload;
+		},
+		setDomain: (state, action) => {
+			state.companyDomain = action.payload;
+		},
+		setGlassdoorLink: (state, action) => {
+			state.companyGlassdoorLink = action.payload;
+		},
+		resetCompanyData: () => initialState
+	}
 });
 
 export const { 
     setCompanyName, 
     setValues, 
+	setCompanyValuesLink,
     setDomain, 
     setGlassdoorLink, 
     resetCompanyData } = companySlice.actions;

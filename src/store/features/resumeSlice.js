@@ -1,12 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  	file: null,
-  	text: null,
-  	url: null,
-  	summary: null,
-  	improvements: null,
-  	alignmentScore: 0,
+  	resumeFile: null,
+  	resumeText: null,
+  	resumeUrl: null,
+  	resumeSummary: null,
+  	resumeImprovements: null,
+  	resumeAlignmentScore: 0,
 };
 
 const resumeSlice = createSlice({
@@ -14,22 +14,22 @@ const resumeSlice = createSlice({
   	initialState,
   	reducers: {
     	setResumeFile: (state, action) => {
-      		state.file = action.payload;
+      		state.resumeFile = action.payload;
     	},
     	setResumeText: (state, action) => {
-      		state.text = action.payload;
+      		state.resumeText = action.payload;
     	},
     	setResumeUrl: (state, action) => {
-      		state.url = action.payload;
+      		state.resumeUrl = action.payload;
     	},
     	setResumeSummary: (state, action) => {
-      		state.summary = action.payload;
+      		state.resumeSummary = action.payload;
     	},
     	setResumeImprovements: (state, action) => {
-      		state.improvements = action.payload;
+      		state.resumeImprovements = action.payload;
     	},
     	setResumeAlignmentScore: (state, action) => {
-      		state.alignmentScore = action.payload;
+      		state.resumeAlignmentScore = action.payload;
     	},
     	resetResumeData: () => initialState
   	}

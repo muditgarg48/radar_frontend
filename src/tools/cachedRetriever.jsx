@@ -1,4 +1,11 @@
-export default async function cachedRetriever(cacheKey, dataKey, deployment, endpoint, payload=null) {
+// import { useSelector } from "react-redux";
+import store from "../store/store.js";
+
+export default async function cachedRetriever(cacheKey, dataKey, endpoint, payload=null) {
+
+    // const { deployment } = useSelector((state) => state.session);
+    const deployment = store.getState().session.deployment;
+
     let cache = JSON.parse(localStorage.getItem(cacheKey));
     // if cache is not null, check for our data using dataKey
     if (cache != null) {

@@ -1,17 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    description: null,
-    title: null,
-    keywords: null,
-    presentKeywords: null,
+    jobDescription: null,
+    jobTitle: null,
+    jdKeywords: null,
     experienceLevel: null,
     salaryBracket: null,
     teamName: null,
     sponsorship: null,                             
     location: null,
     benefits: null,
-    keyNotes: null,
+    jdKeyNotes: null,
 };
 
 const jobSlice = createSlice({
@@ -19,13 +18,13 @@ const jobSlice = createSlice({
     initialState,
     reducers: {
         setJobDescription: (state, action) => {
-            state.description = action.payload;
+            state.jobDescription = action.payload;
         },
         setJobTitle: (state, action) => {
-            state.title = action.payload;
+            state.jobTitle = action.payload;
         },
         setJobKeywords: (state, action) => {
-            state.keywords = action.payload;
+            state.jdKeywords = action.payload;
         },
         setJobExperienceLevel: (state, action) => {
             state.experienceLevel = action.payload;
@@ -46,9 +45,21 @@ const jobSlice = createSlice({
             state.benefits = action.payload;
         },
         setJobKeyNotes: (state, action) => {
-            state.keyNotes = action.payload;
+            state.jdKeyNotes = action.payload;
         },
-        resetJob: () => initialState
+        setJobDetails: (state, action) => {
+            const data = action.payload;
+            state.jobTitle = data.title;
+            state.jdKeywords = data.keywords;
+            state.jdKeyNotes = data.notes;
+            if ("salary_bracket" in data) state.salaryBracket = data.salary_bracket;
+            if ("experience_level" in data) state.experienceLevel = data.experience_level;
+            if ("team_name" in data) state.teamName = data.team_name;
+            if ("visa_sponsorship" in data) state.sponsorship = data.visa_sponsorship;
+            if ("location" in data) state.location = data.location;
+            if ("benefits" in data) state.benefits = data.benefits;
+        },
+        resetJobData: () => initialState
     }
 });
 
@@ -62,6 +73,7 @@ export const {
     setJobSponsorship, 
     setJobLocation, 
     setJobBenefits, 
-    setJobKeyNotes, 
-    resetJob } = jobSlice.actions;
+    setJobKeyNotes,
+    setJobDetails,
+    resetJobData } = jobSlice.actions;
 export default jobSlice.reducer;

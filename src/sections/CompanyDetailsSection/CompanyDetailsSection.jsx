@@ -1,4 +1,7 @@
-import React, {useState} from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setGlassdoorLink } from "../../store/features/companySlice.js";
+
 import "./CompanyDetailsSection.css";   
 import CompanyLogo from "../../components/CompanyLogo/CompanyLogo.jsx";
 import CompanyValuesSection from "../CompanyValuesSection/CompanyValuesSection.jsx";
@@ -6,13 +9,23 @@ import levelfyiIcon from '../../assets/levelfyi.svg';
 import glassdoorIcon from '../../assets/glassdoor.svg';
 import geminiIcon from '../../assets/gemini.svg';
 
-export default function CompanyDetailsSection ({jobTitle, jobCompany, deployment}) {
+export default function CompanyDetailsSection () {
     
+    const dispatch = useDispatch();
     const [showCompanyValues, setShowCompanyValues] = useState(false);
+    const { companyName, companyGlassdoorLink } = useSelector((state) => state.company);
 
-    const generateGlassdoorLink = () => {
-        return "https://www.glassdoor.ie/Reviews/index.htm?filterType=RATING_OVERALL&employerName="+jobCompany.toLowerCase().replace(" ", "+")+"&page=1&overall_rating_low=1";
-    }
+    // const generateGlassdoorLink = () => {
+    //     return "https://www.glassdoor.ie/Reviews/index.htm?filterType=RATING_OVERALL&employerName="+jobCompany.toLowerCase().replace(" ", "+")+"&page=1&overall_rating_low=1";
+    // }
+
+    useEffect(()=> {
+        if (companyName && !companyGlassdoorLink) {
+            dispatch(setGlassdoorLink(
+                "https://www.glassdoor.ie/Reviews/index.htm?filterType=RATING_OVERALL&employerName="+companyName.toLowerCase().replace(" ", "+")+"&page=1&overall_rating_low=1"
+            ));
+        }
+    }, [])
 
     const CheckSalaries = () => {
         return (
@@ -27,7 +40,7 @@ export default function CompanyDetailsSection ({jobTitle, jobCompany, deployment
 
     const CheckCompany = () => {
         return (
-            <a href={generateGlassdoorLink()} target="_blank" rel="noopener noreferrer">
+            <a href={companyGlassdoorLink} target="_blank" rel="noopener noreferrer">
                 <button id="check-company">
                     <img src={glassdoorIcon} alt="Redirect to Glassdoor Review" width="20px" height="35px"/>
                     Glassdoor Review
@@ -49,14 +62,14 @@ export default function CompanyDetailsSection ({jobTitle, jobCompany, deployment
     }
 
     const CompanyHeader = () => {
-        if (!jobCompany) {return null;}
+        if (!companyName) {return null;}
         return (
             <div id="company-section-header">
                 <div id="company-section-header-title">
-                    <CompanyLogo deployment={deployment} jobCompany={jobCompany}/>
+                    <CompanyLogo/>
                     &nbsp;
                     &nbsp;
-                    <h2 id="jd-company">{jobCompany}</h2>
+                    <h2 id="jd-company">{companyName}</h2>
                 </div>
                 <div id="company-section-header-buttons">
                     <CheckSalaries/>
@@ -70,11 +83,7 @@ export default function CompanyDetailsSection ({jobTitle, jobCompany, deployment
     return (
         <div id="company-section">
             <CompanyHeader/>
-            {showCompanyValues && <CompanyValuesSection
-                deployment={deployment}
-                jobCompany={jobCompany}
-                jobTitle={jobTitle}
-            />}
+            {showCompanyValues && <CompanyValuesSection/>}
         </div>
     );
 }

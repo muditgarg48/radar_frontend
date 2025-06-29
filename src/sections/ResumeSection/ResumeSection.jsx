@@ -1,17 +1,26 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setResumeFile, setResumeUrl, setResumeSummary, setResumeImprovements, resetResumeData } from "../../store/features/resumeSlice.js";
+import { setLoadingSummary, setLoadingResumeImprovements } from "../../store/features/sessionSlice.js";
 import "./ResumeSection.css";
 import Loading from '../../components/Loading/Loading.jsx';
+
 import { Document, Page, pdfjs } from "react-pdf"; // For PDF viewer
 import "react-pdf/dist/esm/Page/AnnotationLayer.css"; // PDF viewer styles
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.mjs`;
 
-export default function ResumeSection({deployment, setResume, resume, setResumeUrl, resumeUrl}) {
+// export default function ResumeSection({deployment, setResume, resume, setResumeUrl, resumeUrl}) {
+export default function ResumeSection() {
 
-    const [summary, setSummary] = useState(null);
-    const [improvements, setImprovements] = useState(null);
+    const dispatch = useDispatch();
+    const { deployment } = useSelector((state) => state.session);
+    // const [summary, setSummary] = useState(null);
+    // const [improvements, setImprovements] = useState(null);
+    const { resumeFile, resumeUrl, resumeSummary, resumeImprovements } = useSelector((state) => state.resume);
 
-    const [loadingSummary, setLoadingSummary] = useState(false);
-    const [loadingSuggestions, setLoadingSuggestions] = useState(false);
+    // const [loadingSummary, setLoadingSummary] = useState(false);
+    // const [loadingSuggestions, setLoadingSuggestions] = useState(false);
+    const { loadingSummary, loadingResumeImprovements } = useSelector((state) => state.session);
 
     // Handle resume upload
     const handleResumeUpload = async (file) => {
@@ -19,15 +28,18 @@ export default function ResumeSection({deployment, setResume, resume, setResumeU
         const fileUrl = URL.createObjectURL(file);
         localStorage.setItem("resume", file.name);
         localStorage.setItem("resumeUrl", fileUrl);
-        setResume(file);
-        setResumeUrl(fileUrl);
+        // setResume(file);
+        dispatch(setResumeFile(file));
+        // setResumeUrl(fileUrl);
+        dispatch(setResumeUrl(fileUrl));
     };
 
     // Summarize resume
     const summarizeResume = async () => {
         
-        setSummary(null);
-        setLoadingSummary(true);
+        // setSummary(null);
+        // setLoadingSummary(true);
+        dispatch(setLoadingSummary(true));
         const formData = new FormData();
         formData.append('resume', resume);
         // console.log(formData);
@@ -38,17 +50,19 @@ export default function ResumeSection({deployment, setResume, resume, setResumeU
 
         if (response.ok) {
             const result = await response.json();
-            setSummary(result.summary);
+            // setSummary(result.summary);
+            dispatch(setResumeSummary(result.resumeSummary));
         }
-        setLoadingSummary(false);
-
+        // setLoadingSummary(false);
+        dispatch(setLoadingSummary(false));
     };
 
     // Generate resume improvement suggestions
     const improveResume = async () => {
         
-        setImprovements(null);
-        setLoadingSuggestions(true);
+        // setImprovements(null);
+        // setLoadingSuggestions(true);
+        dispatch(setLoadingResumeImprovements(true));
         const formData = new FormData();
         formData.append('resume', resume);
         const response = await fetch(deployment+"/improve-resume", {
@@ -58,9 +72,11 @@ export default function ResumeSection({deployment, setResume, resume, setResumeU
 
         if (response.ok) {
             const result = await response.json();
-            setImprovements(result.improvements);
+            // setImprovements(result.improvements);
+            dispatch(setResumeImprovements(result.resumeImprovements));
         }
-        setLoadingSuggestions(false);
+        // setLoadingSuggestions(false);
+        dispatch(setLoadingResumeImprovements(false));
     };
 
     // Show resume in new tab
@@ -68,7 +84,7 @@ export default function ResumeSection({deployment, setResume, resume, setResumeU
         if (resumeUrl) {
             window.open(resumeUrl, "_blank");
         } else {
-            alert("No resume found in cache.");
+            alert("No resume found.");
         }
     };
 
@@ -78,10 +94,11 @@ export default function ResumeSection({deployment, setResume, resume, setResumeU
             localStorage.removeItem("resume");
             localStorage.removeItem("resumeUrl");
             // localStorage.removeItem("resume-embeddings");
-            setResume(null);
-            setResumeUrl(null);
-            setSummary(null);
-            setImprovements(null);
+            // setResume(null);
+            // setResumeUrl(null);
+            // setSummary(null);
+            // setImprovements(null);
+            dispatch(resetResumeData())
 
             // IMPORTANT: remember to delete the file from gemini as well if uploaded
 
@@ -130,13 +147,13 @@ export default function ResumeSection({deployment, setResume, resume, setResumeU
     }
 
     const ResumeSummary = () => {
-        if(!summary && !loadingSummary) {return null}
+        if(!resumeSummary && !loadingSummary) {return null}
         return (
             <div id="resume-summary">
                 <h3>Resume Summary</h3>
                 {
-                    summary?
-                        <p>{summary}</p>:
+                    resumeSummary?
+                        <p>{resumeSummary}</p>:
                         <Loading loading={loadingSummary} message="Summarizing resume..."/>
                 }
             </div>
@@ -146,15 +163,15 @@ export default function ResumeSection({deployment, setResume, resume, setResumeU
     const ResumeImprovements = () => {
         return (
             <div id="resume-improvements">
-                {(improvements || loadingSuggestions) && <h3 style={{textAlign: "center"}}>Resume Improvements</h3>}
+                {(resumeImprovements || loadingResumeImprovements) && <h3 style={{textAlign: "center"}}>Resume Improvements</h3>}
                 {
-                    improvements?
+                    resumeImprovements?
                     <ul>
-                        {improvements.map((improvement, index) => (
+                        {resumeImprovements.map((improvement, index) => (
                             <li className="resume-improvement" key={index}>{improvement}</li>
                         ))}
                     </ul>:
-                    <Loading loading={loadingSuggestions} message="Suggesting improvements..."/>
+                    <Loading loading={loadingResumeImprovements} message="Suggesting improvements..."/>
                 }
             </div>
         );

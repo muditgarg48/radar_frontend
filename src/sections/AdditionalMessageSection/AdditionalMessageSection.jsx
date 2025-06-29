@@ -1,32 +1,44 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setLoadingAdditionalMessage, setAdditionalMessageDetails, setAdditionalMessageContext, resetAdditionalMessage } from "../../store/features/additionalDocsSlice.js";
 import Loading from '../../components/Loading/Loading.jsx';
 import './AdditionalMessageSection.css';
 
-export default function AdditionalMessageSection({resume, jobDescription, jobTitle, jobCompany, deployment}) {
+export default function AdditionalMessageSection() {
     
-    const [additionalMessage, setAdditionalMessage] = useState(null);
-    const [additionalMessageImprovements, setAdditionalMessageImprovements] = useState(null);
-    const [additionalMessageContext, setAdditionalMessageContext] = useState(null);
+    const dispatch = useDispatch();
+    const { deployment } = useSelector((state) => state.session);
+    const { resumeFile } = useSelector((state) => state.resume);
+    const { jobDescription, jobTitle } = useSelector((state) => state.job);
+    const { companyName } = useSelector((state) => state.company);
 
-    const [loadingAdditionalMessage, setLoadingAdditionalMessage] = useState(false);
+    // const [additionalMessage, setAdditionalMessage] = useState(null);
+    // const [additionalMessageImprovements, setAdditionalMessageImprovements] = useState(null);
+    const [addMsgContext, maintainAddMsgContext] = useState(null);
+
+    // const [loadingAdditionalMessage, setLoadingAdditionalMessage] = useState(false);
+    const { additionalMessage, additionalMessageContext, additionalMessageImprovements, loadingAdditionalMessage } = useSelector((state) => state.additionalDocs);
 
     const handleAdditionalMsgGeneration = async () => {
         
-        setAdditionalMessage(null);
-        setAdditionalMessageImprovements(null);
+        // setAdditionalMessage(null);
+        // setAdditionalMessageImprovements(null);
+        dispatch(resetAdditionalMessage());
+        dispatch(setAdditionalMessageContext(addMsgContext));
 
-        if (resume === null) {
+        if (resumeFile === null) {
             alert("Please upload a resume first.");
             return;
         } else if (jobDescription === "") {
             alert("Please enter a job description and process it first.");
             return;
-        } else if (jobTitle === ""  || jobCompany === "") {
+        } else if (jobTitle === ""  || companyName === "") {
             alert("Please process the job description first");
             return;
         }
         
-        setLoadingAdditionalMessage(true);
+        // setLoadingAdditionalMessage(true);
+        dispatch(setLoadingAdditionalMessage(true));
         
         const formData = new FormData();
         formData.append('resume', resume);
@@ -42,15 +54,17 @@ export default function AdditionalMessageSection({resume, jobDescription, jobTit
 
         if (response.ok) {
             const result = await response.json();
-            console.log("Additional message generated:", result.additional_msg);
-            setAdditionalMessage(result.additional_msg);
-            setAdditionalMessageImprovements(result.improvements);
+            // console.log("Additional message generated:", result.additional_msg);
+            // setAdditionalMessage(result.additional_msg);
+            // setAdditionalMessageImprovements(result.improvements);
+            dispatch(setAdditionalMessageDetails(result));
         } else {
             console.log("Error generating additional message");
             console.log(response.json().then(data => console.log(data.error)));
         }
 
-        setLoadingAdditionalMessage(false);
+        // setLoadingAdditionalMessage(false);
+        dispatch(setLoadingAdditionalMessage(false));
     }
     
     return (
@@ -62,7 +76,7 @@ export default function AdditionalMessageSection({resume, jobDescription, jobTit
                     rows={2}
                     id="additional-msg-context" 
                     placeholder="Additional Message context" 
-                    onChange={(e) => setAdditionalMessageContext(e.target.value)}
+                    onChange={(e) => maintainAddMsgContext(e.target.value)}
                 />
             </div>
             &nbsp;

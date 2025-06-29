@@ -1,38 +1,50 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setLoadingCoverLetter, setCoverLetterDetails, setCoverLetterContext, resetCoverLetter } from "../../store/features/additionalDocsSlice";
 import Loading from "../../components/Loading/Loading";
 import './CoverLetterSection.css';
 
-export default function CoverLetterSection({resume, jobDescription, jobTitle, jobCompany, deployment}) {
-    
-    const [coverLetter, setCoverLetter] = useState(null);
-    const [coverLetterImprovements, setCoverLetterImprovements] = useState(null);
-    const [coverLetterContext, setCoverLetterContext] = useState(null);
+export default function CoverLetterSection() {
 
-    const [loadingCoverLetter, setLoadingCoverLetter] = useState(false);
+    const dispatch = useDispatch();
+    const { deployment } = useSelector((state) => state.session);
+    const { resumeFile } = useSelector((state) => state.resume);
+    const { jobDescription, jobTitle } = useSelector((state) => state.job);
+    const { companyName } = useSelector((state) => state.company);
+    
+    // const [coverLetter, setCoverLetter] = useState(null);
+    // const [coverLetterImprovements, setCoverLetterImprovements] = useState(null);
+    const [letterContext, maintainLetterContext] = useState(null);
+
+    // const [loadingCoverLetter, setLoadingCoverLetter] = useState(false);
+    const { coverLetter, coverLetterContext, coverLetterImprovements, loadingCoverLetter } = useSelector((state) => state.additionalDocs);
     
     const handleCoverLetterGeneration = async () => {
         
-        setCoverLetter(null);
-        setCoverLetterImprovements(null);
+        // setCoverLetter(null);
+        // setCoverLetterImprovements(null);
+        dispatch(resetCoverLetter());
+        dispatch(setCoverLetterContext(letterContext));
 
-        if (resume === null) {
+        if (resumeFile === null) {
             alert("Please upload a resume first.");
             return;
         } else if (jobDescription === "") {
             alert("Please enter a job description and process it first.");
             return;
-        } else if (jobTitle === ""  || jobCompany === "") {
+        } else if (jobTitle === ""  || companyName === "") {
             alert("Please process the job description first");
             return;
         }
         
-        setLoadingCoverLetter(true);
+        // setLoadingCoverLetter(true);
+        dispatch(setLoadingCoverLetter(true));
         
         const formData = new FormData();
-        formData.append('resume', resume);
+        formData.append('resume', resumeFile);
         formData.append('jd', jobDescription);
         formData.append('position', jobTitle);
-        formData.append('company', jobCompany);
+        formData.append('company', companyName);
         formData.append('context', coverLetterContext);
 
         const response = await fetch(deployment+"/generate-cover-letter", {
@@ -42,15 +54,17 @@ export default function CoverLetterSection({resume, jobDescription, jobTitle, jo
 
         if (response.ok) {
             const result = await response.json();
-            console.log("Cover Letter generated:", result.cover_letter);
-            setCoverLetter(result.cover_letter);
-            setCoverLetterImprovements(result.improvements);
+            // console.log("Cover Letter generated:", result.cover_letter);
+            // setCoverLetter(result.cover_letter);
+            // setCoverLetterImprovements(result.improvements);
+            dispatch(setCoverLetterDetails(result));
         } else {
             console.log("Error generating cover letter");
             console.log(response.json().then(data => console.log(data.error)));
         }
 
-        setLoadingCoverLetter(false);
+        // setLoadingCoverLetter(false);
+        dispatch(setLoadingCoverLetter(false));
     }
     
     return (
@@ -62,7 +76,7 @@ export default function CoverLetterSection({resume, jobDescription, jobTitle, jo
                     rows={2}
                     id="cover-letter-context" 
                     placeholder="Cover letter context" 
-                    onChange={(e) => setCoverLetterContext(e.target.value)}
+                    onChange={(e) => maintainLetterContext(e.target.value)}
                 />
             </div>
             &nbsp;

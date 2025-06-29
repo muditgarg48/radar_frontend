@@ -4,8 +4,8 @@ import './AdditionalDocSection.css';
 import AdditionalMessageSection from "../AdditionalMessageSection/AdditionalMessageSection.jsx";
 import CoverLetterSection from "../CoverLetterSection/CoverLetterSection.jsx";
 
-export default function AdditionalDocSection({resume, jobDescription, jobTitle, jobCompany, deployment}) {
-    
+export default function AdditionalDocSection() {
+
     return (
         <div id="additional-docs-section">
             {/* <h2 className="section-heading">ADDITIONAL DOCUMENTS</h2> */}
@@ -15,19 +15,19 @@ export default function AdditionalDocSection({resume, jobDescription, jobTitle, 
                 Instead, use it as a starting point for your own document. There will be some suggestions on how to start to improve each generated document. Use them as your guide to make them your own.
             </p>
             <CoverLetterSection
-                resume={resume}
-                jobDescription={jobDescription}
-                jobTitle={jobTitle}
-                jobCompany={jobCompany}
-                deployment={deployment}
+                // resume={resume}
+                // jobDescription={jobDescription}
+                // jobTitle={jobTitle}
+                // jobCompany={jobCompany}
+                // deployment={deployment}
             />
             &nbsp;
             <AdditionalMessageSection
-                resume={resume}
-                jobDescription={jobDescription}
-                jobTitle={jobTitle}
-                jobCompany={jobCompany}
-                deployment={deployment}
+                // resume={resume}
+                // jobDescription={jobDescription}
+                // jobTitle={jobTitle}
+                // jobCompany={jobCompany}
+                // deployment={deployment}
             />
         </div>
     );

@@ -1,11 +1,19 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setLogoClientId } from "../../store/features/sessionSlice.js";
+import { setDomain } from "../../store/features/companySlice.js";
 import './CompanyLogo.css';
 import cachedRetriever from "../../tools/cachedRetriever";
 
-export default function CompanyLogo({deployment, jobCompany}) {
-    
-    const [clientId, setClientId] = useState(null);
-    const [domain, setDomain] = useState(null);
+// export default function CompanyLogo({deployment, jobCompany}) {
+export default function CompanyLogo() {
+
+    // const [clientId, setClientId] = useState(null);
+    // const [domain, setDomain] = useState(null);
+
+    const dispatch = useDispatch();
+    const { deployment, logoClientId } = useSelector((state) => state.session);
+    const { companyName, companyDomain } = useSelector((state) => state.company);
 
     useEffect(() => {
         const fetchLogoClientId = async () => {
@@ -15,7 +23,8 @@ export default function CompanyLogo({deployment, jobCompany}) {
 
             if (response.ok) {
                 const result = await response.text();
-                setClientId(result);
+                // setClientId(result);
+                dispatch(setLogoClientId(result));
             }
         }
         const fetchCompanyDomain = async () => {
@@ -34,23 +43,23 @@ export default function CompanyLogo({deployment, jobCompany}) {
             // }
             const result = await cachedRetriever(
                 "RADAR_CACHED_COMPANY_DOMAINS",
-                jobCompany.toLowerCase(),
-                deployment,
+                companyName.toLowerCase(),
                 "/get-company-domain",
                 {
                     method: "POST",
                     headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({"company":jobCompany})
+                    body: JSON.stringify({"company": companyName})
                 }
             );
-            setDomain(result.domain);
+            // setDomain(result.domain);
+            dispatch(setDomain(result.domain));
         }
-        fetchLogoClientId();
-        fetchCompanyDomain();
+        if (!logoClientId) fetchLogoClientId();
+        if (!companyDomain) fetchCompanyDomain();
     }, []);
 
     return (
-        clientId && domain &&
-        <img className="company-logo" src={`https://cdn.brandfetch.io/${domain}?c=${clientId}`} alt={jobCompany}/>
+        logoClientId && companyDomain &&
+        <img className="company-logo" src={`https://cdn.brandfetch.io/${companyDomain}?c=${logoClientId}`} alt={companyName}/>
     );
 }

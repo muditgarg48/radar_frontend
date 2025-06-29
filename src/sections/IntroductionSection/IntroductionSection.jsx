@@ -1,7 +1,11 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import './IntroductionSection.css';
 
-export default function IntroductionSection({serverStatus}) {
+export default function IntroductionSection() {
+    
+    const { serverStatus } = useSelector((state) => state.session);
+    
     return (
         <div id="introduction-section">
             <div id="website-title">

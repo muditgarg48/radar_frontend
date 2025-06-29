@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setLoadingApplyData, setLogoClientId } from "../../store/features/sessionSlice.js";
 import "./ApplySection.css";
 import Loading from "../../components/Loading/Loading.jsx";
 import ErrorLogo from "../../components/ErrorLogo/ErrorLogo.jsx";
 
-export default function ApplySection({deployment, serverStatus}) {
+export default function ApplySection() {
+
+    const dispatch = useDispatch();
+    const { serverStatus, deployment, loadingApplyData, logoClientId } = useSelector((state) => state.session);
 
     const [applyData, setApplyData] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [clientId, setClientId] = useState(null);
+    // const [loading, setLoading] = useState(true);
+    // const [clientId, setClientId] = useState(null);
     const [searchQuery, setSearchQuery] = useState("");
     const [filteredCompanies, setFilteredCompanies] = useState(applyData);
     const logo_link = "https://cdn.brandfetch.io/";
@@ -22,7 +27,8 @@ export default function ApplySection({deployment, serverStatus}) {
                 const result = await response.json();
                 setApplyData(result);
                 setFilteredCompanies(result);
-                setLoading(false);
+                // setLoading(false);
+                dispatch(setLoadingApplyData(false));
             }
         };
 
@@ -33,18 +39,22 @@ export default function ApplySection({deployment, serverStatus}) {
 
             if (response.ok) {
                 const result = await response.text();
-                setClientId(result);
+                // setClientId(result);
+                dispatch(setLogoClientId(result));
             }
         }
 
-        fetchLogoClientId().then(() => fetchApplyData());
-    }, [deployment]);
+        if(!logoClientId) fetchLogoClientId().then(() => fetchApplyData());
+
+    }, []);
 
     useEffect(() => {
         if (serverStatus === "🔴 Offline" || serverStatus === "🟢 Online") {
-            setLoading(false);
+            // setLoading(false);
+            dispatch(setLoadingApplyData(false));
         } else {
-            setLoading(true);
+            // setLoading(true);
+            dispatch(setLoadingApplyData(true));
         }
     }, [serverStatus]);
 
@@ -82,7 +92,7 @@ export default function ApplySection({deployment, serverStatus}) {
         company = company.company
         return (
             <a className="apply-button" href={company.portal_link} target="_blank" rel="noopener noreferrer">
-                <img className="company-logo" src={`${logo_link}${company.domain}?c=${clientId}`} alt={company.name}/>
+                <img className="company-logo" src={`${logo_link}${company.domain}?c=${logoClientId}`} alt={company.name}/>
                 <div className="company-name">{company.name}</div>
             </a>
         );
@@ -132,7 +142,7 @@ export default function ApplySection({deployment, serverStatus}) {
             </p>
             <h4>Please Note, there is no affiliation between RaDAR and any of these companies. These are just the direct links to the list of job opportunties there.</h4>
             <h3>Happy Applying!</h3>
-            <Loading loading={loading} message="Loading the Portal List"/>
+            <Loading loading={loadingApplyData} message="Loading the Portal List"/>
             {applyData && <>
                 <input
                     type="text"
@@ -146,7 +156,7 @@ export default function ApplySection({deployment, serverStatus}) {
                     displayData(filteredCompanies)
                 }
             </>}
-            {!applyData && !loading && 
+            {!applyData && !loadingApplyData && 
                 <ErrorLogo
                     errorMessage="There's something wrong with the server."
                 />
