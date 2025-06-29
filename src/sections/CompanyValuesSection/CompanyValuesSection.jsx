@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setFetchingCompanyValues } from "../../store/features/sessionSlice";
+import { setValues, setCompanyValuesLink } from "../../store/features/companySlice";
 
 import './CompanyValuesSection.css';
 import Loading from "../../components/Loading/Loading";
 
 import cachedRetriever from "../../tools/cachedRetriever";
-import { setCompanyValuesLink } from "../../store/features/companySlice";
 
 export default function CompanyValuesSection() {
     
     const dispatch = useDispatch();
     // const [values, setValues] = useState(null);
     // const [link, setLink] = useState(null);
+    const { jobTitle } = useSelector((state) => state.job);
     const { companyName, companyValues, companyValuesLink } = useSelector((state) => state.company);
 
     // const [loadingValues, setLoadingValues] = useState(true);
@@ -29,9 +30,10 @@ export default function CompanyValuesSection() {
                 {
                     method: "POST",
                     headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({"job_title": jobTitle, "company":jobCompany})
+                    body: JSON.stringify({"job_title": jobTitle, "company": companyName})
                 }
             );
+            // console.log(company_values)
             dispatch(setValues(company_values.values));
             dispatch(setCompanyValuesLink(company_values.link));
             dispatch(setFetchingCompanyValues(false));
@@ -51,7 +53,7 @@ export default function CompanyValuesSection() {
                         <a href={companyValuesLink} target="_blank" rel="noopener noreferrer">🔗</a>
                     </div>
                     {
-                        companyValues.map((value, i) => (
+                        companyValues && companyValues.map((value, i) => (
                             <div key={i} className="company-value-item">
                                 <div><strong>{value.value_name}</strong></div>
                                 <div><em>{value.value_explanation}</em></div>
