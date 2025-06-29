@@ -1,19 +1,38 @@
+:root {
+    --background-color: #FFFFE5;
+    --text-color: #2E1F27;
+    --button-color: #9EB7E5;
+    --button-text-color: #0A100D;
+    --soft-warning-color: #FF9F1C;
+    --hard-warning-color: #D19C1D;
+    --error-color: #C03221;
+    --success-color: #1C7C54;
+    --font: "Kanit", sans-serif;
+    --heading-font: "Righteous", sans-serif;
+    --border-radius: 20px;
+    --button-border-radius: 15px;
+}
+
 body * {
-    font-family: "Kanit", sans-serif;
+    font-family: var(--font);
     /* font-weight: lighter; */
+    color: var(--text-color);
 }
 
 button {
     border: none;
-    border-radius: 20px;
-    padding: 5px 8px;
-    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.1);
+    border-radius: var(--button-border-radius);
+    padding: 10px 20px;
+    background-color: var(--button-color);
+    color: var(--button-text-color);
+    box-shadow: 1px 1px 3px 3px rgba(0, 0, 0, 0.1);
     cursor: pointer;
+    font-size: 100%;
 }
 
 body {
     margin: 5%;
-    background-color: rgba(255, 255, 0, 0.1);
+    background-color: var(--background-color);
 }
 
 .section-heading {

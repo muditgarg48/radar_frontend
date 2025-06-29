@@ -2,8 +2,9 @@
     width: 100%;
     padding: 1.3%;
     box-sizing: border-box;
-    font-family: "Kanit", sans-serif;
-    border-radius: 20px;
+    /* font-family: "Kanit", sans-serif; */
+    border-radius: var(--button-border-radius);
+    border-color: lightgrey;
 }
 
 .apply-category {
@@ -40,11 +41,11 @@
     align-items: space-evenly;
     text-align: center;
     /* border: 2px solid lightblue; */
-    border-radius: 10px;
+    border-radius: var(--button-border-radius);
     margin: 5px;
     max-width: min-content;
     text-decoration: none;
-    color: black;
+    color: var(--button-border-radius);
     transition: 0.5s all;
 }
 
