@@ -17,20 +17,7 @@ import './App.css';
 function App() {
 
 	const dispatch = useDispatch();
-  	
-	// const [serverStatus, setServerStatus] = useState("🟡 Initialising...");
-
-  	// const [resume, setResume] = useState(null);
-  	// const [resumeUrl, setResumeUrl] = useState(null);
-  	// const [jobDescription, setJobDescription] = useState("");
-  	// const [jobTitle, setJobTitle] = useState(null);
-  	// const [jobCompany, setJobCompany] = useState(null);
-
-  	// Development
-  	// const deployment = "http://localhost:4000";
-  	// Production
-  	// const deployment = "https://radar-backend-o1yd.onrender.com";
-	const deployment = useSelector((state) => state.session.deployment);
+  	const deployment = useSelector((state) => state.session.deployment);
 
   	useEffect(() => {
     	
@@ -45,15 +32,11 @@ function App() {
       		try {
         		const response = await axios.get(deployment+"/hello-server");
 				if(response.status === 200) {
-					// setServerStatus("🟢 Online");
 					dispatch(setRadarOnline());
-					// console.log("RaDAR Online!");
 				} else {
 					dispatch(setRadarOffline("Server side error: "+response));
-					// console.log("This is weird. Server status: "+response);
 				}
       		} catch (Exception) {
-        		// setServerStatus("🔴 Offline");
 				dispatch(setRadarOffline("Client side error: "+Exception));
         		alert("Server response: "+Exception+". Report back to the developer.");
       		}
@@ -63,32 +46,12 @@ function App() {
 
 	return (
 		<div>
-			<IntroductionSection
-				// serverStatus={serverStatus}
-			/>
-			<ResumeSection 
-				// deployment={deployment}
-				// setResume={setResume}
-				// resume={resume}
-				// setResumeUrl={setResumeUrl}
-				// resumeUrl={resumeUrl}
-			/>
-			<JDSection 
-				// deployment={deployment}
-				// setJobDescription={setJobDescription}
-				// jobDescription={jobDescription}
-				// setJobTitle={setJobTitle}
-				// jobTitle={jobTitle}
-				// setJobCompany={setJobCompany}
-				// jobCompany={jobCompany}
-				// resume={resume}
-			/>
+			<IntroductionSection/>
+			<ResumeSection/>
+			<JDSection/>
 			&nbsp;
 			&nbsp;
-			<ApplySection 
-				// deployment={deployment}
-				// serverStatus={serverStatus}
-			/>
+			<ApplySection/>
 		</div>
 	);
 }

@@ -20,13 +20,11 @@
 .react-tabs__tab-list {
     margin: 10px 0;
     padding: 10px 0;
-    /* box-shadow: 1px 1px 3px 3px rgba(0, 0, 0, 0.1); */
     border-radius: var(--border-radius);
 }
 
 .react-tabs__tab {
     display: inline-block;
-    /* border: 1px solid transparent; */
     position: relative;
     list-style: none;
     padding: 3px 10px;
@@ -35,7 +33,6 @@
 }
 
 .react-tabs__tab--selected {
-    /* background-color: aliceblue; */
     border-radius: var(--border-radius);
     box-shadow: 1px 1px 5px 5px rgba(0, 0, 0, 0.1) inset;
     font-weight: normal;

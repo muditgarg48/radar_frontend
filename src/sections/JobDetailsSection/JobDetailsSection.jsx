@@ -7,25 +7,7 @@ import "./JobDetailsSection.css";
 import Loading from "../../components/Loading/Loading.jsx";
 import CompanyLogo from "../../components/CompanyLogo/CompanyLogo.jsx";
 
-export default function JobDetailsSection ({
-        // loading, 
-        // deployment,
-        // jobTitle, 
-        // jobCompany, 
-        // jobDescription, 
-        // resume,
-        // resumeText,
-        // alignmentScore,
-        // jobKeywords, 
-        // highlightKeywords, 
-        // jobKeyNotes, 
-        // benefits, 
-        // sponsorship, 
-        // experienceLevel, 
-        // salaryBracket, 
-        // teamName, 
-        // location
-    }) {
+export default function JobDetailsSection () {
 
     const dispatch = useDispatch();
     const { deployment, processingJobDescription } = useSelector((state) => state.session);
@@ -39,7 +21,6 @@ export default function JobDetailsSection ({
         const formData = new FormData();
         formData.append('resume', resumeText);
         formData.append('jd', jobDescription);
-        // formData.append('company', jobCompany);
         formData.append('company', companyName);
         formData.append('position', jobTitle);
         const response = await fetch(deployment+"/get-resume-alignment-score", {
@@ -48,12 +29,9 @@ export default function JobDetailsSection ({
         });
         if (response.ok) {
             const result = await response.json();
-            // setAlignmentScore(result.alignment_score);
             dispatch(setResumeAlignmentScore(result.alignment_score));
         } else {
             alert("Failed to get resume alignment score. "+response.text().error);
-            // setLoading(false);
-            // dispatch(setProcessingJobDescription(false));
         }
         setLoadingResumeAlignmentScore(false);
     }
@@ -75,9 +53,6 @@ export default function JobDetailsSection ({
             );
         } else if (!resumeAlignmentScore) {
             return (
-                // <div className="section-footnote">
-                //     <button onClick={calculateResumeAlignmentScore}>Calculate Resume Alignment Score</button>
-                // </div>
                 <button id="calculate-resume-alignment-score"
                     style={{margin: "1% 0"}}
                     onClick={calculateResumeAlignmentScore}
@@ -192,7 +167,6 @@ export default function JobDetailsSection ({
 
     function checkResumeForKeyword (word) {
         if (!resumeText) {return false;}
-        // if (!highlightKeywords) {return false;}
         return resumeText.toLowerCase().includes(word.toLowerCase());
     }
 
@@ -200,7 +174,6 @@ export default function JobDetailsSection ({
         if (!jdKeywords) {return null;}
         return (
             <div>
-                {/* <b>Suggested keywords</b> to be included in the application: */}
                 <ul id="jd-keywords-section">
                 {
                     jdKeywords.map((word, index) => {

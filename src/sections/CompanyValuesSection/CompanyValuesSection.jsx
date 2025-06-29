@@ -11,12 +11,9 @@ import cachedRetriever from "../../tools/cachedRetriever";
 export default function CompanyValuesSection() {
     
     const dispatch = useDispatch();
-    // const [values, setValues] = useState(null);
-    // const [link, setLink] = useState(null);
     const { jobTitle } = useSelector((state) => state.job);
     const { companyName, companyValues, companyValuesLink } = useSelector((state) => state.company);
 
-    // const [loadingValues, setLoadingValues] = useState(true);
     const { fetchingCompanyValues } = useSelector((state) => state.session);
 
     useEffect(() => {
@@ -33,7 +30,6 @@ export default function CompanyValuesSection() {
                     body: JSON.stringify({"job_title": jobTitle, "company": companyName})
                 }
             );
-            // console.log(company_values)
             dispatch(setValues(company_values.values));
             dispatch(setCompanyValuesLink(company_values.link));
             dispatch(setFetchingCompanyValues(false));

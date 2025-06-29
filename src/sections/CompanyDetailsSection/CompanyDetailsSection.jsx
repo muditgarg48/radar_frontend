@@ -13,13 +13,8 @@ import geminiIcon from '../../assets/gemini.svg';
 export default function CompanyDetailsSection () {
     
     const dispatch = useDispatch();
-    // const [showCompanyValues, setShowCompanyValues] = useState(false);
     const { companyName, companyGlassdoorLink } = useSelector((state) => state.company);
     const { companyValuesVisibility } = useSelector((state) => state.session);
-
-    // const generateGlassdoorLink = () => {
-    //     return "https://www.glassdoor.ie/Reviews/index.htm?filterType=RATING_OVERALL&employerName="+jobCompany.toLowerCase().replace(" ", "+")+"&page=1&overall_rating_low=1";
-    // }
 
     useEffect(()=> {
         if (companyName && !companyGlassdoorLink) {
@@ -55,7 +50,6 @@ export default function CompanyDetailsSection () {
         return (
             <button id="get-company-values"
                 style={{margin: "1% 0"}}
-                // onClick={() => setShowCompanyValues(!showCompanyValues)}
                 onClick={() => {
                     if (companyValuesVisibility) {
                         dispatch(hideCompanyValues());

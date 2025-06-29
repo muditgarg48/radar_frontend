@@ -12,17 +12,12 @@ export default function CoverLetterSection() {
     const { jobDescription, jobTitle } = useSelector((state) => state.job);
     const { companyName } = useSelector((state) => state.company);
     
-    // const [coverLetter, setCoverLetter] = useState(null);
-    // const [coverLetterImprovements, setCoverLetterImprovements] = useState(null);
     const [letterContext, maintainLetterContext] = useState(null);
 
-    // const [loadingCoverLetter, setLoadingCoverLetter] = useState(false);
     const { coverLetter, coverLetterContext, coverLetterImprovements, loadingCoverLetter } = useSelector((state) => state.additionalDocs);
     
     const handleCoverLetterGeneration = async () => {
         
-        // setCoverLetter(null);
-        // setCoverLetterImprovements(null);
         dispatch(resetCoverLetter());
         dispatch(setCoverLetterContext(letterContext));
 
@@ -37,7 +32,6 @@ export default function CoverLetterSection() {
             return;
         }
         
-        // setLoadingCoverLetter(true);
         dispatch(setLoadingCoverLetter(true));
         
         const formData = new FormData();
@@ -54,16 +48,12 @@ export default function CoverLetterSection() {
 
         if (response.ok) {
             const result = await response.json();
-            // console.log("Cover Letter generated:", result.cover_letter);
-            // setCoverLetter(result.cover_letter);
-            // setCoverLetterImprovements(result.improvements);
             dispatch(setCoverLetterDetails(result));
         } else {
             console.log("Error generating cover letter");
             console.log(response.json().then(data => console.log(data.error)));
         }
 
-        // setLoadingCoverLetter(false);
         dispatch(setLoadingCoverLetter(false));
     }
     
@@ -106,7 +96,6 @@ export default function CoverLetterSection() {
                 <div style={{fontSize: "1.2rem", fontWeight: "bold"}}>✏️ Improvements for final version:</div>
                 <ul>
                     {coverLetterImprovements.map((improvement, index) => {
-                    // const keyword = word.substring(1, word.length - 1);
                     return (<li key={index}>{improvement}</li>)
                     })}
                 </ul>

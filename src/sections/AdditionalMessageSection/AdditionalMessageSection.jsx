@@ -12,17 +12,12 @@ export default function AdditionalMessageSection() {
     const { jobDescription, jobTitle } = useSelector((state) => state.job);
     const { companyName } = useSelector((state) => state.company);
 
-    // const [additionalMessage, setAdditionalMessage] = useState(null);
-    // const [additionalMessageImprovements, setAdditionalMessageImprovements] = useState(null);
     const [addMsgContext, maintainAddMsgContext] = useState(null);
 
-    // const [loadingAdditionalMessage, setLoadingAdditionalMessage] = useState(false);
     const { additionalMessage, additionalMessageContext, additionalMessageImprovements, loadingAdditionalMessage } = useSelector((state) => state.additionalDocs);
 
     const handleAdditionalMsgGeneration = async () => {
         
-        // setAdditionalMessage(null);
-        // setAdditionalMessageImprovements(null);
         dispatch(resetAdditionalMessage());
         dispatch(setAdditionalMessageContext(addMsgContext));
 
@@ -37,7 +32,6 @@ export default function AdditionalMessageSection() {
             return;
         }
         
-        // setLoadingAdditionalMessage(true);
         dispatch(setLoadingAdditionalMessage(true));
         
         const formData = new FormData();
@@ -54,16 +48,12 @@ export default function AdditionalMessageSection() {
 
         if (response.ok) {
             const result = await response.json();
-            // console.log("Additional message generated:", result.additional_msg);
-            // setAdditionalMessage(result.additional_msg);
-            // setAdditionalMessageImprovements(result.improvements);
             dispatch(setAdditionalMessageDetails(result));
         } else {
             console.log("Error generating additional message");
             console.log(response.json().then(data => console.log(data.error)));
         }
 
-        // setLoadingAdditionalMessage(false);
         dispatch(setLoadingAdditionalMessage(false));
     }
     

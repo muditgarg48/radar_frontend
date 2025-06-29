@@ -11,8 +11,6 @@ export default function ApplySection() {
     const { serverStatus, deployment, loadingApplyData, logoClientId } = useSelector((state) => state.session);
 
     const [applyData, setApplyData] = useState(null);
-    // const [loading, setLoading] = useState(true);
-    // const [clientId, setClientId] = useState(null);
     const [searchQuery, setSearchQuery] = useState("");
     const [filteredCompanies, setFilteredCompanies] = useState(applyData);
     const logo_link = "https://cdn.brandfetch.io/";
@@ -27,7 +25,6 @@ export default function ApplySection() {
                 const result = await response.json();
                 setApplyData(result);
                 setFilteredCompanies(result);
-                // setLoading(false);
                 dispatch(setLoadingApplyData(false));
             }
         };
@@ -39,7 +36,6 @@ export default function ApplySection() {
 
             if (response.ok) {
                 const result = await response.text();
-                // setClientId(result);
                 dispatch(setLogoClientId(result));
             }
         }
@@ -50,10 +46,8 @@ export default function ApplySection() {
 
     useEffect(() => {
         if (serverStatus === "🔴 Offline" || serverStatus === "🟢 Online") {
-            // setLoading(false);
             dispatch(setLoadingApplyData(false));
         } else {
-            // setLoading(true);
             dispatch(setLoadingApplyData(true));
         }
     }, [serverStatus]);
@@ -80,7 +74,7 @@ export default function ApplySection() {
                 };
             }
             return null;
-        }).filter(Boolean); // Remove null entries (categories with no matches)
+        }).filter(Boolean);
         setFilteredCompanies(filtered);
     };
 

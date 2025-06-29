@@ -15,7 +15,6 @@
 
 body * {
     font-family: var(--font);
-    /* font-weight: lighter; */
     color: var(--text-color);
 }
 
