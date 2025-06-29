@@ -54,6 +54,10 @@ const sessionSlice = createSlice({
 		setLoadingApplyData: (state, action) => {
 			state.loadingApplyData = action.payload;
 		},
+		invalidateCaches: () => {
+			localStorage.clear();
+			alert("Caches cleared!")
+		},
 		resetSession: () => initialState
 	}
 });
@@ -70,5 +74,6 @@ export const {
 	hideCompanyValues,
     setGeneratingCoverLetter, 
     setLoadingApplyData,
+	invalidateCaches,
 	resetSession } = sessionSlice.actions;
 export default sessionSlice.reducer;

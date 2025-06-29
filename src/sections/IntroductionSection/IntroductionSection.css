@@ -26,3 +26,10 @@
     opacity: 70%;
     display: flex;
 }
+
+#introduction-section-footnote {
+    width: 100%;
+    font-size: 75%;
+    display: flex;
+    justify-content: end;
+}

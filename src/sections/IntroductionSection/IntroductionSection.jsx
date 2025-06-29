@@ -1,9 +1,11 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { invalidateCaches } from "../../store/features/sessionSlice.js";
 import './IntroductionSection.css';
 
 export default function IntroductionSection() {
     
+    const dispatch = useDispatch();
     const { serverStatus } = useSelector((state) => state.session);
     
     return (
@@ -26,6 +28,11 @@ export default function IntroductionSection() {
             <p>
                 RaDAR is a tool I came up with which incorporates all the suggestions I have ever been given to optimize my job search, improve my resume, and improve my job hunting strategy.
             </p>
+            <div id="introduction-section-footnote">
+                <button onClick={() => dispatch(invalidateCaches())}>
+                    Invalidate Caches
+                </button>
+            </div>
         </div>
     );
 }
