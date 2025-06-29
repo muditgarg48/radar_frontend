@@ -8,7 +8,7 @@ export default function AdditionalMessageSection() {
     
     const dispatch = useDispatch();
     const { deployment } = useSelector((state) => state.session);
-    const { resumeFile } = useSelector((state) => state.resume);
+    const { resumeText } = useSelector((state) => state.resume);
     const { jobDescription, jobTitle } = useSelector((state) => state.job);
     const { companyName } = useSelector((state) => state.company);
 
@@ -21,7 +21,7 @@ export default function AdditionalMessageSection() {
         dispatch(resetAdditionalMessage());
         dispatch(setAdditionalMessageContext(addMsgContext));
 
-        if (resumeFile === null) {
+        if (resumeText === null) {
             alert("Please upload a resume first.");
             return;
         } else if (jobDescription === "") {
@@ -35,10 +35,10 @@ export default function AdditionalMessageSection() {
         dispatch(setLoadingAdditionalMessage(true));
         
         const formData = new FormData();
-        formData.append('resume', resume);
+        formData.append('resume', resumeText);
         formData.append('jd', jobDescription);
         formData.append('position', jobTitle);
-        formData.append('company', jobCompany);
+        formData.append('company', companyName);
         formData.append('context', additionalMessageContext);
 
         const response = await fetch(deployment+"/generate-additional-msg", {
