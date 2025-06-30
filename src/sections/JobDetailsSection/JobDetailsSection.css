@@ -95,11 +95,17 @@
     border-radius: var(--border-radius);
 }
 
-#jd-keywords-section {
+#jd-keywords-hard-skills, #jd-keywords-soft-skills, #jd-keywords-others {
     list-style: none;
     display: flex;
     flex-wrap: wrap;
     padding-left: 0;
+}
+
+.jd-keywords-subsection-heading {
+    margin: 1% 0;
+    font-weight: bolder;
+    font-size: 80%;
 }
 
 .jd-keyword {

@@ -172,28 +172,58 @@ export default function JobDetailsSection () {
 
     const JKeywords = () => {
         if (!jdKeywords) {return null;}
+        const hardSkills = jdKeywords["hard_skills"].split(";");
+        const softSkills = jdKeywords["soft_skills"].split(";");
+        const otherKeywords = jdKeywords["other_keywords"].split(";");
         return (
             <div>
-                <ul id="jd-keywords-section">
-                {
-                    jdKeywords.map((word, index) => {
-                        return (
-                            <li className={checkResumeForKeyword(word) ? "jd-keyword keyword-present" : "jd-keyword"} key={index}>
-                                {word}
-                            </li>
-                        )
-                    })
-                }
-                </ul>
-                {resumeText? <div className="section-footnote">
-                    <span className="jd-keyword keyword-present">Green</span> indicate that the keyword was found in your resume.
-                </div>: <div className="section-footnote">
+                <div id="jd-keywords-section">
+                    <div className="jd-keywords-subsection-heading">HARD SKILLS</div>
+                    <ul id="jd-keywords-hard-skills">
                     {
-                        resumeText?
-                        <em><a href="#jd-section">Process JD</a> to highlight which keywords were found in your resume.</em>:
-                        <em><a href="#introduction-section">Add resume</a> and process JD again to check which keywords were found in your resume.</em>
+                        hardSkills.map((word, index) => {
+                            if (word.length == 0) {return null;}
+                            return (
+                                <li className={checkResumeForKeyword(word) ? "jd-keyword keyword-present" : "jd-keyword"} key={index}>
+                                    {word}
+                                </li>
+                            )
+                        })
                     }
-                </div>}
+                    </ul>
+                    <div className="jd-keywords-subsection-heading">SOFT SKILLS</div>
+                    <ul id="jd-keywords-soft-skills">
+                    {
+                        softSkills.map((word, index) => {
+                            if (word.length == 0) {return null;}
+                            return (
+                                <li className={checkResumeForKeyword(word) ? "jd-keyword keyword-present" : "jd-keyword"} key={index}>
+                                    {word}
+                                </li>
+                            )
+                        })
+                    }
+                    </ul>
+                    <div className="jd-keywords-subsection-heading">OTHER KEYWORDS</div>
+                    <ul id="jd-keywords-others">
+                    {
+                        otherKeywords.map((word, index) => {
+                            if (word.length == 0) {return null;}
+                            return (
+                                <li className={checkResumeForKeyword(word) ? "jd-keyword keyword-present" : "jd-keyword"} key={index}>
+                                    {word}
+                                </li>
+                            )
+                        })
+                    }
+                    </ul>
+                </div>
+                <div className="section-footnote">
+                    {resumeText? 
+                        <em><span className="jd-keyword keyword-present">Green</span> indicate that the keyword was found in your resume.</em>:
+                        <em><a href="#introduction-section">Add resume</a> to highlight which keywords are in your resume.</em>
+                    }
+                </div> 
                 &nbsp;
             </div>
         );
