@@ -19,7 +19,7 @@ export default function JDSection() {
     const { jobDescription, jobTitle } = useSelector((state) => state.job);
     const { companyName } = useSelector((state) => state.company);
 
-    const [jdCache, setJDCache] = useState("");
+    const [jdCache, setJDCache] = useState(jobDescription);
 
     const handleJobDescriptionSubmit = async () => {
 
