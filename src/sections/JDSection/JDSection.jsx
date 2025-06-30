@@ -89,7 +89,11 @@ export default function JDSection() {
             &nbsp;
             <InputJD/>
             &nbsp;
-            <button onClick={handleJobDescriptionSubmit}>Process Job Description</button>
+            <button 
+                id="jd-process-button"
+                onClick={handleJobDescriptionSubmit}>
+                Process Job Description
+            </button>
             &nbsp;
             {jobDescription && <Tabs>
                 <TabList>
