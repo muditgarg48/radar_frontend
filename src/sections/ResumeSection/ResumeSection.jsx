@@ -204,11 +204,11 @@ export default function ResumeSection() {
                             ))}
                         </ul>
                     </div>
-                    <div id="resume-deletions">
-                        <div className="resume-improvement-heading">➖ DELETIONS</div>
+                    <div id="resume-removals">
+                        <div className="resume-improvement-heading">➖ REMOVALS</div>
                         <ul>
-                            {resumeImprovements.deletions.split(";").map((deletion, index) => (
-                                <li className="resume-improvement" key={index}>{deletion}</li>
+                            {resumeImprovements.removals.split(";").map((removal, index) => (
+                                <li className="resume-improvement" key={index}>{removal}</li>
                             ))}
                         </ul>
                     </div>

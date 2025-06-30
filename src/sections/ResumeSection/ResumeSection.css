@@ -115,7 +115,7 @@
     font-weight: 350;
 }
 
-#resume-additions, #resume-modifications, #resume-deletions {
+#resume-additions, #resume-modifications, #resume-removals {
     /* glass effect */
     border-radius: var(--border-radius);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
@@ -140,6 +140,6 @@
     background-color: var(--hard-warning-color);
 }
 
-#resume-deletions .resume-improvement-heading{
+#resume-removals .resume-improvement-heading{
     background-color: var(--error-color);
 }
