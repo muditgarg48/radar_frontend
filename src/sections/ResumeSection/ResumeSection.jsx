@@ -134,10 +134,41 @@ export default function ResumeSection() {
 
     const ResumeSummary = () => {
         if (resumeSummary) {
+            const quantificationScore = (resumeSummary.number_of_quantified_bullet_points / (resumeSummary.number_of_quantified_bullet_points + resumeSummary.number_of_generic_bullet_points)) * 100;
             return (
                 <div id="resume-summary">
                     <div id="resume-summary-heading">📝 SUMMARY</div>
-                    <p>{resumeSummary}</p>
+                    <p>{resumeSummary.summary}</p>
+                    <div id="resume-summary-subsection">
+                        <div className="resume-summary-item">
+                            <div className="resume-summary-item-title">Ideal Experience Level</div>
+                            <div>{resumeSummary.experience_level}</div>
+                        </div>
+                        <div className="resume-summary-item">
+                            <div className="resume-summary-item-title">Tone</div>
+                            <div>{resumeSummary.resume_tone}</div>
+                        </div>
+                        <div className="resume-summary-item">
+                            <div className="resume-summary-item-title">Quantification Score</div>
+                            <div>{quantificationScore.toFixed(2)}%</div>
+                        </div>
+                        <div className="resume-summary-item">
+                            <div className="resume-summary-item-title">Top Skills</div>
+                            <ul id="resume-top-skills">
+                                {resumeSummary.top_skills.split(";").map((top_skill, index) => (
+                                    <li className="resume-top-skill" key={index}>{top_skill}</li>
+                                ))}
+                            </ul>
+                        </div>
+                        <div className="resume-summary-item">
+                            <div className="resume-summary-item-title">Ideal Roles</div>
+                            <ul id="resume-ideal-roles">
+                                {resumeSummary.ideal_roles.split(";").map((ideal_role, index) => (
+                                    <li className="resume-ideal-role" key={index}>{ideal_role}</li>
+                                ))}
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             );
         } else if (loadingSummary) {
