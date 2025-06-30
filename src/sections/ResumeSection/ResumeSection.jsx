@@ -205,7 +205,6 @@ export default function ResumeSection() {
                     <ResumePreview />
                     <ResumeUploadSection />
                 </div>
-                &nbsp;
                 {resumeUrl && <div id="resume-operations-section">
                     <Tabs>
                         <TabList>
