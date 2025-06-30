@@ -135,7 +135,6 @@ export default function ResumeSection() {
 
     function checkJDForKeyword (word) {
         if (!jdKeywords) {return false;}
-        console.log(jdKeywords);
         for (let i = 0; i < jdKeywords["hard_skills"].length; i++) {
             // console.log(jdKeywords["hard_skills"][i]);
             if (jdKeywords["hard_skills"][i].toLowerCase().includes(word.toLowerCase())) {
