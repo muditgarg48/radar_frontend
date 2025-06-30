@@ -172,9 +172,9 @@ export default function JobDetailsSection () {
 
     const JKeywords = () => {
         if (!jdKeywords) {return null;}
-        const hardSkills = jdKeywords["hard_skills"].split(";");
-        const softSkills = jdKeywords["soft_skills"].split(";");
-        const otherKeywords = jdKeywords["other_keywords"].split(";");
+        const hardSkills = jdKeywords["hard_skills"];
+        const softSkills = jdKeywords["soft_skills"];
+        const otherKeywords = jdKeywords["other_keywords"];
         return (
             <div>
                 <div id="jd-keywords-section">
