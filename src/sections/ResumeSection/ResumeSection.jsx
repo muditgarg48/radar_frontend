@@ -16,6 +16,7 @@ export default function ResumeSection() {
     const dispatch = useDispatch();
     const { deployment } = useSelector((state) => state.session);
     const { resumeName, resumeText, resumeUrl, resumeSummary, resumeImprovements } = useSelector((state) => state.resume);
+    const { jobTitle, jdKeywords } = useSelector((state) => state.job);
 
     const { loadingSummary, loadingResumeImprovements } = useSelector((state) => state.session);
 
@@ -132,6 +133,33 @@ export default function ResumeSection() {
         }
     }
 
+    function checkJDForKeyword (word) {
+        if (!jdKeywords) {return false;}
+        console.log(jdKeywords);
+        for (let i = 0; i < jdKeywords["hard_skills"].length; i++) {
+            // console.log(jdKeywords["hard_skills"][i]);
+            if (jdKeywords["hard_skills"][i].toLowerCase().includes(word.toLowerCase())) {
+                return true;
+            }
+        }
+        for (let i = 0; i < jdKeywords["soft_skills"].length; i++) {
+            if (jdKeywords["soft_skills"][i].toLowerCase().includes(word.toLowerCase())) {
+                return true;
+            }
+        }
+        for (let i = 0; i < jdKeywords["other_keywords"].length; i++) {
+            if (jdKeywords["other_keywords"][i].toLowerCase().includes(word.toLowerCase())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function checkJDTitle (idealRole) {
+        if (!jobTitle) {return false;}
+        return jobTitle.toLowerCase().includes(idealRole.toLowerCase());
+    }
+
     const ResumeSummary = () => {
         if (resumeSummary) {
             const quantificationScore = (resumeSummary.number_of_quantified_bullet_points / (resumeSummary.number_of_quantified_bullet_points + resumeSummary.number_of_generic_bullet_points)) * 100;
@@ -156,7 +184,7 @@ export default function ResumeSection() {
                             <div className="resume-summary-item-title">Top Skills</div>
                             <ul id="resume-top-skills">
                                 {resumeSummary.top_skills.split(";").map((top_skill, index) => (
-                                    <li className="resume-top-skill" key={index}>{top_skill}</li>
+                                    <li className={checkJDForKeyword(top_skill) ? "resume-top-skill keyword-present" : "resume-top-skill"} key={index}>{top_skill}</li>
                                 ))}
                             </ul>
                         </div>
@@ -164,7 +192,7 @@ export default function ResumeSection() {
                             <div className="resume-summary-item-title">Ideal Roles</div>
                             <ul id="resume-ideal-roles">
                                 {resumeSummary.ideal_roles.split(";").map((ideal_role, index) => (
-                                    <li className="resume-ideal-role" key={index}>{ideal_role}</li>
+                                    <li className={checkJDTitle(ideal_role) ? "resume-ideal-role keyword-present" : "resume-ideal-role"} key={index}>{ideal_role}</li>
                                 ))}
                             </ul>
                         </div>

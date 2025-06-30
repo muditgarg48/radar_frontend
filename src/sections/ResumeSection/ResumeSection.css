@@ -87,6 +87,11 @@
     margin: 0;
 }
 
+.keyword-present {
+    background-color: var(--success-color);
+    color: white;
+}
+
 .resume-top-skill, .resume-ideal-role {
     padding: 5px 7px;
     margin: 5px;
@@ -114,6 +119,7 @@
     margin: 0;
     font-weight: 350;
 }
+
 
 #resume-additions, #resume-modifications, #resume-removals {
     /* glass effect */
