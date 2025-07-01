@@ -125,17 +125,16 @@ export default function ApplySection() {
     return (     
         <div id="apply-section">
             <h2 className="section-heading">APPLY DIRECTLY THROUGH THEIR PORTAL</h2>
-            <p>
-                I felt by the time a role was advertised on universal job portals like LinkedIn or Glassdoor, it would be too late to apply. With the current job market, it has become very competitive and a little late is a little too late. Hence, I used to apply directly through each company's portal. The problem was that it was not a structured effort and I used to apply to any company that came to my mind and resonated with me. This section would hence help to improve this process.
+            <p className="section-description">
+                In today's hyper-competitive job market, timing is critical. By the time roles appear on mainstream platforms like LinkedIn or Glassdoor, they often receive hundreds of applications within hours. To help you stay ahead, this section provides direct links to company career portals—allowing you to apply before positions are widely advertised.
             </p>
-            <p>
-                I had also tried to research to find out if there are any data endpoints or public APIs that I could leverage so that I could accumulate all jobs in a single place but unfortunately that wasn't possible. It struck me later that if that would have been possible, most universal job portals would have not been competing for the applicants' attention.
+            <p className="section-note">
+                <div className="section-subsection-heading">NOTE</div>
+                <em>
+                    While researching, I explored whether any public APIs could centralize these opportunities. However, their lack explains why universal job boards remain dominant. They fill a gap that technical limitations create. For completeness, I've also included traditional platforms, but direct applications remain the gold standard for early access.
+                </em>
             </p>
-            <p>
-                In some cases, I too felt like going to these universal job portals. Hence I have included them at the end of this section as well.
-            </p>
-            <h4>Please Note, there is no affiliation between RaDAR and any of these companies. These are just the direct links to the list of job opportunties there.</h4>
-            <h3>Happy Applying!</h3>
+            <h3>GOOD LUCK!!</h3>
             <Loading loading={loadingApplyData} message="Loading the Portal List"/>
             {applyData && <>
                 <input

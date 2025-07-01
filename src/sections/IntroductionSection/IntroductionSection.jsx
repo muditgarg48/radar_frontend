@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { invalidateCaches } from "../../store/features/sessionSlice.js";
 import './IntroductionSection.css';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 export default function IntroductionSection() {
     
@@ -19,17 +20,40 @@ export default function IntroductionSection() {
             <h3 id="website-subtitle">
                 Resume and Description Analysis Resource
             </h3>
-            <div>
-                Job Search can be a very daunting journey, one filled with a lot of failures. I, myself, am currently (as of March 2025) going through the same journey. With the current job market, the competition has become very tough. From layoffs going on one side of the industry, to even experienced candidates applying for entry level roles, getting an opportunity has never felt short of a battle. 
+            <div id="website-description">
+                Today's job hunt is a perfect storm: <strong>mass layoffs</strong>, <strong>AI screening tools</strong>, and <strong>senior candidates competing for junior roles</strong>. As someone currently in the trenches, I built RaDAR to give you what most applicants lack, a data-driven edge. <em>Why not bring our own AI driven optimised tool?</em> This tool combines insights from recruiters, career coaches from various sources you encounter daily in your job search. From social media posts that give "advices" to my own notes from interviews, rejections, networking and application journey into one battle-tested platform.
             </div>
-            <br/>
-            <div>
-                Anything help or guidance at this instance can be a blessing in disguise. Any suggestion for resume improvement, any suggestion for job hunting strategy improvement, anything could be your edge against other candidates out there. So I decided to create a tool that can help you in your job search journey. 
-            </div>
-            <br/>
-            <div>
-                RaDAR is a tool I came up with which incorporates all the suggestions I have ever been given to optimize my job search, improve my resume, and improve my job hunting strategy.
-            </div>
+            <Tabs id="why-website">
+                <TabList>
+                    <Tab>Why RaDAR?</Tab>
+                    <Tab>Why Not ChatGPT?</Tab>
+                    <Tab>What You Get?</Tab>
+                </TabList>
+                <TabPanel>
+                    <ul className="why-website-list" id="why-radar">
+                        <div className="why-website-heading">Why RaDAR?</div>
+                        <li>Built by a job seeker for job seekers</li>
+                        <li>Powered by Gen AI with only required content and additional resources</li>
+                        <li>Regular updates with market shifts</li>
+                    </ul>
+                </TabPanel>
+                <TabPanel>
+                    <ul className="why-website-list" id="why-not-chatgpt">
+                        <div className="why-website-heading">Why not ChatGPT?</div>
+                        <li>Generic advice with unnecessary filler content</li>
+                        <li>Requires extensive Prompt Engineering for a close to ideal output</li>
+                        <li>No tracking system for job applications</li>
+                    </ul>
+                </TabPanel>
+                <TabPanel>
+                    <ul className="why-website-list" id="what-you-get">
+                        <div className="why-website-heading">What You Get</div>
+                        <li>Resume analysis and instant actionable steps</li>
+                        <li>Job description breakdown with key role and company insights with additional document generation</li>
+                        <li>One stop shop for all job portals</li>
+                    </ul>
+                </TabPanel>
+            </Tabs>
             <br/>
             <div id="introduction-section-footnote">
                 <a href="https://muditgarg48.github.io/" target="_blank" rel="noopener noreferrer">

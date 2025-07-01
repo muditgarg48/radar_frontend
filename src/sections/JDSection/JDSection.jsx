@@ -86,7 +86,18 @@ export default function JDSection() {
     return (
         <div id="jd-section">
             <h2 className="section-heading">JOB DESCRIPTION</h2>
-            &nbsp;
+            <p className="section-description">
+                Understanding the job description is very important for any job seeker to ensure that their efforts are in the right direction. Job descriptions often hide critical requirements between the lines.
+                This section will help you:
+                <ul className="section-use-cases">
+                    <li>
+                        Filter out all the necessary information you need to know about the role without reading the entire job description.
+                    </li>
+                    <li>
+                        Pinpoint must-have keywords to include in your resume and application for maximum ATS score and success rate.
+                    </li>
+                </ul>
+            </p>
             <InputJD/>
             &nbsp;
             <button 
