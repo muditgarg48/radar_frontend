@@ -126,7 +126,7 @@ export default function ApplySection() {
         <div id="apply-section">
             <h2 className="section-heading">APPLY DIRECTLY THROUGH THEIR PORTAL</h2>
             <p className="section-description">
-                In today's hyper-competitive job market, timing is critical. By the time roles appear on mainstream platforms like LinkedIn or Glassdoor, they often receive hundreds of applications within hours. To help you stay ahead, this section provides direct links to company career portals—allowing you to apply before positions are widely advertised.
+                In today's hyper-competitive job market, timing is critical. By the time roles appear on mainstream platforms like LinkedIn or Glassdoor, they often receive hundreds of applications within hours. To help you stay ahead, this section provides direct links to company career portals, allowing you to apply before positions are widely advertised.
             </p>
             <p className="section-note">
                 <div className="section-subsection-heading">NOTE</div>
