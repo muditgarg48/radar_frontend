@@ -1,9 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  	deployment: "https://radar-backend-o1yd.onrender.com",
-	// deployment: "http://localhost:4000",
+  	// deployment: "https://radar-backend-o1yd.onrender.com",
+	deployment: "http://localhost:4000",
 	serverStatus: '🟡 Initialising...',
+	applicationHistory: null,
 	logoClientId: null,
 	loadingSummary: false,
 	loadingResumeImprovements: false,
@@ -26,6 +27,9 @@ const sessionSlice = createSlice({
 			state.serverStatus = '🔴 Offline';
 			console.log("RaDAR Offline! Error received:");
 			console.log(action.payload);
+		},
+		setApplicationHistory: (state, action) => {
+			state.applicationHistory = action.payload;
 		},
 		setLogoClientId: (state, action) => {
 			state.logoClientId = action.payload;
@@ -65,6 +69,7 @@ const sessionSlice = createSlice({
 export const { 
     setRadarOnline,
     setRadarOffline,
+	setApplicationHistory,
 	setLogoClientId,
     setLoadingSummary, 
     setLoadingResumeImprovements, 

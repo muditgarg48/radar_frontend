@@ -63,10 +63,6 @@ export default function HistorySection() {
             sortable: true,
         },
         {
-            name: 'Resume Used',
-            selector: row => row.resumeName,
-        },
-        {
             name: 'Role',
             selector: row => row.title,
         },
@@ -101,6 +97,10 @@ export default function HistorySection() {
                 />
             ),
             ignoreRowClick: true
+        },
+        {
+            name: 'Resume Used',
+            selector: row => row.resumeName,
         },
     ];
 
