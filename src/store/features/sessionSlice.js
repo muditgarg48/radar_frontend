@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  	// deployment: "https://radar-backend-o1yd.onrender.com",
-	deployment: "http://localhost:4000",
+  	deployment: "https://radar-backend-o1yd.onrender.com",
+	// deployment: "http://localhost:4000",
 	serverStatus: '🟡 Initialising...',
 	applicationHistory: null,
 	logoClientId: null,
