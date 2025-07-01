@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setJobDescription, setJobDetails, resetJobData } from "../../store/features/jobSlice.js";
 import { resetCompanyData, setCompanyName } from "../../store/features/companySlice.js";
-import { setProcessingJobDescription } from "../../store/features/sessionSlice.js";
+import { setApplicationHistory, setProcessingJobDescription } from "../../store/features/sessionSlice.js";
 import { setResumeAlignmentScore } from "../../store/features/resumeSlice.js";
 
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
@@ -14,12 +14,33 @@ import AdditionalDocSection from "../AdditionalDocSection/AdditionalDocSection.j
 export default function JDSection() {
 
     const dispatch = useDispatch();
-    const { deployment } = useSelector((state) => state.session);
-    const { resumeText } = useSelector((state) => state.resume);
+    const { deployment, applicationHistory } = useSelector((state) => state.session);
+    const { resumeName, resumeText } = useSelector((state) => state.resume);
     const { jobDescription, jobTitle } = useSelector((state) => state.job);
     const { companyName } = useSelector((state) => state.company);
 
-    const [jdCache, setJDCache] = useState(jobDescription);
+    const [jdCache, setJDCache] = useState(jobDescription? jobDescription : "");
+
+    const addToApplicationHistory = (data) => { 
+        let history = localStorage.getItem("RADAR_HISTORY");
+        if (history === null) {
+            history = [];
+        } else {
+            history = JSON.parse(history);
+        }
+        const newId = history.length;
+        const newApplication = {
+            id: newId,
+            timestamp: Date.now(),
+            resumeName: resumeName? resumeName : "NONE",
+            jd: jdCache,
+            status: 'not_applied',
+            ...data
+        };
+        history.push(newApplication);
+        localStorage.setItem("RADAR_HISTORY", JSON.stringify(history));
+        dispatch(setApplicationHistory(history));
+    };
 
     const handleJobDescriptionSubmit = async () => {
 
@@ -45,6 +66,9 @@ export default function JDSection() {
             const result = await response.json();
             dispatch(setCompanyName(result.company));
             dispatch(setJobDetails(result));
+            addToApplicationHistory(result);
+            if (applicationHistory.length < 3)
+                alert("Make sure to set the correct status in the Application history table.");
         } else {
             alert("Failed to process job description. "+result.error);
         }

@@ -7,6 +7,7 @@ import { resetResumeData } from "./store/features/resumeSlice.js";
 import { resetAllAdditionalDocs } from "./store/features/additionalDocsSlice.js";
 import axios from "axios";
 
+import HistorySection from "./sections/HistorySection/HistorySection.jsx";
 import ResumeSection from "./sections/ResumeSection/ResumeSection.jsx";
 import ApplySection from "./sections/ApplySection/ApplySection.jsx";
 import IntroductionSection from "./sections/IntroductionSection/IntroductionSection.jsx";
@@ -47,6 +48,7 @@ function App() {
 	return (
 		<div>
 			<IntroductionSection/>
+			<HistorySection/>
 			<ResumeSection/>
 			<JDSection/>
 			&nbsp;
