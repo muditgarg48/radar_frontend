@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { invalidateCaches } from "../../store/features/sessionSlice.js";
+import { invalidateData } from "../../store/features/sessionSlice.js";
 import './IntroductionSection.css';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
@@ -8,6 +8,12 @@ export default function IntroductionSection() {
     
     const dispatch = useDispatch();
     const { serverStatus } = useSelector((state) => state.session);
+
+    function invalidateData () {
+        if (window.confirm("This will clear the cache, application history and reset your preference to auto store the job. Do you still want to proceed?")) {
+            dispatch(invalidateData());
+        }
+    }
     
     return (
         <div id="introduction-section">
@@ -31,7 +37,7 @@ export default function IntroductionSection() {
                 </TabList>
                 <TabPanel>
                     <ul className="why-website-list" id="why-radar">
-                        <div className="why-website-heading">Why RaDAR?</div>
+                        {/* <div className="why-website-heading">Why RaDAR?</div> */}
                         <li>Built by a job seeker for job seekers</li>
                         <li>Powered by Gen AI with only required content and additional resources</li>
                         <li>Regular updates with market shifts</li>
@@ -39,7 +45,7 @@ export default function IntroductionSection() {
                 </TabPanel>
                 <TabPanel>
                     <ul className="why-website-list" id="why-not-chatgpt">
-                        <div className="why-website-heading">Why not ChatGPT?</div>
+                        {/* <div className="why-website-heading">Why not ChatGPT?</div> */}
                         <li>Generic advice with unnecessary filler content</li>
                         <li>Requires extensive Prompt Engineering for a close to ideal output</li>
                         <li>No tracking system for job applications</li>
@@ -47,7 +53,7 @@ export default function IntroductionSection() {
                 </TabPanel>
                 <TabPanel>
                     <ul className="why-website-list" id="what-you-get">
-                        <div className="why-website-heading">What You Get</div>
+                        {/* <div className="why-website-heading">What You Get</div> */}
                         <li>Resume analysis and instant actionable steps</li>
                         <li>Job description breakdown with key role and company insights with additional document generation</li>
                         <li>One stop shop for all job portals</li>
@@ -55,17 +61,13 @@ export default function IntroductionSection() {
                 </TabPanel>
             </Tabs>
             <br/>
-            <div id="introduction-section-footnote">
+            <div className="section-footer">
+                <button onClick={invalidateData}>Clear cookies</button>
+                &nbsp;
+                &nbsp;
                 <a href="https://muditgarg48.github.io/" target="_blank" rel="noopener noreferrer">
-                    <button>
-                        About the Developer
-                    </button>
+                    <button>About the Developer</button>
                 </a>
-                &nbsp;
-                &nbsp;
-                <button onClick={() => dispatch(invalidateCaches())}>
-                    Invalidate Caches
-                </button>
             </div>
             <br/>
         </div>

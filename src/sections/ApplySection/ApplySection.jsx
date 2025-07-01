@@ -128,12 +128,12 @@ export default function ApplySection() {
             <p className="section-description">
                 In today's hyper-competitive job market, timing is critical. By the time roles appear on mainstream platforms like LinkedIn or Glassdoor, they often receive hundreds of applications within hours. To help you stay ahead, this section provides direct links to company career portals, allowing you to apply before positions are widely advertised.
             </p>
-            <p className="section-note">
+            <div className="section-note">
                 <div className="section-subsection-heading">NOTE</div>
                 <em>
                     While researching, I explored whether any public APIs could centralize these opportunities. However, their lack explains why universal job boards remain dominant. They fill a gap that technical limitations create. For completeness, I've also included traditional platforms, but direct applications remain the gold standard for early access.
                 </em>
-            </p>
+            </div>
             <h3>GOOD LUCK!!</h3>
             <Loading loading={loadingApplyData} message="Loading the Portal List"/>
             {applyData && <>

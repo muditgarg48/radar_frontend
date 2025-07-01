@@ -257,7 +257,7 @@ export default function ResumeSection() {
     return (
         <div style={{minHeight: "30vh"}}>
             <h2 className="section-heading">RESUME SECTION</h2>
-            <p className="section-description">
+            <div className="section-description">
                 Your resume is your first impression in a competitive job market.
                 This section helps you: 
                 <ul className="section-use-cases">
@@ -268,13 +268,13 @@ export default function ResumeSection() {
                         Identifying key shortcomings of the resume and providing suggestions for improvement.
                     </li>
                 </ul>
-            </p>
-            <p className="section-note">
+            </div>
+            <div className="section-note">
                 <div className="section-subsection-heading">NOTE</div>
                 <em>
                     The contents of the resume are never stored for 100% data privacy. 
                 </em>
-            </p>
+            </div>
             <div id="resume-section">
                 <div id="resume-upload-section">
                     <ResumePreview />

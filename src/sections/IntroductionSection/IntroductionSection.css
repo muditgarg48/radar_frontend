@@ -64,10 +64,3 @@
 #what-you-get {
     background-color: var(--button-color);
 }
-
-#introduction-section-footnote {
-    width: 100%;
-    font-size: 75%;
-    display: flex;
-    justify-content: end;
-}

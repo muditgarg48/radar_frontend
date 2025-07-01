@@ -54,9 +54,9 @@ const sessionSlice = createSlice({
 		setLoadingApplyData: (state, action) => {
 			state.loadingApplyData = action.payload;
 		},
-		invalidateCaches: () => {
+		invalidateData: () => {
 			localStorage.clear();
-			alert("Caches cleared!")
+			alert("RaDAR data cleared!")
 		},
 		resetSession: () => initialState
 	}
@@ -74,6 +74,6 @@ export const {
 	hideCompanyValues,
     setGeneratingCoverLetter, 
     setLoadingApplyData,
-	invalidateCaches,
+	invalidateData,
 	resetSession } = sessionSlice.actions;
 export default sessionSlice.reducer;

@@ -64,6 +64,13 @@ body {
     font-size: 90%;
 }
 
+.section-footer {
+    width: 100%;
+    font-size: 75%;
+    display: flex;
+    justify-content: end;
+}
+
 /* related to tabs styling */
 
 .react-tabs__tab-list {
