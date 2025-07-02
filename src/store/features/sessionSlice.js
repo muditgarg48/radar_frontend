@@ -59,7 +59,9 @@ const sessionSlice = createSlice({
 			state.loadingApplyData = action.payload;
 		},
 		invalidateData: () => {
-			localStorage.clear();
+			if(!window.confirm("Are you sure you want to clear RaDAR cookies? Note, this does not include your application history!")) return;
+			localStorage.removeItem("RADAR_CACHED_COMPANY_DOMAINS");
+			localStorage.removeItem("RADAR_CACHED_COMPANY_VALUES");
 			alert("RaDAR data cleared!")
 		},
 		resetSession: () => initialState

@@ -138,6 +138,11 @@ export default function HistorySection() {
                             <div className="history-job-company">{data.company}</div>
                         </div>
                     </div>
+                    <div className="remove-history-job" onClick={() => removeApplication(data.id)}>
+                        <h3>DELETE</h3>
+                    </div>
+                    &nbsp;
+                    &nbsp;
                     <div className="history-job-details-status" style={{backgroundColor: getStatusData(data.status).backgroundColor}}>
                         <h3>{getStatusData(data.status).label.toUpperCase()}</h3>
                     </div>
@@ -268,6 +273,13 @@ export default function HistorySection() {
         const updatedHistory = applicationHistory.map(app => 
             app.id === id ? { ...app, status: newStatus } : app
         );
+        dispatch(setApplicationHistory(updatedHistory));
+        localStorage.setItem("RADAR_HISTORY", JSON.stringify(updatedHistory));
+    };
+
+    const removeApplication = (id) => {
+        if (!window.confirm("Are you sure you want to delete this application?")) {return;}
+        const updatedHistory = applicationHistory.filter(app => app.id !== id);
         dispatch(setApplicationHistory(updatedHistory));
         localStorage.setItem("RADAR_HISTORY", JSON.stringify(updatedHistory));
     };

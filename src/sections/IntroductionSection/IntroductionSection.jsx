@@ -9,10 +9,8 @@ export default function IntroductionSection() {
     const dispatch = useDispatch();
     const { serverStatus } = useSelector((state) => state.session);
 
-    function invalidateData () {
-        if (window.confirm("This will clear the cache, application history and reset your preference to auto store the job. Do you still want to proceed?")) {
-            dispatch(invalidateData());
-        }
+    function invalidateCookies () {
+        dispatch(invalidateData());
     }
     
     return (
@@ -62,7 +60,7 @@ export default function IntroductionSection() {
             </Tabs>
             <br/>
             <div className="section-footer">
-                <button onClick={invalidateData}>Clear cookies</button>
+                <button onClick={invalidateCookies}>Clear cookies</button>
                 &nbsp;
                 &nbsp;
                 <a href="https://muditgarg48.github.io/" target="_blank" rel="noopener noreferrer">

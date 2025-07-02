@@ -19,6 +19,20 @@
     align-items: center;
 }
 
+.remove-history-job {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: var(--border-radius);
+    background-color: var(--error-color);
+    cursor: pointer;
+}
+
+.remove-history-job * {
+    color: var(--background-color);
+}
+
 .history-job-details-status {
     flex: 1;
     border-radius: var(--border-radius);
