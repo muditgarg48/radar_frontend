@@ -5,6 +5,7 @@ import DataTable from 'react-data-table-component';
 import Select from 'react-select';
 import { setApplicationHistory } from "../../store/features/sessionSlice.js";
 import { format } from 'date-fns';
+import CompanyLogo from "../../components/CompanyLogo/CompanyLogo.jsx";
 
 export default function HistorySection() {
 
@@ -21,11 +22,12 @@ export default function HistorySection() {
         { value: 'rejected', label: 'Rejected', color: '#EF4444' },
     ];
 
-    const getStatusStyle = (status) => {
+    const getStatusData = (status) => {
         const option = statusOptions.find(opt => opt.value === status);
         return {
             backgroundColor: option.color,
             color: "white",
+            label: option.label
         };
     };
 
@@ -80,8 +82,8 @@ export default function HistorySection() {
                     styles={{
                         control: (base) => ({
                             ...base,
-                            backgroundColor: getStatusStyle(row.status).backgroundColor,
-                            color: getStatusStyle(row.status).color,
+                            backgroundColor: getStatusData(row.status).backgroundColor,
+                            color: getStatusData(row.status).color,
                             minHeight: '32px',
                             width: '150px',
                             borderRadius: '40px',
@@ -119,11 +121,146 @@ export default function HistorySection() {
         }
     }
 
-    const ExpandedJobDetails = ({ data }) => {        
+    const ExpandedJobDetails = ({ data }) => {
+        const salaries = data.salary_bracket?.split(";");
+        const experiences = data.experience_level?.split(";");
+        const locations = data.location?.split(";");
         return(
-            <pre>
-                {JSON.stringify(data, null, 2)}
-            </pre>
+            <div className="history-job-details">
+                <div className="history-job-details-header">
+                    <div className="history-job-details-within-header">
+                        <CompanyLogo company={data.company}/>
+                        &nbsp;
+                        &nbsp;
+                        <div>
+                            <div className="history-job-title">{data.title}</div>
+                            <div className="history-job-team">{data.team_name}</div>
+                            <div className="history-job-company">{data.company}</div>
+                        </div>
+                    </div>
+                    <div className="history-job-details-status" style={{backgroundColor: getStatusData(data.status).backgroundColor}}>
+                        <h3>{getStatusData(data.status).label.toUpperCase()}</h3>
+                    </div>
+                </div>
+                <div className="history-job-details-subheader">
+                    {salaries && <div id="jd-salary-bracket">
+                        <span>🤑</span>
+                        &nbsp;
+                        &nbsp;
+                        <div>
+                            {salaries.map((salary, index) => {
+                                return (
+                                    <div key={index}>
+                                        {salary}
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    </div>}
+                    {experiences && <div id="jd-experience-level">
+                        <span>🏢</span>
+                        &nbsp;
+                        &nbsp;
+                        <div>
+                            {experiences.map((experience, index) => {
+                                return (
+                                    <div key={index}>
+                                        {experience}
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    </div>}
+                    {data.visa_sponsorship && <div id="jd-sponsorship">
+                        Visa Sponsorship: {data.visa_sponsorship? "✅" : "❌"}
+                    </div>}
+                    {locations && <div id="jd-location">
+                        <span>📌</span>
+                        &nbsp;
+                        &nbsp;
+                        <div>
+                            {locations.map((location, index) => {
+                                return (
+                                    <div key={index}>
+                                        {location}
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    </div>}
+                </div>
+                <div className="history-job-details-keywords">
+                    <h5>HARD SKILLS</h5>
+                    <ul>
+                    {
+                        "hard_skills" in data.keywords && data.keywords.hard_skills.map((word, index) => {
+                            if (word.length == 0) {return null;}
+                            return (
+                                <li className="jd-keyword" key={index}>
+                                    {word}
+                                </li>
+                            )
+                        })
+                    }
+                    </ul>
+                    <h5>SOFT SKILLS</h5>
+                    <ul>
+                    {
+                        "soft_skills" in data.keywords && data.keywords.soft_skills.map((word, index) => {
+                            if (word.length == 0) {return null;}
+                            return (
+                                <li className="jd-keyword" key={index}>
+                                    {word}
+                                </li>
+                            )
+                        })
+                    }
+                    </ul>
+                    <h5>OTHER KEYWORDS</h5>
+                    <ul>
+                    {
+                        "other_keywords" in data.keywords && data.keywords.other_keywords.map((word, index) => {
+                            if (word.length == 0) {return null;}
+                            return (
+                                <li className="jd-keyword" key={index}>
+                                    {word}
+                                </li>
+                            )
+                        })
+                    }
+                    </ul>
+                </div>
+                <div>
+                    {data.benefits && <div>
+                        <h5>💪  KEY BENEFITS</h5>
+                        <ul>
+                        {
+                            data.benefits.map((benefit, index) => {
+                                return (<li key={index}>{benefit}</li>)
+                            })
+                        }
+                        </ul>
+                    </div>}
+                    <h5>📝  NOTE</h5>
+                    <ul>
+                    {
+                        data.notes.map((note, index) => {
+                            return (<li key={index}>{note}</li>)
+                        })
+                    }
+                    </ul>
+                </div>
+                <div className="history-job-description">
+                    <h5>JOB DESCRIPTION</h5>
+                    {data.jd.split("\n").map((paragraph, index) => {
+                        return (
+                            <div key={index}>
+                                {paragraph}
+                            </div>
+                        )
+                    })}
+                </div>
+            </div>
         );
     }
 

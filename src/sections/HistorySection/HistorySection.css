@@ -1,3 +1,60 @@
 #history-section {
     min-height: 30vh;
 }
+
+.history-job-details {
+    border-radius: var(--border-radius);
+    padding: 15px;
+    color: var(--background-color);
+}
+
+.history-job-details-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.history-job-details-within-header {
+    flex: 5;
+    display: flex;
+    align-items: center;
+}
+
+.history-job-details-status {
+    flex: 1;
+    border-radius: var(--border-radius);
+    box-shadow: 1px 1px 3px 3px rgba(0, 0, 0, 0.1);
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+.history-job-details-status * {
+   color: var(--background-color);
+}
+
+.history-job-title {
+    font-size: 120%;
+    font-weight: bolder;
+}
+
+.history-job-team {
+    font-size: 110%;
+}
+
+.history-job-company {
+    font-size: 90%;
+    font-weight: lighter;
+}
+
+.history-job-details-subheader {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.history-job-details-keywords > ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+    margin: 0;
+}

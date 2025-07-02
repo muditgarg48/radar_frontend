@@ -5,11 +5,13 @@ import { setDomain } from "../../store/features/companySlice.js";
 import './CompanyLogo.css';
 import cachedRetriever from "../../tools/cachedRetriever";
 
-export default function CompanyLogo() {
+export default function CompanyLogo({company = null}) {
 
     const dispatch = useDispatch();
     const { deployment, logoClientId } = useSelector((state) => state.session);
     const { companyName, companyDomain } = useSelector((state) => state.company);
+
+    const name = company? company: companyName;
 
     useEffect(() => {
         const fetchLogoClientId = async () => {
@@ -25,12 +27,12 @@ export default function CompanyLogo() {
         const fetchCompanyDomain = async () => {
             const result = await cachedRetriever(
                 "RADAR_CACHED_COMPANY_DOMAINS",
-                companyName.toLowerCase(),
+                name.toLowerCase(),
                 "/get-company-domain",
                 {
                     method: "POST",
                     headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({"company": companyName})
+                    body: JSON.stringify({"company": name})
                 }
             );
             dispatch(setDomain(result.domain));
@@ -39,10 +41,10 @@ export default function CompanyLogo() {
         if (!companyDomain) fetchCompanyDomain();
     }, []);
 
-    if (companyName === "UNSPECIFIED") return null;
+    if (name === "UNSPECIFIED") return null;
 
     return (
         logoClientId && companyDomain &&
-        <img className="company-logo" src={`https://cdn.brandfetch.io/${companyDomain}?c=${logoClientId}`} alt={companyName}/>
+        <img className="company-logo" src={`https://cdn.brandfetch.io/${companyDomain}?c=${logoClientId}`} alt={name}/>
     );
 }
