@@ -1,9 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+export const statusInitialising = "🟡 Initialising...";
+export const statusOnline = "🟢 Online";
+export const statusOffline = "🔴 Offline";
+
 const initialState = {
   	deployment: "https://radar-backend-o1yd.onrender.com",
 	// deployment: "http://localhost:4000",
-	serverStatus: '🟡 Initialising...',
+	serverStatus: statusInitialising,
 	applicationHistory: null,
 	logoClientId: null,
 	loadingSummary: false,
@@ -20,11 +24,11 @@ const sessionSlice = createSlice({
 	initialState,
 	reducers: {
 		setRadarOnline: (state) => {
-			state.serverStatus = '🟢 Online';
+			state.serverStatus = statusOnline;
 			console.log("RaDAR Online!");
 		},
 		setRadarOffline: (state, action) => {
-			state.serverStatus = '🔴 Offline';
+			state.serverStatus = statusOffline;
 			console.log("RaDAR Offline! Error received:");
 			console.log(action.payload);
 		},

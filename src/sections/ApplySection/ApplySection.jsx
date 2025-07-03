@@ -4,6 +4,8 @@ import { setLoadingApplyData, setLogoClientId } from "../../store/features/sessi
 import "./ApplySection.css";
 import Loading from "../../components/Loading/Loading.jsx";
 import ErrorLogo from "../../components/ErrorLogo/ErrorLogo.jsx";
+import { statusInitialising } from "../../store/features/sessionSlice.js";
+import serverOnline from "../../tools/serverOnline";
 
 export default function ApplySection() {
 
@@ -45,10 +47,10 @@ export default function ApplySection() {
     }, []);
 
     useEffect(() => {
-        if (serverStatus === "🔴 Offline" || serverStatus === "🟢 Online") {
-            dispatch(setLoadingApplyData(false));
-        } else {
+        if (serverStatus === statusInitialising) {
             dispatch(setLoadingApplyData(true));
+        } else {
+            dispatch(setLoadingApplyData(false));
         }
     }, [serverStatus]);
 
@@ -149,7 +151,7 @@ export default function ApplySection() {
                     displayData(filteredCompanies)
                 }
             </>}
-            {!applyData && !loadingApplyData && 
+            {!applyData && !loadingApplyData && !serverOnline() && 
                 <ErrorLogo
                     errorMessage="There's something wrong with the server."
                 />

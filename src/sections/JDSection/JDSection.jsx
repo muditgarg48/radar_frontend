@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setJobDescription, setJobDetails, resetJobData } from "../../store/features/jobSlice.js";
 import { resetCompanyData, setCompanyName } from "../../store/features/companySlice.js";
-import { setApplicationHistory, setProcessingJobDescription } from "../../store/features/sessionSlice.js";
+import { statusOnline, setApplicationHistory, setProcessingJobDescription } from "../../store/features/sessionSlice.js";
 import { setResumeAlignmentScore } from "../../store/features/resumeSlice.js";
 
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
@@ -10,11 +10,12 @@ import './JDSection.css';
 import JobDetailsSection from "../JobDetailsSection/JobDetailsSection.jsx";
 import CompanyDetailsSection from "../CompanyDetailsSection/CompanyDetailsSection.jsx";
 import AdditionalDocSection from "../AdditionalDocSection/AdditionalDocSection.jsx";
+import serverOnline from "../../tools/serverOnline.jsx";
 
 export default function JDSection() {
 
     const dispatch = useDispatch();
-    const { deployment, applicationHistory } = useSelector((state) => state.session);
+    const { serverStatus, deployment, applicationHistory } = useSelector((state) => state.session);
     const { resumeName, resumeText } = useSelector((state) => state.resume);
     const { jobDescription, jobTitle } = useSelector((state) => state.job);
     const { companyName } = useSelector((state) => state.company);
@@ -48,6 +49,7 @@ export default function JDSection() {
             alert("Please enter a job description.");
             return;
         }
+        if (!serverOnline()) return;
 
         dispatch(setProcessingJobDescription(true));
         dispatch(resetJobData());
@@ -97,11 +99,15 @@ export default function JDSection() {
     const InputJD = () => {
         return (
             <textarea
+                disabled={!serverOnline()}
                 id="jd-input"
                 rows={20}
                 value={jdCache}
                 onChange={(e) => setJDCache(e.target.value)}
-                placeholder="Paste job description here..."
+                placeholder= {
+                    serverStatus!==statusOnline?
+                    serverStatus:
+                    "Enter your job description here..."}
                 wrap="soft"
             />
         );
@@ -124,7 +130,8 @@ export default function JDSection() {
             </div>
             <InputJD/>
             &nbsp;
-            <button 
+            <button
+                disabled={!serverOnline()}
                 id="jd-process-button"
                 onClick={handleJobDescriptionSubmit}>
                 Process Job Description

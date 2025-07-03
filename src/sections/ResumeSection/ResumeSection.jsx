@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setResumeName, setResumeText, setResumeUrl, setResumeSummary, setResumeImprovements, resetResumeData } from "../../store/features/resumeSlice.js";
 import { setLoadingSummary, setLoadingResumeImprovements } from "../../store/features/sessionSlice.js";
 import "./ResumeSection.css";
+import serverOnline from '../../tools/serverOnline';
 import Loading from '../../components/Loading/Loading.jsx';
 import redirectIcon from '../../assets/redirect.gif';
 
@@ -39,7 +40,6 @@ export default function ResumeSection() {
     };
 
     const summarizeResume = async () => {
-        
         dispatch(setLoadingSummary(true));
         const formData = new FormData();
         formData.append('resume', resumeText);
@@ -56,7 +56,6 @@ export default function ResumeSection() {
     };
 
     const improveResume = async () => {
-        
         dispatch(setLoadingResumeImprovements(true));
         const formData = new FormData();
         formData.append('resume', resumeText);
@@ -100,7 +99,7 @@ export default function ResumeSection() {
             return (
                 <div id="resume-header">
                     <div id="resume-subheader">
-                        <button onClick={updateResume}>Update Resume</button>
+                        <button disabled={!serverOnline()} onClick={updateResume}>Update Resume</button>
                         &nbsp;
                         &nbsp;
                         <div id="resume-name">{resumeName}</div>
@@ -113,7 +112,7 @@ export default function ResumeSection() {
         } else {
             return(
                 <div id="resume-header">
-                    <button onClick={uploadResume}>Upload Resume</button>
+                    <button disabled={!serverOnline()} onClick={uploadResume}>Upload Resume</button>
                 </div>
             );
         }
