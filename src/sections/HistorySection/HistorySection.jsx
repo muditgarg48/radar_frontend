@@ -125,6 +125,7 @@ export default function HistorySection() {
         const salaries = data.salary_bracket?.split(";");
         const experiences = data.experience_level?.split(";");
         const locations = data.location?.split(";");
+        const specialRequirements = data.special_requirements?.split(";");
         return(
             <div className="history-job-details">
                 <div className="history-job-details-header">
@@ -194,6 +195,21 @@ export default function HistorySection() {
                         </div>
                     </div>}
                 </div>
+                {specialRequirements && <div className="history-job-special-requirements">
+                    <h5>SPECIAL REQUIREMENTS</h5>
+                    <ul>
+                    {
+                        specialRequirements.map((requirement, index) => {
+                            if (requirement.length == 0) {return null;}
+                            return (
+                                <li key={index}>
+                                    {requirement}
+                                </li>
+                            )
+                        })
+                    }
+                    </ul>
+                </div>}
                 <div className="history-job-details-keywords">
                     <h5>HARD SKILLS</h5>
                     <ul>

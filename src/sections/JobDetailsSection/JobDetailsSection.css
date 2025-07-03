@@ -89,6 +89,12 @@
     align-items: center;
 }
 
+#jd-special-requirements {
+    padding: 1%;
+    box-shadow: 1px 1px 3px 3px rgba(0, 0, 0, 0.1);
+    border-radius: var(--border-radius);
+}
+
 #jd-benefits {
     padding: 1%;
     box-shadow: 1px 1px 3px 3px rgba(0, 0, 0, 0.1);
@@ -102,7 +108,7 @@
     padding-left: 0;
 }
 
-.jd-keywords-subsection-heading {
+.jd-keywords-subsection-heading, #jd-special-requirements-heading {
     margin: 1% 0;
     font-weight: bolder;
     font-size: 80%;

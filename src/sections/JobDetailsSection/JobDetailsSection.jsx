@@ -11,7 +11,7 @@ export default function JobDetailsSection () {
 
     const dispatch = useDispatch();
     const { deployment, processingJobDescription } = useSelector((state) => state.session);
-    const { jobTitle, jobDescription, jdKeywords, jdKeyNotes, benefits, sponsorship, experienceLevel, salaryBracket, teamName, location } = useSelector((state) => state.job);
+    const { jobTitle, jobDescription, jdKeywords, jdKeyNotes, benefits, sponsorship, experienceLevel, salaryBracket, teamName, location, specialRequirements } = useSelector((state) => state.job);
     const { companyName } = useSelector((state) => state.company);
     const { resumeText, resumeAlignmentScore } = useSelector((state) => state.resume);
     const [loadingResumeAlignmentScore, setLoadingResumeAlignmentScore] = useState(false);
@@ -102,66 +102,73 @@ export default function JobDetailsSection () {
 
     const JSubHeader = () => {
         if (!companyName) {return null;}
-        let salaries = null;
-        let experiences = null;
-        let locations = null;
-        if (salaryBracket) salaries = salaryBracket.split(";");
-        if (experienceLevel) experiences = experienceLevel.split(";");
-        if (location) locations = location.split(";");
         return (
-            <div id="jd-subheader">
-                {teamName && <div id="jd-team-name">
-                    <span>👥</span>
-                    &nbsp;
-                    &nbsp;
-                    <span>{teamName}</span>
+            <>
+                <div id="jd-subheader">
+                    {teamName && <div id="jd-team-name">
+                        <span>👥</span>
+                        &nbsp;
+                        &nbsp;
+                        <span>{teamName}</span>
+                    </div>}
+                    {salaryBracket && <div id="jd-salary-bracket">
+                        <span>🤑</span>
+                        &nbsp;
+                        &nbsp;
+                        <div>
+                            {salaryBracket.map((salary, index) => {
+                                return (
+                                    <div key={index}>
+                                        {salary}
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    </div>}
+                    {experienceLevel && <div id="jd-experience-level">
+                        <span>🏢</span>
+                        &nbsp;
+                        &nbsp;
+                        <div>
+                            {experienceLevel.map((experience, index) => {
+                                return (
+                                    <div key={index}>
+                                        {experience}
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    </div>}
+                    {sponsorship && <div id="jd-sponsorship">
+                        Visa Sponsorship: {sponsorship? "✅" : "❌"}
+                    </div>}
+                    {location && <div id="jd-location">
+                        <span>📌</span>
+                        &nbsp;
+                        &nbsp;
+                        <div>
+                            {location.map((location, index) => {
+                                return (
+                                    <div key={index}>
+                                        {location}
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    </div>}
+                </div>
+                &nbsp;
+                {specialRequirements && <div id="jd-special-requirements">
+                    <div id="jd-special-requirements-heading">⚠️  SPECIAL REQUIREMENTS</div>
+                    <ul>
+                    {
+                        specialRequirements.map((benefit, index) => {
+                            return (<li key={index}>{benefit}</li>)
+                        })
+                    }
+                    </ul>
                 </div>}
-                {salaries && <div id="jd-salary-bracket">
-                    <span>🤑</span>
-                    &nbsp;
-                    &nbsp;
-                    <div>
-                        {salaries.map((salary, index) => {
-                            return (
-                                <div key={index}>
-                                    {salary}
-                                </div>
-                            )
-                        })}
-                    </div>
-                </div>}
-                {experiences && <div id="jd-experience-level">
-                    <span>🏢</span>
-                    &nbsp;
-                    &nbsp;
-                    <div>
-                        {experiences.map((experience, index) => {
-                            return (
-                                <div key={index}>
-                                    {experience}
-                                </div>
-                            )
-                        })}
-                    </div>
-                </div>}
-                {sponsorship && <div id="jd-sponsorship">
-                    Visa Sponsorship: {sponsorship? "✅" : "❌"}
-                </div>}
-                {locations && <div id="jd-location">
-                    <span>📌</span>
-                    &nbsp;
-                    &nbsp;
-                    <div>
-                        {locations.map((location, index) => {
-                            return (
-                                <div key={index}>
-                                    {location}
-                                </div>
-                            )
-                        })}
-                    </div>
-                </div>}
-            </div>
+            </>
         );
     }
 

@@ -9,6 +9,7 @@ const initialState = {
     teamName: null,
     sponsorship: null,                             
     location: null,
+    specialRequirements: null,
     benefits: null,
     jdKeyNotes: null,
 };
@@ -41,6 +42,9 @@ const jobSlice = createSlice({
         setJobLocation: (state, action) => {
             state.location = action.payload;
         },
+        setSpecialRequirements: (state, action) => {
+            state.specialRequirements = action.payload;
+        },
         setJobBenefits: (state, action) => {
             state.benefits = action.payload;
         },
@@ -49,18 +53,24 @@ const jobSlice = createSlice({
         },
         setJobDetails: (state, action) => {
             const data = action.payload;
-            state.jobTitle = data.title;
-            state.jdKeywords = data.keywords;
-            state.jdKeywords["hard_skills"] = data.keywords.hard_skills.split(";");
-            state.jdKeywords["soft_skills"] = data.keywords.soft_skills.split(";");
-            state.jdKeywords["other_keywords"] = data.keywords.other_keywords.split(";");
-            state.jdKeyNotes = data.notes;
-            if ("salary_bracket" in data) state.salaryBracket = data.salary_bracket;
-            if ("experience_level" in data) state.experienceLevel = data.experience_level;
-            if ("team_name" in data) state.teamName = data.team_name;
-            if ("visa_sponsorship" in data) state.sponsorship = data.visa_sponsorship;
-            if ("location" in data) state.location = data.location;
-            if ("benefits" in data) state.benefits = data.benefits;
+            try {
+                state.jobTitle = data.title;
+                state.jdKeywords = data.keywords;
+                state.jdKeywords["hard_skills"] = data.keywords.hard_skills.split(";");
+                state.jdKeywords["soft_skills"] = data.keywords.soft_skills.split(";");
+                state.jdKeywords["other_keywords"] = data.keywords.other_keywords.split(";");
+                state.jdKeyNotes = data.notes;
+                if ("special_requirements" in data) state.specialRequirements = data.special_requirements?.split(";");
+                if ("salary_bracket" in data) state.salaryBracket = data.salary_bracket?.split(";");
+                if ("experience_level" in data) state.experienceLevel = data.experience_level?.split(";");
+                if ("team_name" in data) state.teamName = data.team_name;
+                if ("visa_sponsorship" in data) state.sponsorship = data.visa_sponsorship;
+                if ("location" in data) state.location = data.location?.split(";");
+                if ("benefits" in data) state.benefits = data.benefits;
+            } catch (error) {
+                console.error("Error encountered when interpreting the processed job data: " + error);
+                console.log(data);
+            }
         },
         resetJobData: () => initialState
     }
