@@ -48,7 +48,7 @@ export default function JobDetailsSection () {
         if (!resumeText) {
             return (
                 <div className="section-footnote"><em>
-                    <a href="#introduction-section">Add resume</a> to get resume alignment score.
+                    <a href="#resume-header">Add resume</a> to get resume alignment score.
                 </em></div>
             );
         } else if (!resumeAlignmentScore) {
@@ -221,7 +221,7 @@ export default function JobDetailsSection () {
                 <div className="section-footnote">
                     {resumeText? 
                         <em><span className="jd-keyword keyword-present">Green</span> indicate that the keyword was found in your resume.</em>:
-                        <em><a href="#introduction-section">Add resume</a> to highlight which keywords are in your resume.</em>
+                        <em><a href="#resume-header">Add resume</a> to highlight which keywords are in your resume.</em>
                     }
                 </div> 
                 &nbsp;
