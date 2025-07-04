@@ -20,29 +20,24 @@ function App() {
 	const dispatch = useDispatch();
   	const deployment = useSelector((state) => state.session.deployment);
 
-  	useEffect(() => {
-    	
-		function resetAllData() {
-			dispatch(resetSession());
-			dispatch(resetCompanyData());
-			dispatch(resetJobData());
-			dispatch(resetResumeData());
-			dispatch(resetAllAdditionalDocs());
+	const checkServerStatus = async () => {
+		try {
+			const response = await axios.get(deployment+"/hello-server");
+			if(response.status === 200) {
+				dispatch(setRadarOnline());
+			} else {
+				dispatch(setRadarOffline("Server side error: "+response));
+			}
+		} catch (Exception) {
+			dispatch(setRadarOffline("Client side error: "+Exception));
+			console.error("Server ping failed:", error);
 		}
-		async function checkServerStatus() {
-      		try {
-        		const response = await axios.get(deployment+"/hello-server");
-				if(response.status === 200) {
-					dispatch(setRadarOnline());
-				} else {
-					dispatch(setRadarOffline("Server side error: "+response));
-				}
-      		} catch (Exception) {
-				dispatch(setRadarOffline("Client side error: "+Exception));
-        		alert("Server response: "+Exception+". Report back to the developer.");
-      		}
-    	}
+	}
+
+  	useEffect(() => {
     	checkServerStatus();
+		const intervalId = setInterval(checkServerStatus, 14 * 60 * 1000);
+		return () => clearInterval(intervalId);
   	}, [deployment]);
 
 	return (
