@@ -11,6 +11,7 @@ import JobDetailsSection from "../JobDetailsSection/JobDetailsSection.jsx";
 import CompanyDetailsSection from "../CompanyDetailsSection/CompanyDetailsSection.jsx";
 import AdditionalDocSection from "../AdditionalDocSection/AdditionalDocSection.jsx";
 import serverOnline from "../../tools/serverOnline.jsx";
+import { resetAllAdditionalDocs } from "../../store/features/additionalDocsSlice.js";
 
 export default function JDSection() {
 
@@ -53,7 +54,8 @@ export default function JDSection() {
 
         dispatch(setProcessingJobDescription(true));
         dispatch(resetJobData());
-        dispatch(resetCompanyData())
+        dispatch(resetCompanyData());
+        dispatch(resetAllAdditionalDocs());
         dispatch(setJobDescription(jdCache));
 
         const response = await fetch(deployment+"/process-job-description", {
