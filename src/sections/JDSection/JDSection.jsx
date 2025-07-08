@@ -33,6 +33,12 @@ export default function JDSection() {
         const newId = history.length;
         const newApplication = {
             id: newId,
+            timeline: [
+                {
+                    status: 'not_applied',
+                    timestamp: Date.now()
+                }
+            ],
             timestamp: Date.now(),
             resumeName: resumeName? resumeName : "NONE",
             jd: jdCache,

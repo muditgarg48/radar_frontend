@@ -1,4 +1,5 @@
 import React, {useEffect} from "react";
+import HopList from 'hoplist';
 import "./HistorySection.css";
 import { useSelector, useDispatch } from "react-redux";
 import DataTable from 'react-data-table-component';
@@ -6,6 +7,7 @@ import Select from 'react-select';
 import { setApplicationHistory } from "../../store/features/sessionSlice.js";
 import { format } from 'date-fns';
 import CompanyLogo from "../../components/CompanyLogo/CompanyLogo.jsx";
+import deleteIcon from '../../assets/delete.gif';
 
 export default function HistorySection() {
 
@@ -58,10 +60,14 @@ export default function HistorySection() {
         },
     };
 
+    const formatDate = (timestamp) => {
+        return format(new Date(timestamp), 'MMM dd, yyyy hh:mm a');
+    }
+
     const columns = [
         {
-            name: 'Processed On',
-            selector: row => format(new Date(row.timestamp), 'MMM dd, yyyy hh:mm a'),
+            name: 'Last Updated',
+            selector: row => formatDate(row.timestamp),
             sortable: true,
         },
         {
@@ -110,7 +116,20 @@ export default function HistorySection() {
         let history = localStorage.getItem("RADAR_HISTORY");
         if (history !== null) {
             history = JSON.parse(history); 
+            for (let i = 0; i < history.length; i++) {
+                let application = history[i];
+                if (!("timeline" in application)) {
+                    application.timeline = [
+                        {
+                            status: application.status,
+                            timestamp: application.timestamp
+                        }
+                    ]
+                }
+                history[i] = application;
+            }
             dispatch(setApplicationHistory(history));
+            localStorage.setItem("RADAR_HISTORY", JSON.stringify(history));
         }
     }, []);
 
@@ -126,6 +145,8 @@ export default function HistorySection() {
         const experiences = data.experience_level?.split(";");
         const locations = data.location?.split(";");
         const specialRequirements = data.special_requirements?.split(";");
+        const timeline = data.timeline;
+        const hops = timeline.map((event) => ({ name: getStatusData(event.status).label, hopTime: event.timestamp }));
         return(
             <div className="history-job-details">
                 <div className="history-job-details-header">
@@ -139,15 +160,24 @@ export default function HistorySection() {
                             <div className="history-job-company">{data.company}</div>
                         </div>
                     </div>
+                    <div className="history-job-details-status">
+                        <h3 style={{color: getStatusData(data.status).backgroundColor}}>
+                            {getStatusData(data.status).label.toUpperCase()}
+                        </h3>
+                    </div>
+                    &nbsp;
+                    &nbsp;
                     <div className="remove-history-job" onClick={() => removeApplication(data.id)}>
+                        <img src={deleteIcon} height={"25px"} width={"25px"} alt="Delete Application"/>
+                        &nbsp;
                         <h3>DELETE</h3>
                     </div>
-                    &nbsp;
-                    &nbsp;
-                    <div className="history-job-details-status" style={{backgroundColor: getStatusData(data.status).backgroundColor}}>
-                        <h3>{getStatusData(data.status).label.toUpperCase()}</h3>
-                    </div>
                 </div>
+                <HopList 
+                    hops={hops}
+                    startIconColor={getStatusData("not_applied").backgroundColor}
+                    // stepIcon={"🚀"}
+                />
                 <div className="history-job-details-subheader">
                     {salaries && <div id="jd-salary-bracket">
                         <span>🤑</span>
@@ -286,8 +316,15 @@ export default function HistorySection() {
     }
 
     const handleStatusChange = (id, newStatus) => {
+        const currentTimestamp = Date.now();
+        const oldTimeline = applicationHistory.find(app => app.id === id).timeline;
+        const newTimeline = [ ...oldTimeline, { status: newStatus, timestamp: currentTimestamp }];
         const updatedHistory = applicationHistory.map(app => 
-            app.id === id ? { ...app, status: newStatus } : app
+            app.id === id ? { ...app, 
+                status: newStatus, 
+                timeline: newTimeline,
+                timestamp: currentTimestamp 
+            } : app
         );
         dispatch(setApplicationHistory(updatedHistory));
         localStorage.setItem("RADAR_HISTORY", JSON.stringify(updatedHistory));

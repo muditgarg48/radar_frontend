@@ -3,9 +3,13 @@
 }
 
 .history-job-details {
+    width: 100%;
+    max-width: 90vw;
     border-radius: var(--border-radius);
     padding: 15px;
     color: var(--background-color);
+    max-height: 50vh;
+    overflow-y: auto;
 }
 
 .history-job-details-header {
@@ -25,12 +29,11 @@
     justify-content: center;
     align-items: center;
     border-radius: var(--border-radius);
-    background-color: var(--error-color);
     cursor: pointer;
 }
 
-.remove-history-job * {
-    color: var(--background-color);
+.remove-history-job h3 {
+    color: var(--error-color);
 }
 
 .history-job-details-status {
@@ -58,6 +61,23 @@
     font-size: 90%;
     font-weight: lighter;
 }
+
+/* Timeline CSS Start */
+
+.hoplist-container {
+    max-width: 100%;
+}
+
+.hoplist-scroll-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.hoplist-icon {
+    z-index: 0;
+}
+
+/* Timeline CSS End */
 
 .history-job-details-subheader {
     display: flex;
