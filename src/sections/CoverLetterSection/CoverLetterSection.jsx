@@ -8,7 +8,7 @@ export default function CoverLetterSection() {
 
     const dispatch = useDispatch();
     const { deployment } = useSelector((state) => state.session);
-    const { resumeFile } = useSelector((state) => state.resume);
+    const { resumeText } = useSelector((state) => state.resume);
     const { jobDescription, jobTitle } = useSelector((state) => state.job);
     const { companyName } = useSelector((state) => state.company);
     
@@ -21,7 +21,7 @@ export default function CoverLetterSection() {
         dispatch(resetCoverLetter());
         dispatch(setCoverLetterContext(letterContext));
 
-        if (resumeFile === null) {
+        if (resumeText === null) {
             alert("Please upload a resume first.");
             return;
         } else if (jobDescription === "") {
@@ -35,7 +35,7 @@ export default function CoverLetterSection() {
         dispatch(setLoadingCoverLetter(true));
         
         const formData = new FormData();
-        formData.append('resume', resumeFile);
+        formData.append('resume', resumeText);
         formData.append('jd', jobDescription);
         formData.append('position', jobTitle);
         formData.append('company', companyName);
