@@ -1,0 +1,17 @@
+.notfound-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    /* margin-top: "5%"; */
+}
+
+.notfound-message {
+    color: var(--error-color);
+    opacity: 0.7;
+}
+
+.notfound-footnote {
+    color: var(--text-color);
+    opacity: 0.7;
+}

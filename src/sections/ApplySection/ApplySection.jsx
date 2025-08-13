@@ -4,6 +4,7 @@ import { setLoadingApplyData, setLogoClientId } from "../../store/features/sessi
 import "./ApplySection.css";
 import Loading from "../../components/Loading/Loading.jsx";
 import ErrorLogo from "../../components/ErrorLogo/ErrorLogo.jsx";
+import NotFoundLogo from "../../components/NotFoundLogo/NotFoundLogo.jsx";
 import { statusInitialising } from "../../store/features/sessionSlice.js";
 import serverOnline from "../../tools/serverOnline";
 
@@ -151,6 +152,11 @@ export default function ApplySection() {
                     displayData(filteredCompanies)
                 }
             </>}
+            {filteredCompanies && filteredCompanies.length == 0 &&
+                <NotFoundLogo
+                    notfoundMessage="I'm afraid that organisation's portal doesn't exist in your database"
+                />
+            }
             {!applyData && !loadingApplyData && !serverOnline() && 
                 <ErrorLogo
                     errorMessage="There's something wrong with the server."
