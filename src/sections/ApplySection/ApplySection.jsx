@@ -154,7 +154,7 @@ export default function ApplySection() {
             </>}
             {filteredCompanies && filteredCompanies.length == 0 &&
                 <NotFoundLogo
-                    notfoundMessage="I'm afraid that organisation's portal doesn't exist in your database"
+                    notfoundMessage="I'm afraid that organisation's portal data doesn't exist in our database"
                 />
             }
             {!applyData && !loadingApplyData && !serverOnline() && 
